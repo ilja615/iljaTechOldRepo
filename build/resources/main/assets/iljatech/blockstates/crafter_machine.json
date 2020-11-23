@@ -1,0 +1,24 @@
+{
+  "variants":
+  {
+    "facing=east":
+    {
+      "model": "iljatech:block/crafter_machine",
+      "y": 90
+    },
+    "facing=north":
+    {
+      "model": "iljatech:block/crafter_machine"
+    },
+    "facing=south":
+    {
+      "model": "iljatech:block/crafter_machine",
+      "y": 180
+    },
+    "facing=west":
+    {
+      "model": "iljatech:block/crafter_machine",
+      "y": 270
+    }
+  }
+}

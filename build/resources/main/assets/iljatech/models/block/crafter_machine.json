@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "iljatech:block/crafting_machine_front",
+		"north": "iljatech:block/crafting_machine_front",
+		"south": "iljatech:block/crafting_machine_side_1",
+		"east": "iljatech:block/crafting_machine_side_1",
+		"west": "iljatech:block/crafting_machine_side_2",
+		"up": "iljatech:block/crafting_machine_top",
+		"down": "iljatech:block/iron_plate"
+	}
+}
