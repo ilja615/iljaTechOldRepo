@@ -3,13 +3,27 @@ package ilja615.iljatech.util;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 
-public enum Edge
-{
-    BOTTOM_NORTH, BOTTOM_EAST, BOTTOM_SOUTH, BOTTOM_WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, TOP_NORTH, TOP_EAST, TOP_SOUTH, TOP_WEST;
+public enum Edge implements IStringSerializable {
+    BOTTOM_NORTH("bottom_north"),
+    BOTTOM_EAST("bottom_east"),
+    BOTTOM_SOUTH("bottom_south"),
+    BOTTOM_WEST("bottom_west"),
+    NORTHEAST("northeast"),
+    NORTHWEST("northwest"),
+    SOUTHEAST("southeast"),
+    SOUTHWEST("southwest"),
+    TOP_NORTH("top_north"),
+    TOP_EAST("top_east"),
+    TOP_SOUTH("top_south"),
+    TOP_WEST("top_west");
 
-    public static BlockState getEdgeBetweenSides;
+    private final String name;
+    private Edge(String nameIn) {
+        this.name = nameIn;
+    }
 
     public static Edge getEdgeBetweenSides(Direction side1, Direction side2)
     {
@@ -127,4 +141,7 @@ public enum Edge
         }
         return edge;
     }
+
+    @Override
+    public String getString() { return this.name; }
 }

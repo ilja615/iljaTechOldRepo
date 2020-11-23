@@ -1,40 +1,16 @@
 {
-  "multipart": [
-    {   "when": { "bottom_north": "true"},
-      "apply": { "model": "iljatech:block/iron_rod", "x": 90, "y": 270, "uvlock": true }
-    },
-    {   "when": { "bottom_east": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 90, "uvlock": true }
-    },
-    {   "when": { "bottom_south": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 90, "y": 90, "uvlock": true }
-    },
-    {   "when": { "bottom_west": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 90, "y": 180, "uvlock": true }
-    },
-    {   "when": { "top_north": "true"},
-      "apply": { "model": "iljatech:block/iron_rod","x": 270, "y": 270, "uvlock": true }
-    },
-    {   "when": { "top_east": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 270, "uvlock": true }
-    },
-    {   "when": { "top_south": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 270, "y": 90, "uvlock": true }
-    },
-    {   "when": { "top_west": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "x": 270, "y": 180, "uvlock": true }
-    },
-    {   "when": { "northeast": "true"},
-      "apply": { "model": "iljatech:block/iron_rod", "uvlock": true }
-    },
-    {   "when": { "northwest": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "y": 270, "uvlock": true }
-    },
-    {   "when": { "southeast": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "y": 90, "uvlock": true }
-    },
-    {   "when": { "southwest": "true" },
-      "apply": { "model": "iljatech:block/iron_rod", "y": 180, "uvlock": true }
-    }
-  ]
+  "variants": {
+    "edge=bottom_north": { "model": "iljatech:block/iron_rod", "x": 90, "y": 270, "uvlock": true },
+    "edge=bottom_east": { "model": "iljatech:block/iron_rod", "x": 90, "uvlock": true },
+    "edge=bottom_south": { "model": "iljatech:block/iron_rod", "x": 90, "y": 90, "uvlock": true },
+    "edge=bottom_west": { "model": "iljatech:block/iron_rod", "x": 90, "y": 180, "uvlock": true },
+    "edge=top_north": { "model": "iljatech:block/iron_rod","x": 270, "y": 270, "uvlock": true },
+    "edge=top_east": { "model": "iljatech:block/iron_rod", "x": 270, "uvlock": true },
+    "edge=top_south": { "model": "iljatech:block/iron_rod", "x": 270, "y": 90, "uvlock": true },
+    "edge=top_west": { "model": "iljatech:block/iron_rod", "x": 270, "y": 180, "uvlock": true },
+    "edge=northeast": { "model": "iljatech:block/iron_rod", "uvlock": true },
+    "edge=northwest": { "model": "iljatech:block/iron_rod", "y": 270, "uvlock": true },
+    "edge=southeast": { "model": "iljatech:block/iron_rod", "y": 90, "uvlock": true },
+    "edge=bottom_west": { "model": "iljatech:block/iron_rod", "y": 180, "uvlock": true }
+  }
 }
