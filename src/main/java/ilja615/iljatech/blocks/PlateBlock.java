@@ -231,15 +231,6 @@ public class PlateBlock extends Block implements IWaterLoggable
         return super.updatePostPlacement(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
     }
 
-//    @OnlyIn(Dist.CLIENT)
-//    public void animateTick(BlockState blockState, World worldIn, BlockPos blockPos, Random random)
-//    {
-//        if (blockState.getBlock() == ModBlocks.CHROME_PLATE.get().getBlock() && random.nextInt(5) == 0)
-//        {
-//            worldIn.addParticle(ParticleTypes.END_ROD, blockPos.getX() + random.nextFloat(), blockPos.getY() + random.nextFloat(), blockPos.getZ() + random.nextFloat(), random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D);
-//        }
-//    }
-
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, WATERLOGGED);
     }

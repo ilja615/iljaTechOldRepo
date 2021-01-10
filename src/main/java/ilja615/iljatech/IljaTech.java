@@ -1,12 +1,6 @@
 package ilja615.iljatech;
 
-import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModContainerTypes;
-import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.proxy.ClientProxy;
-import ilja615.iljatech.proxy.IProxy;
-import ilja615.iljatech.proxy.ServerProxy;
+import ilja615.iljatech.init.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -27,23 +21,19 @@ import static ilja615.iljatech.IljaTech.MOD_ID;
 public class IljaTech
 {
     public static final String MOD_ID = "iljatech";
-    public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
     public IljaTech()
     {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
 
-//        ModItemsNew.ITEMS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
         ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        proxy.init();
-    }
+    private void setup(final FMLCommonSetupEvent event){ }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {

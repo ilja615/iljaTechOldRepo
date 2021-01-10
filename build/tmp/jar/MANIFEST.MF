@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Implementation-Title: iljaTechMod
-Implementation-Version: 1.16.2-0.1
+Implementation-Title: iljaTech
+Implementation-Version: 1.16.4-0.1
 Specification-Vendor: examplemodsareus
 Specification-Title: examplemod
-Implementation-Timestamp: 2020-10-06T22:11:21+0200
+Implementation-Timestamp: 2021-01-07T18:03:15+0100
 Specification-Version: 1
 Implementation-Vendor: examplemodsareus
 

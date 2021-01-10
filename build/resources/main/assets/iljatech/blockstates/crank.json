@@ -1,0 +1,471 @@
+{
+  "variants": {
+    "facing=east,rotation=0":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=0":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=0":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=0":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=0":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=0":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "y": 112.5
+    },
+    "facing=north,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "y": 22.5
+    },
+    "facing=south,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "y": 202.5
+    },
+    "facing=west,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "y": 292.5
+    },
+    "facing=up,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270,
+      "y": 22.5
+    },
+    "facing=down,rotation=1":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90,
+      "y": 22.5
+    },
+    "facing=east,rotation=2":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=2":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=2":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=2":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=2":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=2":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=3":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=3":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=3":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=3":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=3":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=3":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=4":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=4":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=4":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=4":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=4":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=4":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=5":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=5":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=5":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=5":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=5":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=5":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=6":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=6":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=6":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=6":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=6":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=6":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=7":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=7":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=7":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=7":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=7":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=7":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=8":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=8":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=8":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=8":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=8":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=8":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=9":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=9":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=9":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=9":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=9":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=9":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=10":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=10":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=10":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=10":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=10":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=10":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=11":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=11":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=11":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=11":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=11":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=11":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=12":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=12":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=12":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=12":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=12":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=12":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=13":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=13":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=13":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=13":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=13":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=13":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=14":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=14":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=14":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=14":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=14":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=14":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    },
+    "facing=east,rotation=15":
+    {
+      "model": "iljatech:block/crank",
+      "y": 90
+    },
+    "facing=north,rotation=15":
+    {
+      "model": "iljatech:block/crank"
+    },
+    "facing=south,rotation=15":
+    {
+      "model": "iljatech:block/crank",
+      "y": 180
+    },
+    "facing=west,rotation=15":
+    {
+      "model": "iljatech:block/crank",
+      "y": 270
+    },
+    "facing=up,rotation=15":
+    {
+      "model": "iljatech:block/crank",
+      "x": 270
+    },
+    "facing=down,rotation=15":
+    {
+      "model": "iljatech:block/crank",
+      "x": 90
+    }
+  }
+}

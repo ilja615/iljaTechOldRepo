@@ -1,0 +1,468 @@
+{
+  "variants": {
+    "facing=east,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off",
+      "y": 90
+    },
+    "facing=north,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off"
+    },
+    "facing=south,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off",
+      "y": 180
+    },
+    "facing=west,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off",
+      "y": 270
+    },
+    "facing=up,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off",
+      "x": 270
+    },
+    "facing=down,mechanical_power=0":
+    {
+      "model": "iljatech:block/gearbox_off",
+      "x": 90
+    },
+    "facing=east,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=1":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=2":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=3":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=4":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=5":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=6":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=7":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=8":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=9":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=10":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=11":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=12":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=13":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=14":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on"
+    },
+    "facing=south,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=15":
+    {
+      "model": "iljatech:block/gearbox_on",
+      "x": 90
+    }
+  }
+}

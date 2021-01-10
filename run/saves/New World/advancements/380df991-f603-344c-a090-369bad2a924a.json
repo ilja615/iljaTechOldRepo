@@ -1,47 +1,81 @@
 {
-  "minecraft:recipes/transportation/acacia_boat": {
+  "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/oak_boat": {
+  "minecraft:recipes/decorations/spruce_sign": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_spruce_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/dark_oak_boat": {
+  "minecraft:recipes/decorations/spruce_fence": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/birch_boat": {
+  "minecraft:recipes/building_blocks/spruce_slab": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/jungle_boat": {
+  "minecraft:recipes/redstone/spruce_button": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/spruce_boat": {
+  "minecraft:recipes/decorations/barrel": {
     "criteria": {
-      "in_water": "2020-11-23 21:29:51 +0100"
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/spruce_door": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/spruce_pressure_plate": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/stick": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/spruce_fence_gate": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/spruce_stairs": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
     },
     "done": true
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:forest": "2020-11-23 21:29:06 +0100",
-      "minecraft:river": "2020-11-23 21:47:56 +0100",
-      "minecraft:swamp": "2020-11-23 21:49:06 +0100"
+      "minecraft:plains": "2020-12-28 22:06:21 +0100"
     },
     "done": false
   },
-  "DataVersion": 2578
+  "minecraft:recipes/redstone/spruce_trapdoor": {
+    "criteria": {
+      "has_planks": "2020-12-28 22:33:11 +0100"
+    },
+    "done": true
+  },
+  "DataVersion": 2584
 }

@@ -1,5 +1,5 @@
-Args: "--inJar", "/Users/Ilja/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.16.2-33.0.42/forge-1.16.2-33.0.42-injected.jar", "--outJar", "/Users/Ilja/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.16.2-33.0.42_mapped_snapshot_20200916-1.16.2/forge-1.16.2-33.0.42_mapped_snapshot_20200916-1.16.2.jar", "--logFile", "accesstransform.log", "--atFile", "/Users/Ilja/Documents/mc alles/iljaTechMod/build/_atJar_5/parent_at.cfg"
+Args: "--inJar", "/Users/Ilja/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.16.4-35.1.20/forge-1.16.4-35.1.20-injected.jar", "--outJar", "/Users/Ilja/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3.jar", "--logFile", "accesstransform.log", "--atFile", "/Users/Ilja/Documents/mc alles/iljaTech/build/_atJar_5/parent_at.cfg"
 Classpath: /Users/Ilja/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/accesstransformers/1.0.5/accesstransformers-1.0.5-fatjar.jar
-WorkDir: /Users/Ilja/Documents/mc alles/iljaTechMod/build/_atJar_5
+WorkDir: /Users/Ilja/Documents/mc alles/iljaTech/build/_atJar_5
 Main: net.minecraftforge.accesstransformer.TransformerProcessor
 ====================================

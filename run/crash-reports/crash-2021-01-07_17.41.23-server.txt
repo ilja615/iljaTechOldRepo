@@ -1,0 +1,98 @@
+---- Minecraft Crash Report ----
+// Hey, that tickles! Hehehe!
+
+Time: 7-1-21 17:41
+Description: Exception while ticking
+
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388) ~[?:1.8.0_131] {}
+	at ilja615.iljatech.blocks.GearboxBlock.tick(GearboxBlock.java:50) ~[?:?] {re:classloading}
+	at net.minecraft.block.AbstractBlock$AbstractBlockState.tick(AbstractBlock.java:618) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.tickBlock(ServerWorld.java:591) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerTickList.tick(SourceFile:84) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.tick(ServerWorld.java:336) ~[?:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:850) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:786) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:78) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.func_240802_v_(MinecraftServer.java:641) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$startServer$0(MinecraftServer.java:232) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at java.util.Random.nextInt(Random.java:388) ~[?:1.8.0_131] {}
+	at ilja615.iljatech.blocks.GearboxBlock.tick(GearboxBlock.java:50) ~[?:?] {re:classloading}
+	at net.minecraft.block.AbstractBlock$AbstractBlockState.tick(AbstractBlock.java:618) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.tickBlock(ServerWorld.java:591) ~[?:?] {re:classloading}
+-- Block being ticked --
+Details:
+	Block location: World: (-230,71,-247), Chunk: (at 10,4,9 in -15,-16; contains blocks -240,0,-256 to -225,255,-241), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+Stacktrace:
+	at net.minecraft.world.server.ServerTickList.tick(SourceFile:84) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.tick(ServerWorld.java:336) ~[?:?] {re:classloading}
+
+
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayerEntity['Dev'/235, l='ServerLevel[New World]', x=-226.60, y=72.00, z=-244.26]]
+	Chunk stats: ServerChunkCache: 2194
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (-224,70,-256), Chunk: (at 0,4,0 in -14,-16; contains blocks -224,0,-256 to -209,255,-241), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Level time: 13979 game time, 2541 day time
+	Level name: New World
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+	Level weather: Rain time: 88967 (now: false), thunder time: 100896 (now: false)
+	Known server brands: forge
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:850) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:786) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:78) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.func_240802_v_(MinecraftServer.java:641) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$startServer$0(MinecraftServer.java:232) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.16.4
+	Minecraft Version ID: 1.16.4
+	Operating System: Mac OS X (x86_64) version 10.15.7
+	Java Version: 1.8.0_131, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 639122032 bytes (609 MB) / 1129316352 bytes (1077 MB) up to 1908932608 bytes (1820 MB)
+	CPUs: 4
+	JVM Flags: 1 total; -Xss1M
+	ModLauncher: 8.0.6+85+master.325de55
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/mixin-0.8.2.jar mixin PLUGINSERVICE 
+		/eventbus-3.0.5-service.jar eventbus PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-2.2.0-shadowed.jar accesstransformer PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/mixin-0.8.2.jar mixin TRANSFORMATIONSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 35.1
+	Forge: net.minecraftforge:35.1.20
+	FML Language Providers: 
+		javafml@35.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar                                  |Minecraft                     |minecraft                     |1.16.2              |DONE      |a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16|Forge                         |forge                         |33.0.42             |DONE      |NOSIGNATURE
+		main                                              |IljaTech                      |iljatech                      |1.16.2-0.1          |DONE      |NOSIGNATURE
+	Crash Report UUID: 3a374660-b848-453c-a121-9ee1a8640c9a
+	Player Count: 1 / 8; [ServerPlayerEntity['Dev'/235, l='ServerLevel[New World]', x=-226.60, y=72.00, z=-244.26]]
+	Data Packs: vanilla, mod:forge, mod:iljatech
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'
