@@ -35,7 +35,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
     {
         super.tick(state, worldIn, pos, rand);
-        if (state.getBlock() != this) return;
+        if (state.getBlock() != this) {System.out.println("not this"); return;}
 
         int amount = state.get(ModProperties.MECHANICAL_POWER);
         System.out.println("Gearbox is now tick. He currently has " + amount + "power.");
@@ -62,8 +62,9 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     @Override
     public void receivePower(World world, BlockPos thisPos, int amount)
     {
-        IMechanicalPowerAccepter.super.receivePower(world, thisPos, amount);
         world.getPendingBlockTicks().scheduleTick(thisPos, this, 10);
+        System.out.println("Tick scheduled");
+        IMechanicalPowerAccepter.super.receivePower(world, thisPos, amount);
     }
 
     @Override

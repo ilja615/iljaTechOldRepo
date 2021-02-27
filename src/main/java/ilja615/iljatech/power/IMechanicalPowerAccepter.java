@@ -11,9 +11,7 @@ public interface IMechanicalPowerAccepter
     default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom, int amount) { return true; }
     default void receivePower(World world, BlockPos thisPos, int amount)
     {
-        if (world.isRemote) {
-            System.out.println("Received " + amount + " power at coords: " + thisPos.getCoordinatesAsString());
-            world.setBlockState(thisPos, world.getBlockState(thisPos).with(ModProperties.MECHANICAL_POWER, amount));
-        }
+        System.out.println("Received " + amount + " power at coords: " + thisPos.getCoordinatesAsString());
+        world.setBlockState(thisPos, world.getBlockState(thisPos).with(ModProperties.MECHANICAL_POWER, amount));
     };
 }

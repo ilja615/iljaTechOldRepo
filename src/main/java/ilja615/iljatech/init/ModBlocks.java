@@ -6,12 +6,16 @@ import ilja615.iljatech.power.IMechanicalPowerAccepter;
 import net.minecraft.block.Block;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
+import java.util.function.ToIntFunction;
+
+import ilja615.iljatech.util.ModUtils;
 
 public class ModBlocks
 {
@@ -39,5 +43,7 @@ public class ModBlocks
     public static final RegistryObject<Block> CRAFTER_MACHINE = BLOCKS.register("crafter_machine", () -> new CrafterMachineBlock(Block.Properties.create(Material.IRON)));
 
     public static final RegistryObject<Block> GEARBOX = BLOCKS.register("gearbox", () -> new GearboxBlock(Block.Properties.create(Material.IRON)));
-    public static final RegistryObject<Block> CRANK = BLOCKS.register("crank", () -> new CrankBlock(Block.Properties.create(Material.WOOD)));
+    public static final RegistryObject<Block> CRANK = BLOCKS.register("crank", () -> new CrankBlock(Block.Properties.create(Material.WOOD).notSolid().doesNotBlockMovement()));
+
+    public static final RegistryObject<Block> BURNER = BLOCKS.register("burner", () -> new BurnerBlock(Block.Properties.from(Blocks.BRICKS).setLightLevel(ModUtils.getLightValueLit(13))));
 }

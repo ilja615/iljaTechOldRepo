@@ -1,0 +1,112 @@
+---- Minecraft Crash Report ----
+// This is a token for 1 free hug. Redeem at your nearest Mojangsta: [~~HUG~~]
+
+Time: 8-2-21 16:54
+Description: Sending packet
+
+java.lang.NullPointerException: Sending packet
+	at net.minecraft.network.ProtocolType.getFromPacket(ProtocolType.java:209) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.dispatchPacket(NetworkManager.java:187) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.sendPacket(NetworkManager.java:175) ~[?:?] {re:classloading}
+	at net.minecraft.network.play.ServerPlayNetHandler.sendPacket(ServerPlayNetHandler.java:1086) ~[?:?] {re:classloading}
+	at net.minecraft.network.play.ServerPlayNetHandler.sendPacket(ServerPlayNetHandler.java:1069) ~[?:?] {re:classloading}
+	at net.minecraft.world.TrackedEntity.sendSpawnPackets(TrackedEntity.java:206) ~[?:?] {re:classloading}
+	at net.minecraft.world.TrackedEntity.track(TrackedEntity.java:193) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager$EntityTracker.updateTrackingState(ChunkManager.java:1181) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.sendChunkData(ChunkManager.java:1075) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.setChunkLoadedAtClient(ChunkManager.java:766) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.setPlayerTracking(ChunkManager.java:868) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.track(ChunkManager.java:987) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerChunkProvider.track(ServerChunkProvider.java:451) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.server.ServerWorld.onEntityAdded(ServerWorld.java:954) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.addPlayer(ServerWorld.java:821) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.addNewPlayer(ServerWorld.java:798) ~[?:?] {re:classloading}
+	at net.minecraft.server.management.PlayerList.initializeConnectionToPlayer(PlayerList.java:185) ~[?:?] {re:classloading}
+	at net.minecraft.network.login.ServerLoginNetHandler.tryAcceptPlayer(ServerLoginNetHandler.java:122) ~[?:?] {re:classloading}
+	at net.minecraft.network.login.ServerLoginNetHandler.tick(ServerLoginNetHandler.java:66) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.tick(NetworkManager.java:244) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkSystem.tick(NetworkSystem.java:151) ~[?:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:898) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:820) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:84) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.func_240802_v_(MinecraftServer.java:663) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$startServer$0(MinecraftServer.java:233) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at net.minecraft.network.ProtocolType.getFromPacket(ProtocolType.java:209) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.dispatchPacket(NetworkManager.java:187) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.sendPacket(NetworkManager.java:175) ~[?:?] {re:classloading}
+-- Packet being sent --
+Details:
+	Packet class: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.network.play.ServerPlayNetHandler.sendPacket(ServerPlayNetHandler.java:1086) ~[?:?] {re:classloading}
+	at net.minecraft.network.play.ServerPlayNetHandler.sendPacket(ServerPlayNetHandler.java:1069) ~[?:?] {re:classloading}
+	at net.minecraft.world.TrackedEntity.sendSpawnPackets(TrackedEntity.java:206) ~[?:?] {re:classloading}
+	at net.minecraft.world.TrackedEntity.track(TrackedEntity.java:193) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager$EntityTracker.updateTrackingState(ChunkManager.java:1181) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.sendChunkData(ChunkManager.java:1075) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.setChunkLoadedAtClient(ChunkManager.java:766) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.setPlayerTracking(ChunkManager.java:868) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ChunkManager.track(ChunkManager.java:987) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerChunkProvider.track(ServerChunkProvider.java:451) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.server.ServerWorld.onEntityAdded(ServerWorld.java:954) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.addPlayer(ServerWorld.java:821) ~[?:?] {re:classloading}
+	at net.minecraft.world.server.ServerWorld.addNewPlayer(ServerWorld.java:798) ~[?:?] {re:classloading}
+	at net.minecraft.server.management.PlayerList.initializeConnectionToPlayer(PlayerList.java:185) ~[?:?] {re:classloading}
+	at net.minecraft.network.login.ServerLoginNetHandler.tryAcceptPlayer(ServerLoginNetHandler.java:122) ~[?:?] {re:classloading}
+	at net.minecraft.network.login.ServerLoginNetHandler.tick(ServerLoginNetHandler.java:66) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.tick(NetworkManager.java:244) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkSystem.tick(NetworkSystem.java:151) ~[?:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:898) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:820) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:84) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.func_240802_v_(MinecraftServer.java:663) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$startServer$0(MinecraftServer.java:233) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.16.4
+	Minecraft Version ID: 1.16.4
+	Operating System: Mac OS X (x86_64) version 10.15.7
+	Java Version: 1.8.0_131, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 149916088 bytes (142 MB) / 1010302976 bytes (963 MB) up to 1908932608 bytes (1820 MB)
+	CPUs: 4
+	JVM Flags: 1 total; -Xss1M
+	ModLauncher: 8.0.6+85+master.325de55
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/mixin-0.8.2.jar mixin PLUGINSERVICE 
+		/eventbus-3.0.5-service.jar eventbus PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-2.2.0-shadowed.jar accesstransformer PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/mixin-0.8.2.jar mixin TRANSFORMATIONSERVICE 
+		/forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16.3-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 35.1
+	Forge: net.minecraftforge:35.1.20
+	FML Language Providers: 
+		javafml@35.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar                                  |Minecraft                     |minecraft                     |1.16.2              |DONE      |a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		forge-1.16.4-35.1.20_mapped_snapshot_20201028-1.16|Forge                         |forge                         |33.0.42             |DONE      |NOSIGNATURE
+		main                                              |IljaTech                      |iljatech                      |1.16.2-0.1          |DONE      |NOSIGNATURE
+	Crash Report UUID: 1f184b4c-331e-4cf0-989d-f8e48a05c270
+	Player Count: 1 / 8; [ServerPlayerEntity['Dev'/235, l='ServerLevel[New World]', x=-240.86, y=72.00, z=-301.68]]
+	Data Packs: vanilla, mod:forge, mod:iljatech
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'

@@ -79,6 +79,7 @@ public class CrafterMachineBlock extends HorizontalBlock
                 InventoryHelper.dropItems(worldIn, pos, ((CrafterMachineTileEntity)tileEntity).getItems());
             }
         }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @Override

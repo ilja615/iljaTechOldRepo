@@ -1,0 +1,43 @@
+{
+  "variants":
+  {
+    "facing=east,lit=false":
+    {
+      "model": "iljatech:block/burner",
+      "y": 90
+    },
+    "facing=north,lit=false":
+    {
+      "model": "iljatech:block/burner"
+    },
+    "facing=south,lit=false":
+    {
+      "model": "iljatech:block/burner",
+      "y": 180
+    },
+    "facing=west,lit=false":
+    {
+      "model": "iljatech:block/burner",
+      "y": 270
+    },
+    "facing=east,lit=true":
+    {
+      "model": "iljatech:block/burner_lit",
+      "y": 90
+    },
+    "facing=north,lit=true":
+    {
+      "model": "iljatech:block/burner_lit"
+    },
+    "facing=south,lit=true":
+    {
+      "model": "iljatech:block/burner_lit",
+      "y": 180
+    },
+    "facing=west,lit=true":
+    {
+      "model": "iljatech:block/burner_lit",
+      "y": 270
+    }
+  }
+}

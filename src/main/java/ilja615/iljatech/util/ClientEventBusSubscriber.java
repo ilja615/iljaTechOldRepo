@@ -22,5 +22,6 @@ public class ClientEventBusSubscriber
 
         //render layers
         RenderTypeLookup.setRenderLayer(ModBlocks.IRON_NAILS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.CRANK.get(), RenderType.getCutout());
     }
 }

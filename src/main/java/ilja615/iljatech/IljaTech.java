@@ -1,10 +1,15 @@
 package ilja615.iljatech;
 
+import ilja615.iljatech.client.ModEntityRenderRegistry;
 import ilja615.iljatech.init.*;
+import ilja615.iljatech.particles.SteamParticle;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -31,12 +36,21 @@ public class IljaTech
         ModBlocks.BLOCKS.register(modEventBus);
         ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
         ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+        ModParticles.PARTICLES.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
+
     }
 
     private void setup(final FMLCommonSetupEvent event){ }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+        @SubscribeEvent
+        public static void clientSetup(final FMLClientSetupEvent event)
+        {
+            ModEntityRenderRegistry.registerEntityRenderers();
+        }
+
         @SubscribeEvent
         public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -45,6 +59,11 @@ public class IljaTech
                 blockItem.setRegistryName(block.getRegistryName());
                 registry.register(blockItem);
             });
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void registerParticles(ParticleFactoryRegisterEvent event) {
+            Minecraft.getInstance().particles.registerFactory(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
         }
     }
 }

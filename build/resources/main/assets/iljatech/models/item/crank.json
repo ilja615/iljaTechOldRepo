@@ -1,3 +1,6 @@
 {
-  "parent": "iljatech:block/crank"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iljatech:block/crank"
+  }
 }
