@@ -29,52 +29,70 @@ import java.util.Map;
 
 public class RodBlock extends Block
 {
-    public static final EnumProperty<Edge> EDGE = EnumProperty.create("edge", Edge.class);
+    public static final BooleanProperty NORTHEAST = BooleanProperty.create("northeast");
+    public static final BooleanProperty NORTHWEST = BooleanProperty.create("northwest");
+    public static final BooleanProperty SOUTHEAST = BooleanProperty.create("southeast");
+    public static final BooleanProperty SOUTHWEST = BooleanProperty.create("southwest");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    private static final VoxelShape BOTTOM_NORTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 2.0D);
-    private static final VoxelShape BOTTOM_EAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-    private static final VoxelShape BOTTOM_SOUTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 16.0D);
-    private static final VoxelShape BOTTOM_WEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D);
+    public static final Map<Edge, BooleanProperty> EDGE_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Edge.class), (edgeBooleanPropertyEnumMap) -> {
+        edgeBooleanPropertyEnumMap.put(Edge.NORTHEAST, NORTHEAST);
+        edgeBooleanPropertyEnumMap.put(Edge.NORTHWEST, NORTHWEST);
+        edgeBooleanPropertyEnumMap.put(Edge.SOUTHEAST, SOUTHEAST);
+        edgeBooleanPropertyEnumMap.put(Edge.SOUTHWEST, SOUTHWEST);
+    });
+
     private static final VoxelShape NORTHEAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
     private static final VoxelShape NORTHWEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D);
     private static final VoxelShape SOUTHEAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
     private static final VoxelShape SOUTHWEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D);
-    private static final VoxelShape TOP_NORTH_AABB = Block.makeCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-    private static final VoxelShape TOP_EAST_AABB = Block.makeCuboidShape(14.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    private static final VoxelShape TOP_SOUTH_AABB = Block.makeCuboidShape(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 16.0D);
-    private static final VoxelShape TOP_WEST_AABB = Block.makeCuboidShape(0.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D);
 
     public RodBlock(AbstractBlock.Properties properties)
     {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(EDGE, Edge.BOTTOM_NORTH).with(WATERLOGGED, Boolean.FALSE));
+        this.setDefaultState(this.stateContainer.getBaseState()
+                .with(NORTHEAST, Boolean.FALSE)
+                .with(NORTHWEST, Boolean.FALSE)
+                .with(SOUTHEAST, Boolean.FALSE)
+                .with(SOUTHWEST, Boolean.FALSE)
+                .with(WATERLOGGED, Boolean.FALSE));
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        if (state.get(EDGE) == Edge.BOTTOM_NORTH)  { voxelshape = VoxelShapes.or(voxelshape, BOTTOM_NORTH_AABB); }
-        if (state.get(EDGE) == Edge.BOTTOM_EAST)   { voxelshape = VoxelShapes.or(voxelshape, BOTTOM_EAST_AABB); }
-        if (state.get(EDGE) == Edge.BOTTOM_SOUTH)  { voxelshape = VoxelShapes.or(voxelshape, BOTTOM_SOUTH_AABB); }
-        if (state.get(EDGE) == Edge.BOTTOM_WEST)   { voxelshape = VoxelShapes.or(voxelshape, BOTTOM_WEST_AABB); }
-        if (state.get(EDGE) == Edge.NORTHEAST)     { voxelshape = VoxelShapes.or(voxelshape, NORTHEAST_AABB); }
-        if (state.get(EDGE) == Edge.NORTHWEST)     { voxelshape = VoxelShapes.or(voxelshape, NORTHWEST_AABB); }
-        if (state.get(EDGE) == Edge.SOUTHEAST)     { voxelshape = VoxelShapes.or(voxelshape, SOUTHEAST_AABB); }
-        if (state.get(EDGE) == Edge.SOUTHWEST)     { voxelshape = VoxelShapes.or(voxelshape, SOUTHWEST_AABB); }
-        if (state.get(EDGE) == Edge.TOP_NORTH)     { voxelshape = VoxelShapes.or(voxelshape, TOP_NORTH_AABB); }
-        if (state.get(EDGE) == Edge.TOP_EAST)      { voxelshape = VoxelShapes.or(voxelshape, TOP_EAST_AABB); }
-        if (state.get(EDGE) == Edge.TOP_SOUTH)     { voxelshape = VoxelShapes.or(voxelshape, TOP_SOUTH_AABB); }
-        if (state.get(EDGE) == Edge.TOP_WEST)      { voxelshape = VoxelShapes.or(voxelshape, TOP_WEST_AABB); }
+        if (state.get(NORTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHEAST_AABB); }
+        if (state.get(NORTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHWEST_AABB); }
+        if (state.get(SOUTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHEAST_AABB); }
+        if (state.get(SOUTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHWEST_AABB); }
         return voxelshape;
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return this.getDefaultState().with(EDGE, Edge.getEdgeForContext(context));
+        BlockPos pos = context.getPos();
+        BlockState blockState = context.getWorld().getBlockState(pos).isIn(this) ? context.getWorld().getBlockState(pos) : this.getDefaultState();
+        return blockState.with(EDGE_TO_PROPERTY_MAP.get(Edge.getEdgeForContext(context)), true);
     }
 
-    public boolean isReplaceable(BlockState blockState, BlockItemUseContext context) { return false; }
+    public boolean isReplaceable(BlockState blockState, BlockItemUseContext context) {
+        if (context.getItem().getItem() == this.asItem()) {
+            if (context.getFace() == Direction.UP && context.getHitVec().y - context.getPos().getY() >= 1)
+                return false;
+            if (context.getFace() == Direction.DOWN && context.getHitVec().y - context.getPos().getY() <= 0)
+                return false;
+            if (context.getFace() == Direction.EAST && context.getHitVec().x - context.getPos().getX() >= 1)
+                return false;
+            if (context.getFace() == Direction.WEST && context.getHitVec().x - context.getPos().getX() <= 0)
+                return false;
+            if (context.getFace() == Direction.SOUTH && context.getHitVec().z - context.getPos().getZ() >= 1)
+                return false;
+            if (context.getFace() == Direction.NORTH && context.getHitVec().z - context.getPos().getZ() <= 0)
+                return false;
+            return true;
+        }
+        return false;
+    }
 
     // Watterlogging stuff
 
@@ -102,6 +120,6 @@ public class RodBlock extends Block
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(EDGE, WATERLOGGED);
+        builder.add(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, WATERLOGGED);
     }
 }

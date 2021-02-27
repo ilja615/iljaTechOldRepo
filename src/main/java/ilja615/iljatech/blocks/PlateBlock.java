@@ -100,35 +100,35 @@ public class PlateBlock extends Block implements IWaterLoggable
             // For adding to a existing block
             if (context.getFace().getAxis() == Direction.Axis.Y)
             {
-                if (context.getHitVec().x - context.getPos().getX() > 0.9375D)
+                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
                     return blockState.with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.0625D)
+                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
                     return blockState.with(WEST, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.9375D)
+                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
                     return blockState.with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.0625D)
+                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
                     return blockState.with(NORTH, true);
             }
             if (context.getFace().getAxis() == Direction.Axis.X)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.9375D)
+                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
                     return blockState.with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.0625D)
+                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
                     return blockState.with(DOWN, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.9375D)
+                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
                     return blockState.with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.0625D)
+                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
                     return blockState.with(NORTH, true);
             }
             if (context.getFace().getAxis() == Direction.Axis.Z)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.9375D)
+                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
                     return blockState.with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.0625D)
+                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
                     return blockState.with(DOWN, true);
-                if (context.getHitVec().x - context.getPos().getX() > 0.9375D)
+                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
                     return blockState.with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.0625D)
+                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
                     return blockState.with(WEST, true);
             }
             // Default:
@@ -140,37 +140,37 @@ public class PlateBlock extends Block implements IWaterLoggable
             // For placing a new block:
             if (context.getFace().getAxis() == Direction.Axis.Y)
             {
-                if (context.getHitVec().x - context.getPos().getX() > 0.9375D)
+                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
                     return this.getDefaultState().with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.0625D)
+                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
                     return this.getDefaultState().with(WEST, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.9375D)
+                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
                     return this.getDefaultState().with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.0625D)
+                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
                     return this.getDefaultState().with(NORTH, true);
                 return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
             }
             if (context.getFace().getAxis() == Direction.Axis.X)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.9375D)
+                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
                     return this.getDefaultState().with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.0625D)
+                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
                     return this.getDefaultState().with(DOWN, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.9375D)
+                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
                     return this.getDefaultState().with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.0625D)
+                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
                     return this.getDefaultState().with(NORTH, true);
                 return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
             }
             if (context.getFace().getAxis() == Direction.Axis.Z)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.9375D)
+                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
                     return this.getDefaultState().with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.0625D)
+                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
                     return this.getDefaultState().with(DOWN, true);
-                if (context.getHitVec().x - context.getPos().getX() > 0.9375D)
+                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
                     return this.getDefaultState().with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.0625D)
+                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
                     return this.getDefaultState().with(WEST, true);
                 return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
             }
