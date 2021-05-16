@@ -13,4 +13,6 @@ public class ModParticles
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, IljaTech.MOD_ID);
 
     public static final RegistryObject<BasicParticleType> STEAM_PARTICLE = PARTICLES.register("steam_particle", () -> new BasicParticleType(false));
+    public static final RegistryObject<BasicParticleType> STAR_PARTICLE = PARTICLES.register("star_particle", () -> new BasicParticleType(false));
+
 }

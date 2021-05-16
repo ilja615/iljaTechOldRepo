@@ -2,6 +2,7 @@ package ilja615.iljatech;
 
 import ilja615.iljatech.client.ModEntityRenderRegistry;
 import ilja615.iljatech.init.*;
+import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
@@ -38,7 +39,7 @@ public class IljaTech
         ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
-
+        ModEffects.EFFECTS.register(modEventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event){ }
@@ -63,7 +64,9 @@ public class IljaTech
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void registerParticles(ParticleFactoryRegisterEvent event) {
-            Minecraft.getInstance().particles.registerFactory(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
+            Minecraft.getInstance().particleEngine.register(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
+            Minecraft.getInstance().particleEngine.register(ModParticles.STAR_PARTICLE.get(), StarParticle.Factory::new);
+
         }
     }
 }

@@ -30,14 +30,16 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CrafterMachineBlock extends HorizontalBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
     public CrafterMachineBlock(Properties properties)
     {
         super(properties);
-        this.setDefaultState((BlockState)((BlockState)this.stateContainer.getBaseState()).with(FACING, Direction.NORTH));
+        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -54,12 +56,12 @@ public class CrafterMachineBlock extends HorizontalBlock
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
     {
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof CrafterMachineTileEntity)
         {
-            if (!world.isRemote())
+            if (!world.isClientSide())
             {
                 NetworkHooks.openGui((ServerPlayerEntity)player, (CrafterMachineTileEntity)tileEntity, pos);
             }
@@ -69,29 +71,29 @@ public class CrafterMachineBlock extends HorizontalBlock
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
         if (state.getBlock() != newState.getBlock())
         {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof CrafterMachineTileEntity)
             {
-                InventoryHelper.dropItems(worldIn, pos, ((CrafterMachineTileEntity)tileEntity).getItems());
+                InventoryHelper.dropContents(worldIn, pos, ((CrafterMachineTileEntity)tileEntity).getItems());
             }
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState blockState) {
+    public boolean hasAnalogOutputSignal(BlockState blockState) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos)
     {
         int j = 0;
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        TileEntity tileEntity = worldIn.getBlockEntity(pos);
         if (tileEntity instanceof CrafterMachineTileEntity)
         {
             for (int i = 0; i < ((CrafterMachineTileEntity)tileEntity).chestContents.size(); i++)
@@ -105,9 +107,9 @@ public class CrafterMachineBlock extends HorizontalBlock
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
     {
-        if (worldIn.isBlockPowered(pos))
+        if (worldIn.hasNeighborSignal(pos))
         {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof CrafterMachineTileEntity)
             {
                 ((CrafterMachineTileEntity)tileEntity).craft();
@@ -117,8 +119,8 @@ public class CrafterMachineBlock extends HorizontalBlock
 
     public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_)
     {
-        return (BlockState)this.getDefaultState().with(FACING, p_196258_1_.getPlacementHorizontalFacing().getOpposite());
+        return (BlockState)this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(new Property[]{FACING}); }
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(new Property[]{FACING}); }
 }

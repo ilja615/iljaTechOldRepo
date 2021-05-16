@@ -32,6 +32,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class PlateBlock extends Block implements IWaterLoggable
 {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
@@ -43,44 +45,44 @@ public class PlateBlock extends Block implements IWaterLoggable
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
+    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION;
 
-    protected static final VoxelShape UP_AABB = Block.makeCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape DOWN_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-    protected static final VoxelShape WEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
-    protected static final VoxelShape EAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape NORTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-    protected static final VoxelShape SOUTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape UP_AABB = Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    protected static final VoxelShape WEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
+    protected static final VoxelShape EAST_AABB = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
 
     public PlateBlock(Properties p_i48440_1_)
     {
         super(p_i48440_1_);
-        this.setDefaultState(this.stateContainer.getBaseState().with(UP, Boolean.valueOf(false)).with(DOWN, Boolean.valueOf(false)).with(NORTH, Boolean.valueOf(false)).with(EAST, Boolean.valueOf(false)).with(SOUTH, Boolean.valueOf(false)).with(WEST, Boolean.valueOf(false)).with(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(UP, Boolean.valueOf(false)).setValue(DOWN, Boolean.valueOf(false)).setValue(NORTH, Boolean.valueOf(false)).setValue(EAST, Boolean.valueOf(false)).setValue(SOUTH, Boolean.valueOf(false)).setValue(WEST, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        if (state.get(UP)) {
+        if (state.getValue(UP)) {
             voxelshape = VoxelShapes.or(voxelshape, UP_AABB);
         }
 
-        if (state.get(DOWN)) {
+        if (state.getValue(DOWN)) {
             voxelshape = VoxelShapes.or(voxelshape, DOWN_AABB);
         }
 
-        if (state.get(NORTH)) {
+        if (state.getValue(NORTH)) {
             voxelshape = VoxelShapes.or(voxelshape, NORTH_AABB);
         }
 
-        if (state.get(EAST)) {
+        if (state.getValue(EAST)) {
             voxelshape = VoxelShapes.or(voxelshape, EAST_AABB);
         }
 
-        if (state.get(SOUTH)) {
+        if (state.getValue(SOUTH)) {
             voxelshape = VoxelShapes.or(voxelshape, SOUTH_AABB);
         }
 
-        if (state.get(WEST)) {
+        if (state.getValue(WEST)) {
             voxelshape = VoxelShapes.or(voxelshape, WEST_AABB);
         }
         return voxelshape;
@@ -93,106 +95,106 @@ public class PlateBlock extends Block implements IWaterLoggable
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        BlockPos pos = context.getPos();
-        BlockState blockState = context.getWorld().getBlockState(pos);
-        if (blockState.isIn(this))
+        BlockPos pos = context.getClickedPos();
+        BlockState blockState = context.getLevel().getBlockState(pos);
+        if (blockState.is(this))
         {
             // For adding to a existing block
-            if (context.getFace().getAxis() == Direction.Axis.Y)
+            if (context.getClickedFace().getAxis() == Direction.Axis.Y)
             {
-                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
-                    return blockState.with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
-                    return blockState.with(WEST, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
-                    return blockState.with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
-                    return blockState.with(NORTH, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() > 0.875D)
+                    return blockState.setValue(EAST, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() < 0.125D)
+                    return blockState.setValue(WEST, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() > 0.875D)
+                    return blockState.setValue(SOUTH, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() < 0.125D)
+                    return blockState.setValue(NORTH, true);
             }
-            if (context.getFace().getAxis() == Direction.Axis.X)
+            if (context.getClickedFace().getAxis() == Direction.Axis.X)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
-                    return blockState.with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
-                    return blockState.with(DOWN, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
-                    return blockState.with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
-                    return blockState.with(NORTH, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() > 0.875D)
+                    return blockState.setValue(UP, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() < 0.125D)
+                    return blockState.setValue(DOWN, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() > 0.875D)
+                    return blockState.setValue(SOUTH, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() < 0.125D)
+                    return blockState.setValue(NORTH, true);
             }
-            if (context.getFace().getAxis() == Direction.Axis.Z)
+            if (context.getClickedFace().getAxis() == Direction.Axis.Z)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
-                    return blockState.with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
-                    return blockState.with(DOWN, true);
-                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
-                    return blockState.with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
-                    return blockState.with(WEST, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() > 0.875D)
+                    return blockState.setValue(UP, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() < 0.125D)
+                    return blockState.setValue(DOWN, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() > 0.875D)
+                    return blockState.setValue(EAST, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() < 0.125D)
+                    return blockState.setValue(WEST, true);
             }
             // Default:
-            if (!blockState.get(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite())))
-                return blockState.with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
+            if (!blockState.getValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace().getOpposite())))
+                return blockState.setValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace().getOpposite()), true);
             else
                 return blockState;
         } else {
             // For placing a new block:
-            if (context.getFace().getAxis() == Direction.Axis.Y)
+            if (context.getClickedFace().getAxis() == Direction.Axis.Y)
             {
-                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
-                    return this.getDefaultState().with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
-                    return this.getDefaultState().with(WEST, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
-                    return this.getDefaultState().with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
-                    return this.getDefaultState().with(NORTH, true);
-                return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() > 0.875D)
+                    return this.defaultBlockState().setValue(EAST, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() < 0.125D)
+                    return this.defaultBlockState().setValue(WEST, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() > 0.875D)
+                    return this.defaultBlockState().setValue(SOUTH, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() < 0.125D)
+                    return this.defaultBlockState().setValue(NORTH, true);
+                return this.defaultBlockState().setValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace().getOpposite()), true);
             }
-            if (context.getFace().getAxis() == Direction.Axis.X)
+            if (context.getClickedFace().getAxis() == Direction.Axis.X)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
-                    return this.getDefaultState().with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
-                    return this.getDefaultState().with(DOWN, true);
-                if (context.getHitVec().z - context.getPos().getZ() > 0.875D)
-                    return this.getDefaultState().with(SOUTH, true);
-                if (context.getHitVec().z - context.getPos().getZ() < 0.125D)
-                    return this.getDefaultState().with(NORTH, true);
-                return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() > 0.875D)
+                    return this.defaultBlockState().setValue(UP, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() < 0.125D)
+                    return this.defaultBlockState().setValue(DOWN, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() > 0.875D)
+                    return this.defaultBlockState().setValue(SOUTH, true);
+                if (context.getClickLocation().z - context.getClickedPos().getZ() < 0.125D)
+                    return this.defaultBlockState().setValue(NORTH, true);
+                return this.defaultBlockState().setValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace().getOpposite()), true);
             }
-            if (context.getFace().getAxis() == Direction.Axis.Z)
+            if (context.getClickedFace().getAxis() == Direction.Axis.Z)
             {
-                if (context.getHitVec().y - context.getPos().getY() > 0.875D)
-                    return this.getDefaultState().with(UP, true);
-                if (context.getHitVec().y - context.getPos().getY() < 0.125D)
-                    return this.getDefaultState().with(DOWN, true);
-                if (context.getHitVec().x - context.getPos().getX() > 0.875D)
-                    return this.getDefaultState().with(EAST, true);
-                if (context.getHitVec().x - context.getPos().getX() < 0.125D)
-                    return this.getDefaultState().with(WEST, true);
-                return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace().getOpposite()), true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() > 0.875D)
+                    return this.defaultBlockState().setValue(UP, true);
+                if (context.getClickLocation().y - context.getClickedPos().getY() < 0.125D)
+                    return this.defaultBlockState().setValue(DOWN, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() > 0.875D)
+                    return this.defaultBlockState().setValue(EAST, true);
+                if (context.getClickLocation().x - context.getClickedPos().getX() < 0.125D)
+                    return this.defaultBlockState().setValue(WEST, true);
+                return this.defaultBlockState().setValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace().getOpposite()), true);
             }
-            return this.getDefaultState().with(FACING_TO_PROPERTY_MAP.get(context.getFace()), true);
+            return this.defaultBlockState().setValue(FACING_TO_PROPERTY_MAP.get(context.getClickedFace()), true);
         }
     }
 
-    public boolean isReplaceable(BlockState blockState, BlockItemUseContext context)
+    public boolean canBeReplaced(BlockState blockState, BlockItemUseContext context)
     {
-        if (context.getItem().getItem() == this.asItem())
+        if (context.getItemInHand().getItem() == this.asItem())
         {
-            if (context.getFace() == Direction.UP && context.getHitVec().y - context.getPos().getY() >= 1)
+            if (context.getClickedFace() == Direction.UP && context.getClickLocation().y - context.getClickedPos().getY() >= 1)
                 return false;
-            if (context.getFace() == Direction.DOWN && context.getHitVec().y - context.getPos().getY() <= 0)
+            if (context.getClickedFace() == Direction.DOWN && context.getClickLocation().y - context.getClickedPos().getY() <= 0)
                 return false;
-            if (context.getFace() == Direction.EAST && context.getHitVec().x - context.getPos().getX() >= 1)
+            if (context.getClickedFace() == Direction.EAST && context.getClickLocation().x - context.getClickedPos().getX() >= 1)
                 return false;
-            if (context.getFace() == Direction.WEST && context.getHitVec().x - context.getPos().getX() <= 0)
+            if (context.getClickedFace() == Direction.WEST && context.getClickLocation().x - context.getClickedPos().getX() <= 0)
                 return false;
-            if (context.getFace() == Direction.SOUTH && context.getHitVec().z - context.getPos().getZ() >= 1)
+            if (context.getClickedFace() == Direction.SOUTH && context.getClickLocation().z - context.getClickedPos().getZ() >= 1)
                 return false;
-            if (context.getFace() == Direction.NORTH && context.getHitVec().z - context.getPos().getZ() <= 0)
+            if (context.getClickedFace() == Direction.NORTH && context.getClickLocation().z - context.getClickedPos().getZ() <= 0)
                 return false;
             return true;
         }
@@ -202,12 +204,12 @@ public class PlateBlock extends Block implements IWaterLoggable
     // Watterlogging stuff
 
     @Override
-    public boolean allowsMovement(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
+    public boolean isPathfindable(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
         switch(p_196266_4_) {
             case LAND:
                 return false;
             case WATER:
-                return p_196266_2_.getFluidState(p_196266_3_).isTagged(FluidTags.WATER);
+                return p_196266_2_.getFluidState(p_196266_3_).is(FluidTags.WATER);
             case AIR:
                 return false;
             default:
@@ -216,22 +218,22 @@ public class PlateBlock extends Block implements IWaterLoggable
     }
 
     public FluidState getFluidState(BlockState p_204507_1_) {
-        return (Boolean)p_204507_1_.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(p_204507_1_);
+        return (Boolean)p_204507_1_.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(p_204507_1_);
     }
 
-    public boolean canContainFluid(IBlockReader p_204510_1_, BlockPos p_204510_2_, BlockState p_204510_3_, Fluid p_204510_4_) {
+    public boolean canPlaceLiquid(IBlockReader p_204510_1_, BlockPos p_204510_2_, BlockState p_204510_3_, Fluid p_204510_4_) {
         return true;
     }
 
-    public BlockState updatePostPlacement(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
-        if ((Boolean)p_196271_1_.get(WATERLOGGED)) {
-            p_196271_4_.getPendingFluidTicks().scheduleTick(p_196271_5_, Fluids.WATER, Fluids.WATER.getTickRate(p_196271_4_));
+    public BlockState updateShape(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
+        if ((Boolean)p_196271_1_.getValue(WATERLOGGED)) {
+            p_196271_4_.getLiquidTicks().scheduleTick(p_196271_5_, Fluids.WATER, Fluids.WATER.getTickDelay(p_196271_4_));
         }
 
-        return super.updatePostPlacement(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
+        return super.updateShape(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, WATERLOGGED);
     }
 }

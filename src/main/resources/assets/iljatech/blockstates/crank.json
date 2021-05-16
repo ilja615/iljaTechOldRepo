@@ -171,7 +171,7 @@
     },
     "facing=down,rotation=5":
     {
-      "model": "iljatech:block/crank",
+      "model": "iljatech:block/crank_5",
       "x": 90
     },
     "facing=east,rotation=6":

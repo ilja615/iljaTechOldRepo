@@ -21,18 +21,18 @@ public enum Edge implements IStringSerializable
     public static Edge getEdgeForContext(BlockItemUseContext context)
     {
         Edge edge = Edge.SOUTHEAST;
-            if (context.getHitVec().x - context.getPos().getX() >= 0.5d && context.getHitVec().z - context.getPos().getZ() >= 0.5d)
+            if (context.getClickLocation().x - context.getClickedPos().getX() >= 0.5d && context.getClickLocation().z - context.getClickedPos().getZ() >= 0.5d)
                 edge = Edge.SOUTHEAST;
-            else if (context.getHitVec().x - context.getPos().getX() >= 0.5d && context.getHitVec().z - context.getPos().getZ() < 0.5d)
+            else if (context.getClickLocation().x - context.getClickedPos().getX() >= 0.5d && context.getClickLocation().z - context.getClickedPos().getZ() < 0.5d)
                 edge = Edge.NORTHEAST;
-            else if (context.getHitVec().x - context.getPos().getX() < 0.5d && context.getHitVec().z - context.getPos().getZ() >= 0.5d)
+            else if (context.getClickLocation().x - context.getClickedPos().getX() < 0.5d && context.getClickLocation().z - context.getClickedPos().getZ() >= 0.5d)
                 edge = Edge.SOUTHWEST;
-            else if (context.getHitVec().x - context.getPos().getX() < 0.5d && context.getHitVec().z - context.getPos().getZ() < 0.5d)
+            else if (context.getClickLocation().x - context.getClickedPos().getX() < 0.5d && context.getClickLocation().z - context.getClickedPos().getZ() < 0.5d)
                 edge = Edge.NORTHWEST;
 
         return edge;
     }
 
     @Override
-    public String getString() { return this.name; }
+    public String getSerializedName() { return this.name; }
 }

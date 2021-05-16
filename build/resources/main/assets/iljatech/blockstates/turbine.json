@@ -1,0 +1,73 @@
+{
+  "variants": {
+    "facing=east,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off",
+      "y": 90
+    },
+    "facing=north,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off"
+    },
+    "facing=south,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off",
+      "y": 180
+    },
+    "facing=west,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off",
+      "y": 270
+    },
+    "facing=up,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off",
+      "x": 270
+    },
+    "facing=down,mechanical_power=off": {
+      "model": "iljatech:block/turbine_off",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=almost_stopping": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    }
+  }
+}

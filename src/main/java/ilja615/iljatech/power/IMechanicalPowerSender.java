@@ -7,13 +7,13 @@ import net.minecraft.world.World;
 
 public interface IMechanicalPowerSender
 {
-    default boolean sendPower(World world, BlockPos thisPos, Direction face, int amount)
+    // The block will send power
+    default boolean sendPower(World world, BlockPos thisPos, Direction face)
     {
-        BlockPos neighborPos = thisPos.offset(face);
+        BlockPos neighborPos = thisPos.relative(face);
         if (world.getBlockState(neighborPos).getBlock() instanceof IMechanicalPowerAccepter) {
-            if (((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).acceptsPower(world, neighborPos, face.getOpposite(), amount)) {
-                System.out.println(world.getBlockState(thisPos).getBlock().toString() + "is attempting to send " + amount + " power to: " + world.getBlockState(neighborPos).toString() + " at coords:" + neighborPos.getCoordinatesAsString());
-                ((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).receivePower(world, neighborPos, amount);
+            if (((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).acceptsPower(world, neighborPos, face.getOpposite())) {
+                ((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).receivePower(world, neighborPos);
                 return true;
             }
         }

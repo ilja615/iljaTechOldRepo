@@ -14,12 +14,12 @@ public class SteamParticle extends SimpleAnimatedParticle
     protected SteamParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ, IAnimatedSprite spriteWithAge)
     {
         super(world, x, y, z, spriteWithAge, (float) motionY);
-        this.motionX = motionX + (Math.random() * 2.0d - 1.0d) * 0.03d;
-        this.motionX = motionX + (Math.random() * 2.0d - 1.0d) * 0.03d;
-        this.motionZ = motionZ + (Math.random() * 2.0d - 1.0d) * 0.03d;
-        this.particleScale += 0.2f;
-        this.maxAge = 32 + this.rand.nextInt(16);
-        this.selectSpriteWithAge(spriteWithAge);
+        this.xd = motionX + (Math.random() * 2.0d - 1.0d) * 0.03d;
+        this.yd = motionY + (Math.random() * 2.0d - 1.0d) * 0.03d;
+        this.zd = motionZ + (Math.random() * 2.0d - 1.0d) * 0.03d;
+        this.quadSize += 0.2f;
+        this.lifetime = 32 + this.random.nextInt(16);
+        this.setSpriteFromAge(spriteWithAge);
     }
 
 
@@ -32,15 +32,15 @@ public class SteamParticle extends SimpleAnimatedParticle
     @Override
     public void tick()
     {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         } else {
-            this.selectSpriteWithAge(this.spriteWithAge);
-            this.particleScale += 0.003f;
-            this.move(this.motionX, this.motionY, this.motionZ);
+            this.setSpriteFromAge(this.sprites);
+            this.quadSize += 0.003f;
+            this.move(this.xd, this.yd, this.zd);
         }
     }
 
@@ -54,7 +54,7 @@ public class SteamParticle extends SimpleAnimatedParticle
 
         @Nullable
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             SteamParticle steamParticle = new SteamParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
             steamParticle.setColor(1.0f, 1.0f, 1.0f);
             return steamParticle;

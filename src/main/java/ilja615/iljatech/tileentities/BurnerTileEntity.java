@@ -1,21 +1,16 @@
 package ilja615.iljatech.tileentities;
 
 import ilja615.iljatech.blocks.BurnerBlock;
-import ilja615.iljatech.entity.GassEntity;
+import ilja615.iljatech.entity.AbstractGasEntity;
+import ilja615.iljatech.entity.SteamEntity;
 import ilja615.iljatech.init.ModEntities;
 import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.util.CraftingInventoryWrapper;
-import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -32,7 +27,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
 {
@@ -64,8 +58,7 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
                 this.emitHeat();
             }
         }
-        System.out.println("Burner tick. Burning: "+this.isBurning()+". burnTime: "+this.burnTime);
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             ItemStack itemstack = this.items.get(0);
             if (!this.isBurning())
             {
@@ -87,11 +80,11 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
             }
             if (flag != this.isBurning()) {
                 flag1 = true;
-                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(BurnerBlock.LIT, Boolean.valueOf(this.isBurning())), 3);
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(BurnerBlock.LIT, Boolean.valueOf(this.isBurning())), 3);
             }
         }
         if (flag1) {
-            this.markDirty();
+            this.setChanged();
         }
     }
 
@@ -100,18 +93,18 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound)
+    public CompoundNBT save(CompoundNBT compound)
     {
-        super.write(compound);
+        super.save(compound);
         ItemStackHelper.saveAllItems(compound, this.items);
         compound.putInt("BurnTime", this.burnTime);
         return compound;
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound)
+    public void load(BlockState blockState, CompoundNBT compound)
     {
-        super.read(blockState, compound);
+        super.load(blockState, compound);
         this.items = NonNullList.withSize(this.items.size(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.items);
         burnerItemStackHandler.ifPresent(h ->
@@ -141,8 +134,8 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         if (burnerItemStackHandler != null) {
             burnerItemStackHandler.invalidate();
         }
@@ -150,15 +143,16 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
 
     private void emitHeat()
     {
-        if (!this.world.isRemote) {
-            BlockState state = this.world.getBlockState(this.pos.up());
-            if (this.pos.getY() < this.world.getHeight() - 1 && state.getBlock() == Blocks.CAULDRON) {
-                int value = state.get(CauldronBlock.LEVEL) - 1; // The value that the cauldron level would be.
+        if (!this.level.isClientSide) {
+            BlockState state = this.level.getBlockState(this.worldPosition.above());
+            if (this.worldPosition.getY() < this.level.getMaxBuildHeight() - 1 && state.getBlock() == Blocks.CAULDRON) {
+                int value = state.getValue(CauldronBlock.LEVEL) - 1; // The value that the cauldron level would be.
                 if (value >= 0) {
-                    this.world.setBlockState(this.pos.up(), state.with(CauldronBlock.LEVEL, value));
-                    GassEntity gassEntity = ModEntities.STEAM_CLOUD.get().create(this.world);
-                    gassEntity.setLocationAndAngles(this.pos.getX() + 0.5f, this.pos.getY() + 1.8f, this.pos.getZ() + 0.5f, 0.0f, 0.0F);
-                    this.world.addEntity(gassEntity);
+                    this.level.setBlockAndUpdate(this.worldPosition.above(), state.setValue(CauldronBlock.LEVEL, value));
+                    AbstractGasEntity gasEntity = ModEntities.STEAM_CLOUD.get().create(this.level);
+                    gasEntity.moveTo(this.worldPosition.getX() + 0.5f, this.worldPosition.getY() + 1.8f, this.worldPosition.getZ() + 0.5f, 0.0f, 0.0F);
+                    gasEntity.setDeltaMovement(0.0d, 0.05d, 0.0d);
+                    this.level.addFreshEntity(gasEntity);
                 }
             }
         }
@@ -178,7 +172,7 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
         protected void onContentsChanged(int slot)
         {
             tile.items.set(slot, this.stacks.get(slot));
-            tile.markDirty();
+            tile.setChanged();
         }
     }
 

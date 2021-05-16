@@ -9,5 +9,6 @@ public class ModEntityRenderRegistry
     public static void registerEntityRenderers()
     {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.AIR_CLOUD.get(), GassEntityRender::new);
     }
 }

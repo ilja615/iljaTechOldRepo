@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class ModItemGroup extends ItemGroup
 {
-    public static final ModItemGroup instance = new ModItemGroup(ItemGroup.GROUPS.length, "iljatech");
+    public static final ModItemGroup instance = new ModItemGroup(ItemGroup.TABS.length, "iljatech");
 
     private ModItemGroup(int index, String label)
     {
@@ -14,7 +14,7 @@ public class ModItemGroup extends ItemGroup
     }
 
     @Override
-    public ItemStack createIcon()
+    public ItemStack makeIcon()
     {
         return new ItemStack(Blocks.GRAY_GLAZED_TERRACOTTA);
     }

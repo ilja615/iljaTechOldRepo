@@ -8,10 +8,13 @@ import net.minecraft.world.World;
 
 public interface IMechanicalPowerAccepter
 {
-    default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom, int amount) { return true; }
-    default void receivePower(World world, BlockPos thisPos, int amount)
+    // If the block is able to receive power or not
+    default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom) { return true; }
+
+    // What the block will do upon receiving power
+    default void receivePower(World world, BlockPos thisPos)
     {
-        System.out.println("Received " + amount + " power at coords: " + thisPos.getCoordinatesAsString());
-        world.setBlockState(thisPos, world.getBlockState(thisPos).with(ModProperties.MECHANICAL_POWER, amount));
+        if (world.getBlockState(thisPos).hasProperty(ModProperties.MECHANICAL_POWER))
+            world.setBlockAndUpdate(thisPos, world.getBlockState(thisPos).setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.SPINNING));
     };
 }

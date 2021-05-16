@@ -42,52 +42,52 @@ public class RodBlock extends Block
         edgeBooleanPropertyEnumMap.put(Edge.SOUTHWEST, SOUTHWEST);
     });
 
-    private static final VoxelShape NORTHEAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-    private static final VoxelShape NORTHWEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D);
-    private static final VoxelShape SOUTHEAST_AABB = Block.makeCuboidShape(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
-    private static final VoxelShape SOUTHWEST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D);
+    private static final VoxelShape NORTHEAST_AABB = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
+    private static final VoxelShape NORTHWEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D);
+    private static final VoxelShape SOUTHEAST_AABB = Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+    private static final VoxelShape SOUTHWEST_AABB = Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D);
 
     public RodBlock(AbstractBlock.Properties properties)
     {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState()
-                .with(NORTHEAST, Boolean.FALSE)
-                .with(NORTHWEST, Boolean.FALSE)
-                .with(SOUTHEAST, Boolean.FALSE)
-                .with(SOUTHWEST, Boolean.FALSE)
-                .with(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(NORTHEAST, Boolean.FALSE)
+                .setValue(NORTHWEST, Boolean.FALSE)
+                .setValue(SOUTHEAST, Boolean.FALSE)
+                .setValue(SOUTHWEST, Boolean.FALSE)
+                .setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        if (state.get(NORTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHEAST_AABB); }
-        if (state.get(NORTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHWEST_AABB); }
-        if (state.get(SOUTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHEAST_AABB); }
-        if (state.get(SOUTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHWEST_AABB); }
+        if (state.getValue(NORTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHEAST_AABB); }
+        if (state.getValue(NORTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, NORTHWEST_AABB); }
+        if (state.getValue(SOUTHEAST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHEAST_AABB); }
+        if (state.getValue(SOUTHWEST))     { voxelshape = VoxelShapes.or(voxelshape, SOUTHWEST_AABB); }
         return voxelshape;
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        BlockPos pos = context.getPos();
-        BlockState blockState = context.getWorld().getBlockState(pos).isIn(this) ? context.getWorld().getBlockState(pos) : this.getDefaultState();
-        return blockState.with(EDGE_TO_PROPERTY_MAP.get(Edge.getEdgeForContext(context)), true);
+        BlockPos pos = context.getClickedPos();
+        BlockState blockState = context.getLevel().getBlockState(pos).is(this) ? context.getLevel().getBlockState(pos) : this.defaultBlockState();
+        return blockState.setValue(EDGE_TO_PROPERTY_MAP.get(Edge.getEdgeForContext(context)), true);
     }
 
-    public boolean isReplaceable(BlockState blockState, BlockItemUseContext context) {
-        if (context.getItem().getItem() == this.asItem()) {
-            if (context.getFace() == Direction.UP && context.getHitVec().y - context.getPos().getY() >= 1)
+    public boolean canBeReplaced(BlockState blockState, BlockItemUseContext context) {
+        if (context.getItemInHand().getItem() == this.asItem()) {
+            if (context.getClickedFace() == Direction.UP && context.getClickLocation().y - context.getClickedPos().getY() >= 1)
                 return false;
-            if (context.getFace() == Direction.DOWN && context.getHitVec().y - context.getPos().getY() <= 0)
+            if (context.getClickedFace() == Direction.DOWN && context.getClickLocation().y - context.getClickedPos().getY() <= 0)
                 return false;
-            if (context.getFace() == Direction.EAST && context.getHitVec().x - context.getPos().getX() >= 1)
+            if (context.getClickedFace() == Direction.EAST && context.getClickLocation().x - context.getClickedPos().getX() >= 1)
                 return false;
-            if (context.getFace() == Direction.WEST && context.getHitVec().x - context.getPos().getX() <= 0)
+            if (context.getClickedFace() == Direction.WEST && context.getClickLocation().x - context.getClickedPos().getX() <= 0)
                 return false;
-            if (context.getFace() == Direction.SOUTH && context.getHitVec().z - context.getPos().getZ() >= 1)
+            if (context.getClickedFace() == Direction.SOUTH && context.getClickLocation().z - context.getClickedPos().getZ() >= 1)
                 return false;
-            if (context.getFace() == Direction.NORTH && context.getHitVec().z - context.getPos().getZ() <= 0)
+            if (context.getClickedFace() == Direction.NORTH && context.getClickLocation().z - context.getClickedPos().getZ() <= 0)
                 return false;
             return true;
         }
@@ -97,12 +97,12 @@ public class RodBlock extends Block
     // Watterlogging stuff
 
     @Override
-    public boolean allowsMovement(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
+    public boolean isPathfindable(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
         switch(p_196266_4_) {
             case LAND:
                 return false;
             case WATER:
-                return p_196266_2_.getFluidState(p_196266_3_).isTagged(FluidTags.WATER);
+                return p_196266_2_.getFluidState(p_196266_3_).is(FluidTags.WATER);
             case AIR:
                 return false;
             default:
@@ -111,14 +111,14 @@ public class RodBlock extends Block
     }
 
     public FluidState getFluidState(BlockState p_204507_1_) {
-        return (Boolean)p_204507_1_.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(p_204507_1_);
+        return (Boolean)p_204507_1_.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(p_204507_1_);
     }
 
     public boolean canContainFluid(IBlockReader p_204510_1_, BlockPos p_204510_2_, BlockState p_204510_3_, Fluid p_204510_4_) {
         return true;
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, WATERLOGGED);
     }

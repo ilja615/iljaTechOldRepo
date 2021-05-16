@@ -10,7 +10,7 @@ public class ModUtils
     // Used for furnace-type blocks their light level
     public static ToIntFunction<BlockState> getLightValueLit(int lightValue) {
         return (state) -> {
-            return state.get(BlockStateProperties.LIT) ? lightValue : 0;
+            return state.getValue(BlockStateProperties.LIT) ? lightValue : 0;
         };
     }
 }

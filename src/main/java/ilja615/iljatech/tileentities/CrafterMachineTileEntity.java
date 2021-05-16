@@ -95,17 +95,17 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound)
+    public CompoundNBT save(CompoundNBT compound)
     {
-        super.write(compound);
+        super.save(compound);
         ItemStackHelper.saveAllItems(compound, this.chestContents);
         return compound;
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compound)
+    public void load(BlockState blockState, CompoundNBT compound)
     {
-        super.read(blockState, compound);
+        super.load(blockState, compound);
         this.chestContents = NonNullList.withSize(this.chestContents.size(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.chestContents);
         cmItemStackHandler.ifPresent(h ->
@@ -118,25 +118,25 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     }
 
     @Override
-    public boolean receiveClientEvent(int id, int type) {
+    public boolean triggerEvent(int id, int type) {
         if (id == 1) {
             this.numPlayersUsing = type;
             return true;
-        } else return super.receiveClientEvent(id, type);
+        } else return super.triggerEvent(id, type);
     }
 
     protected void onOpenOrClose() {
         Block block = this.getBlockState().getBlock();
         if (block instanceof CrafterMachineBlock) {
-            this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
-            this.world.notifyNeighborsOfStateChange(this.pos, block);
+            this.level.blockEvent(this.worldPosition, block, 1, this.numPlayersUsing);
+            this.level.updateNeighborsAt(this.worldPosition, block);
         }
     }
 
     public static int getPlayersUsing(IBlockReader reader, BlockPos pos) {
         BlockState blockState = reader.getBlockState(pos);
         if (blockState.hasTileEntity()) {
-            TileEntity tileEntity = reader.getTileEntity(pos);
+            TileEntity tileEntity = reader.getBlockEntity(pos);
             if (tileEntity instanceof CrafterMachineTileEntity) {
                 return ((CrafterMachineTileEntity) tileEntity).numPlayersUsing;
             }
@@ -167,8 +167,8 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         if (cmItemStackHandler != null) {
             cmItemStackHandler.invalidate();
         }
@@ -188,7 +188,7 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
         protected void onContentsChanged(int slot)
         {
             if (slot < 9) tile.chestContents.set(slot, this.stacks.get(slot));
-            tile.markDirty();
+            tile.setChanged();
         }
 
         @Override
@@ -201,8 +201,8 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     public void setItemStackAndSaveAndSync(int slot, ItemStack itemStack)
     {
         this.chestContents.set(slot, itemStack);
-        this.markDirty();
-        this.world.notifyBlockUpdate(this.pos, this.getBlockState(), this.getBlockState(), 2);
+        this.setChanged();
+        this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 2);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     }
 
     public void craft() {
-        if (this.hasWorld()) {
+        if (this.hasLevel()) {
             cmItemStackHandler.ifPresent(h ->
             {
                 for (int i = 0; i < h.getSlots(); i++)
@@ -227,25 +227,25 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
             });
             wrapper.ifPresent(w ->
             {
-                recipeUsed = world.getRecipeManager().getRecipe(IRecipeType.CRAFTING, w, world).filter(r -> canUseRecipe(world, null, r));
-                ItemStack outPutStack = recipeUsed.map(r -> r.getCraftingResult(w)).orElse(ItemStack.EMPTY);
-                BlockPos pos = this.pos;
+                recipeUsed = level.getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, w, level).filter(r -> setRecipeUsed(level, null, r));
+                ItemStack outPutStack = recipeUsed.map(r -> r.assemble(w)).orElse(ItemStack.EMPTY);
+                BlockPos pos = this.worldPosition;
                 if (this.getBlockState().hasProperty(CrafterMachineBlock.FACING))
                 {
-                    Direction side = this.getBlockState().get(CrafterMachineBlock.FACING);
-                    double x = pos.getX() + 0.5D + 0.7D * (double) side.getXOffset();
-                    double y = pos.getY() + 0.5D + 0.7D * (double) side.getYOffset();
-                    double z = pos.getZ() + 0.5D + 0.7D * (double) side.getZOffset();
+                    Direction side = this.getBlockState().getValue(CrafterMachineBlock.FACING);
+                    double x = pos.getX() + 0.5D + 0.7D * (double) side.getStepX();
+                    double y = pos.getY() + 0.5D + 0.7D * (double) side.getStepY();
+                    double z = pos.getZ() + 0.5D + 0.7D * (double) side.getStepZ();
 
                     // Lower the dispense position slightly when shooting from the side
                     if (side.getAxis().isHorizontal()) {
                         y -= 0.2D;
                     }
 
-                    DefaultDispenseItemBehavior.doDispense(world, outPutStack, 6, side, new Position(x, y, z));
+                    DefaultDispenseItemBehavior.spawnItem(level, outPutStack, 6, side, new Position(x, y, z));
 
-                    world.playEvent(1000, pos, 0); // Play dispense sound
-                    world.playEvent(2000, pos, side.getIndex()); // Spawn dispense particles
+                    level.levelEvent(1000, pos, 0); // Play dispense sound
+                    level.levelEvent(2000, pos, side.get3DDataValue()); // Spawn dispense particles
                 }
                 if (outPutStack != ItemStack.EMPTY) {
                     for (int i = 0; i < chestContents.size(); i++)

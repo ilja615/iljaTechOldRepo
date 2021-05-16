@@ -8,15 +8,15 @@
     <module name="iljaTech.main"/>
     <envs>
       <env name="MOD_CLASSES" value="examplemod%%$PROJECT_DIR$/build/resources/main:examplemod%%$PROJECT_DIR$/build/classes/java/main"/>
-      <env name="MCP_MAPPINGS" value="snapshot_20200916-1.16.2"/>
-      <env name="MCP_VERSION" value="20200812.004259"/>
-      <env name="FORGE_VERSION" value="33.0.42"/>
+      <env name="MCP_MAPPINGS" value="official_1.16.5"/>
+      <env name="MCP_VERSION" value="20201102.104115"/>
+      <env name="FORGE_VERSION" value="35.1.20"/>
       <env name="assetIndex" value="1.16"/>
       <env name="assetDirectory" value="/Users/Ilja/.gradle/caches/forge_gradle/assets"/>
       <env name="nativesDirectory" value="$PROJECT_DIR$/build/natives"/>
       <env name="FORGE_GROUP" value="net.minecraftforge"/>
       <env name="target" value="fmluserdevclient"/>
-      <env name="MC_VERSION" value="1.16.2"/>
+      <env name="MC_VERSION" value="1.16.4"/>
     </envs>
     <method v="2">
       <option enabled="true" name="Make"/>

@@ -18,10 +18,10 @@ public class CrafterMachineScreen extends ContainerScreen<CrafterMachineContaine
 
     public CrafterMachineScreen(CrafterMachineContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title);
-        this.guiLeft = 0;
-        this.guiTop = 0;
-        this.xSize = 175;
-        this.ySize = 165;
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = 175;
+        this.imageHeight = 165;
     }
 
     @Override
@@ -29,16 +29,16 @@ public class CrafterMachineScreen extends ContainerScreen<CrafterMachineContaine
     {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY)
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(GUI_TEXTURE);
-        int x = (this.width - this.xSize) / 2;
-        int y = (this.height - this.ySize) / 2;
-        this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

@@ -27,16 +27,18 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BurnerBlock extends HorizontalBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
     public static final IntegerProperty ASH_LEVEL = IntegerProperty.create("ash_level", 0, 5);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public BurnerBlock(Properties properties)
     {
         super(properties);
-        this.setDefaultState((BlockState)((BlockState)this.stateContainer.getBaseState()).with(FACING, Direction.NORTH).with(LIT, false).with(ASH_LEVEL, 0));
+        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(ASH_LEVEL, 0));
     }
 
     @Override
@@ -53,56 +55,56 @@ public class BurnerBlock extends HorizontalBlock
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
         if (state.getBlock() != newState.getBlock())
         {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof BurnerTileEntity)
             {
-                InventoryHelper.dropItems(worldIn, pos, ((BurnerTileEntity)tileEntity).getItems());
+                InventoryHelper.dropContents(worldIn, pos, ((BurnerTileEntity)tileEntity).getItems());
             }
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState blockState) {
+    public boolean hasAnalogOutputSignal(BlockState blockState) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos)
     {
         if (blockState.hasProperty(ASH_LEVEL))
-            return Math.min(blockState.get(ASH_LEVEL), 15);
+            return Math.min(blockState.getValue(ASH_LEVEL), 15);
         else
             return 0;
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_)
     {
-        return (BlockState)this.getDefaultState().with(FACING, p_196258_1_.getPlacementHorizontalFacing().getOpposite());
+        return (BlockState)this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
-        ItemStack stack = player.getHeldItem(handIn);
+        ItemStack stack = player.getItemInHand(handIn);
         int burnTime = ForgeHooks.getBurnTime(stack);
-        if (burnTime > 0)
+        if (burnTime > 0 && !stack.hasContainerItem())
         {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof BurnerTileEntity)
             {
                 final ItemStack[] newStack = new ItemStack[]{stack};
                 ((BurnerTileEntity)tileEntity).burnerItemStackHandler.ifPresent(h -> newStack[0] = h.insertItem(0, stack, false));
-                player.setHeldItem(handIn, newStack[0]);
+                player.setItemInHand(handIn, newStack[0]);
                 return ActionResultType.SUCCESS;
             }
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(FACING, ASH_LEVEL, LIT); }
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(FACING, ASH_LEVEL, LIT); }
 }

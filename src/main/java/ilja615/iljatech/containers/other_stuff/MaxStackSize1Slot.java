@@ -14,7 +14,7 @@ public class MaxStackSize1Slot extends SlotItemHandler
     }
 
     @Override
-    public int getSlotStackLimit()
+    public int getMaxStackSize()
     {
         return 1;
     }

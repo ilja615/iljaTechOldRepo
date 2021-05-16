@@ -26,7 +26,7 @@ public class CrafterMachineContainer extends Container
     public CrafterMachineContainer(final int windowId, final PlayerInventory playerInventory, final CrafterMachineTileEntity tileEntity)
     {
         super(ModContainerTypes.CRAFTER_MACHINE.get(), windowId);
-        this.canInteractWithCallable = IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos());
+        this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
         this.te = tileEntity;
 
         // Main Inventory
@@ -66,7 +66,7 @@ public class CrafterMachineContainer extends Container
     {
         Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
         Objects.requireNonNull(data, "data cannot be null");
-        final TileEntity tileAtPos = playerInventory.player.world.getTileEntity(data.readBlockPos());
+        final TileEntity tileAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
         if (tileAtPos instanceof CrafterMachineTileEntity)
         {
             return (CrafterMachineTileEntity) tileAtPos;
@@ -80,40 +80,40 @@ public class CrafterMachineContainer extends Container
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn)
+    public boolean stillValid(PlayerEntity playerIn)
     {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, ModBlocks.CRAFTER_MACHINE.get());
+        return stillValid(canInteractWithCallable, playerIn, ModBlocks.CRAFTER_MACHINE.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
     {
         //this.inventorySlots.forEach(s -> { if (s.getHasStack()) System.out.println("Slot "+index+" : "+s.getStack()); else System.out.println("Slot "+index+" : "+"Empty Item Stack");});
         ItemStack itemStack = ItemStack.EMPTY;
-        final Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack())
+        final Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem())
         {
-            final ItemStack itemStack1 = slot.getStack();
+            final ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             if (index < 9)
             {
-                if (!this.mergeItemStack(itemStack1, 9, this.inventorySlots.size(), true))
+                if (!this.moveItemStackTo(itemStack1, 9, this.slots.size(), true))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (!this.mergeItemStack(itemStack1, 0, 9, false))
+            else if (!this.moveItemStackTo(itemStack1, 0, 9, false))
             {
                 return ItemStack.EMPTY;
             }
 
             if (itemStack1.isEmpty())
             {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             }
             else
             {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return itemStack;
