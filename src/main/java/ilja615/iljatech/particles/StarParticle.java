@@ -15,7 +15,7 @@ public class StarParticle extends SpriteTexturedParticle
     protected StarParticle(ClientWorld world, double x, double y, double z)
     {
         super(world, x, y, z);
-        this.lifetime = 50;
+        this.lifetime = 35;
     }
 
 

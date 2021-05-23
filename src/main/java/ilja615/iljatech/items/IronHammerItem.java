@@ -10,12 +10,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
@@ -57,7 +59,7 @@ public class IronHammerItem extends TieredItem
         this.attackDamage = 5 + ItemTier.IRON.getAttackDamageBonus();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -3.8f, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -2.6f, AttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 
@@ -100,10 +102,12 @@ public class IronHammerItem extends TieredItem
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
     {
-        target.addEffect(new EffectInstance(ModEffects.STUNNED.get(), 50, 1));
-        stack.hurtAndBreak(1, attacker, (entity) -> {
-            entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-        });
+        if (getCooldown(stack) == 0)
+        {
+            target.addEffect(new EffectInstance(ModEffects.STUNNED.get(), 50, 1));
+            stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+            setCooldown(stack, 200);
+        }
         return true;
     }
 
@@ -114,7 +118,6 @@ public class IronHammerItem extends TieredItem
                 entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
-
         return true;
     }
 
@@ -137,5 +140,31 @@ public class IronHammerItem extends TieredItem
         }
         Material material = blockIn.getMaterial();
         return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
+    }
+
+    public static int getCooldown(ItemStack itemStack) {
+        CompoundNBT compoundnbt = itemStack.getTag();
+        return compoundnbt == null ? 0 : compoundnbt.getInt("coolDown");
+    }
+
+    public static void setCooldown(ItemStack itemStack, int amount) {
+        CompoundNBT compoundnbt = itemStack.getOrCreateTag();
+        compoundnbt.putInt("coolDown", amount);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, World world, Entity entity, int i, boolean b)
+    {
+        int cooldown = getCooldown(itemStack);
+        if (cooldown > 0) {
+            setCooldown(itemStack, cooldown - 1);
+        }
+        super.inventoryTick(itemStack, world, entity, i, b);
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+        return false;
     }
 }

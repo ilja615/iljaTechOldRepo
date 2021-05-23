@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
@@ -22,7 +23,10 @@ public class StunnedEffect extends Effect
     {
         entity.setDeltaMovement(0.0d, 0.0d, 0.0d);
 
-        if (entity.level.random.nextFloat() < 0.1f) entity.level.addParticle(ModParticles.STAR_PARTICLE.get(), entity.getX(), entity.getY() + entity.getEyeHeight(entity.getPose()) + 1.0d, entity.getZ() - 0.3d, 0,0,0);
+        if (entity.level.random.nextFloat() < 0.22f)
+        {
+            ((ServerWorld)entity.level).sendParticles(ModParticles.STAR_PARTICLE.get(), entity.getX(), entity.getY() + entity.getEyeHeight(entity.getPose()) + 1.0d, entity.getZ() - 0.3d, 1, 0.0D, 0.0D, 0.0D, 1.0D);
+        }
     }
 
     @Override

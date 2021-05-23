@@ -8,6 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -44,14 +47,21 @@ public class IljaTech
 
     private void setup(final FMLCommonSetupEvent event){ }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientSideRegistryEvents
+    {
         @SubscribeEvent
         public static void clientSetup(final FMLClientSetupEvent event)
         {
             ModEntityRenderRegistry.registerEntityRenderers();
-        }
 
+            event.enqueueWork(() -> ItemModelsProperties.register(ModItems.IRON_HAMMER.get(), new ResourceLocation(MOD_ID, "cooldown"),
+                    (stack, world, entity) -> stack.getTag() == null ? 0 : stack.getTag().getInt("coolDown")));
+        }
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents {
         @SubscribeEvent
         public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> registry = event.getRegistry();
