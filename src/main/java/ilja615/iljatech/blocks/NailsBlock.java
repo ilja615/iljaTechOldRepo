@@ -1,8 +1,5 @@
 package ilja615.iljatech.blocks;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import ilja615.iljatech.util.Edge;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
@@ -15,16 +12,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class NailsBlock extends Block
 {

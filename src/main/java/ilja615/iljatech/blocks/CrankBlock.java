@@ -5,6 +5,7 @@ import ilja615.iljatech.power.IMechanicalPowerSender;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
@@ -58,5 +59,11 @@ public class CrankBlock extends Block implements IMechanicalPowerSender
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(ROTATION, FACING);
+    }
+
+    @Override
+    public PushReaction getPistonPushReaction(BlockState p_149656_1_)
+    {
+        return PushReaction.DESTROY;
     }
 }

@@ -7,6 +7,7 @@ import ilja615.iljatech.power.MechanicalPower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
@@ -66,10 +67,10 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     }
 
     @Override
-    public void receivePower(World world, BlockPos thisPos)
+    public void receivePower(World world, BlockPos thisPos, Direction sideFrom)
     {
         world.getBlockTicks().scheduleTick(thisPos, this, 10);
-        IMechanicalPowerAccepter.super.receivePower(world, thisPos);
+        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom);
     }
 
     @Override
@@ -96,6 +97,12 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection());
+    }
+
+    public PushReaction getPistonPushReaction(BlockState state)
+    {
+        state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF);
+        return PushReaction.NORMAL;
     }
 
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)

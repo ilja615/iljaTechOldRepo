@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "axis=y,rotationdirection=counterclockwise": {
+      "model": "iljatech:block/conveyor_belt",
+      "x": 180
+    },
+    "axis=x,rotationdirection=clockwise": {
+      "model": "iljatech:block/conveyor_belt",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z,rotationdirection=counterclockwise": {
+      "model": "iljatech:block/conveyor_belt",
+      "x": 90
+    },
+    "axis=z,rotationdirection=clockwise": {
+      "model": "iljatech:block/conveyor_belt",
+      "x": 90,
+      "y": 180
+    },
+    "axis=y,rotationdirection=clockwise": {
+      "model": "iljatech:block/conveyor_belt"
+    },
+    "axis=x,rotationdirection=counterclockwise": {
+      "model": "iljatech:block/conveyor_belt",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

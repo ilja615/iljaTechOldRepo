@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "iljatech:item/iron_hammer_charged"
+    "layer0": "iljatech:item/iron_hammer"
   },
   "overrides": [
     {"predicate": { "iljatech:cooldown": 1.0 }, "model": "iljatech:item/iron_hammer_cooling_down"}

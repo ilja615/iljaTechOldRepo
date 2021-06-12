@@ -25,5 +25,7 @@ public class ClientEventBusSubscriber
         RenderTypeLookup.setRenderLayer(ModBlocks.CRANK.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.BELLOWS.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.STOKED_FIRE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.CONVEYOR_BELT.get(), RenderType.cutout());
+
     }
 }

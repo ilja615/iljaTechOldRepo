@@ -2,6 +2,7 @@ package ilja615.iljatech.util;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 
 import java.util.function.ToIntFunction;
 

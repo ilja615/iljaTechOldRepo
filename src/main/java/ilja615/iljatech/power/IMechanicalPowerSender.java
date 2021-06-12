@@ -13,7 +13,7 @@ public interface IMechanicalPowerSender
         BlockPos neighborPos = thisPos.relative(face);
         if (world.getBlockState(neighborPos).getBlock() instanceof IMechanicalPowerAccepter) {
             if (((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).acceptsPower(world, neighborPos, face.getOpposite())) {
-                ((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).receivePower(world, neighborPos);
+                ((IMechanicalPowerAccepter) world.getBlockState(neighborPos).getBlock()).receivePower(world, neighborPos, face.getOpposite());
                 return true;
             }
         }

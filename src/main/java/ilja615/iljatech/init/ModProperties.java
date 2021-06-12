@@ -15,6 +15,7 @@ public class ModProperties
 {
     //items properties
     public static final Item.Properties ITEM_PROPERTY = new Item.Properties().tab(ModItemGroup.instance);
+    public static final Item.Properties ITEM_PROPERTY_NOT_STACKABLE = new Item.Properties().tab(ModItemGroup.instance).stacksTo(1);
 
     //state properties
     public static final EnumProperty MECHANICAL_POWER = EnumProperty.create("mechanical_power", MechanicalPower.class);

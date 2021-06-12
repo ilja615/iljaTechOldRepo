@@ -39,6 +39,7 @@ public class ModBlocks
     public static final RegistryObject<Block> GEARBOX = BLOCKS.register("gearbox", () -> new GearboxBlock(AbstractBlock.Properties.of(Material.METAL)));
     public static final RegistryObject<Block> CRANK = BLOCKS.register("crank", () -> new CrankBlock(AbstractBlock.Properties.of(Material.WOOD).noOcclusion().noCollission()));
     public static final RegistryObject<Block> TURBINE = BLOCKS.register("turbine", () -> new TurbineBlock(AbstractBlock.Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> CONVEYOR_BELT = BLOCKS.register("conveyor_belt", () -> new ConveyorBeltBlock(AbstractBlock.Properties.of(Material.METAL)));
 
     // Thermal
     public static final RegistryObject<Block> BURNER = BLOCKS.register("burner", () -> new BurnerBlock(AbstractBlock.Properties.copy(Blocks.BRICKS).lightLevel(ModUtils.getLightValueLit(13))));
