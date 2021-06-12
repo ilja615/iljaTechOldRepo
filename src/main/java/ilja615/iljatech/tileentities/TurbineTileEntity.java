@@ -53,26 +53,23 @@ public class TurbineTileEntity extends TileEntity implements ITickableTileEntity
             }
             if (directions.size() > 0) {
                 Direction randomlyPickedDirection = directions.get(this.level.random.nextInt(directions.size()));
-                ((TurbineBlock)state.getBlock()).sendPower(this.level, worldPosition, randomlyPickedDirection);
+                ((TurbineBlock)state.getBlock()).sendPower(this.level, worldPosition, randomlyPickedDirection, 8);
             }
         }
 
         // The code for correctly updating the blockState of the TurbineBlock
         state = this.level.getBlockState(worldPosition); // Idk if this is needed a 2nd time but just in case for if it was changed in the meanwhile
-        if (this.amountTicks > 5 && state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.SPINNING)
+        if (this.amountTicks > 5 && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
-            this.level.setBlockAndUpdate(worldPosition, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.SPINNING));
-            System.out.println("started spinning");
+            this.level.setBlockAndUpdate(worldPosition, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.SPINNING_8));
         }
         else if (this.amountTicks == 5 && state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.ALMOST_STOPPING)
         {
             this.level.setBlockAndUpdate(worldPosition, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
-            System.out.println("almost stopping spinning");
         }
         else if (this.amountTicks <= 0 && state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.OFF)
         {
             this.level.setBlockAndUpdate(worldPosition, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
-            System.out.println("stopped spinning");
         }
     }
 

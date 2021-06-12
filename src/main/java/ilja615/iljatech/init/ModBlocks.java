@@ -15,6 +15,8 @@ public class ModBlocks
 {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IljaTech.MOD_ID);
 
+    public static final RegistryObject<Block> IRON_SCAFFOLDING = BLOCKS.register("iron_scaffolding", () -> new Block(AbstractBlock.Properties.of(Material.METAL)));
+
     public static final RegistryObject<Block> IRON_PLATE = BLOCKS.register("iron_plate", () -> new PlateBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> GOLD_PLATE = BLOCKS.register("gold_plate", () -> new PlateBlock(AbstractBlock.Properties.copy(Blocks.GOLD_BLOCK)));
     public static final RegistryObject<Block> ALUMINIUM_PLATE = BLOCKS.register("aluminium_plate", () -> new PlateBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));

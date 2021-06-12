@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96cb9b08-d65b-4d30-a496-83dd2c1ccd2f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/ConveyorBeltBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModArmorMaterials.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/util/RotationDirection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/conveyor_belt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/conveyor_belt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/rubber_boots.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/rubber_chestplate.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/rubber_helmet.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/rubber_leggings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/iron_scaffolding.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/iron_scaffolding.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item/iron_scaffolding.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
@@ -25,59 +19,17 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/CrankBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/CrankBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/GearboxBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/GearboxBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/NailsBlock$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/NailsBlock$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/NailsBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/NailsBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/RodBlock$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/RodBlock$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/RodBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/blocks/RodBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModBlocks.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModBlocks.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModItems.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModItems.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/init/ModProperties.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/power/IMechanicalPowerAccepter.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/power/IMechanicalPowerAccepter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/power/IMechanicalPowerSender.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/power/IMechanicalPowerSender.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/util/Edge.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/util/ModUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ilja615/iljatech/util/ModUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/blockstates/iron_rod.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/blockstates/iron_rod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_0.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_0.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_1.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_10.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_10.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_11.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_11.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_12.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_12.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_13.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_13.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_14.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_14.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_15.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_15.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_2.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_3.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_4.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_4.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_5.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_5.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_6.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_6.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_7.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_7.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_8.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_8.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_9.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/crank_9.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/iron_rod.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/block/iron_rod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/item/iron_hammer.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/item/iron_hammer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/item/iron_hammer_cooling_down.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/models/item/iron_hammer_cooling_down.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/crank.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/crank_mirrored.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/crushing_mill_front.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/gearbox_input.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/gearbox_input.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_acacia_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_acacia_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_birch_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_birch_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_crimson_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_crimson_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_dark_oak_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_dark_oak_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_jungle_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_jungle_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_oak_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_oak_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_spruce_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_spruce_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_warped_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/block/nailed_warped_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/item/iron_hammer.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/item/iron_hammer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/iljatech/textures/item/iron_hammer_charged.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run/.mixin.out/audit/mixin_implementation_report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/.mixin.out/audit/mixin_implementation_report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-1.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-6.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/2021-05-23-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-05-23-7.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-5.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/2021-06-12-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/2021-06-12-6.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-1.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-2.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-3.log.gz" afterDir="false" />
@@ -85,64 +37,17 @@
       <change beforePath="$PROJECT_DIR$/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/DIM-1/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/DIM1/data/raids_end.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/advancements/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/advancements/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/data/raids.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/level.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/level.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-2.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.-1.-2.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.-1.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.0.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.0.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/region/r.1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/region/r.1.-1.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/saves/New World/stats/380df991-f603-344c-a090-369bad2a924a.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/saves/New World/stats/380df991-f603-344c-a090-369bad2a924a.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/CrankBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/CrankBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/GearboxBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/GearboxBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/NailsBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/NailsBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/RodBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/blocks/RodBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/client/ClientEventBusSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/client/ClientEventBusSubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModBlocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModBlocks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/init/ModProperties.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/IMechanicalPowerAccepter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/IMechanicalPowerAccepter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/IMechanicalPowerSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/IMechanicalPowerSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/util/Edge.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/util/ModUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/util/ModUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/iron_rod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/iron_rod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_0.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_0.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_1.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_10.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_10.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_11.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_11.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_12.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_12.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_13.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_13.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_14.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_14.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_15.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_15.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_2.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_3.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_4.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_4.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_5.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_5.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_6.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_6.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_7.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_7.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_8.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_8.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_9.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/crank_9.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/iron_rod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block/iron_rod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/crank.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/crank_mirrored.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/crushing_mill_front.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/gearbox_input.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/gearbox_input.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_acacia_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_acacia_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_birch_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_birch_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_crimson_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_crimson_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_dark_oak_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_dark_oak_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_jungle_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_jungle_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_oak_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_oak_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_spruce_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_spruce_planks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_warped_planks.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/textures/block/nailed_warped_planks.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/MechanicalPower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/power/MechanicalPower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/tileentities/TurbineTileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ilja615/iljatech/tileentities/TurbineTileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/gearbox.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/gearbox.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/turbine.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates/turbine.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,6 +123,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/item" />
+      <recent name="$PROJECT_DIR$/src/main/resources/assets/iljatech/models/block" />
       <recent name="$PROJECT_DIR$/src/main/resources/assets/iljatech/blockstates" />
       <recent name="$PROJECT_DIR$/src/main/resources/assets/iljatech/particles" />
     </key>

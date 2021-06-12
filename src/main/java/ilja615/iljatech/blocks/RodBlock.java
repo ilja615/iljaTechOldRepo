@@ -99,18 +99,18 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
         {
             worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
         }
-        else if (state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.SPINNING)
+        else if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
             Direction.AxisDirection lastReceivedPower = state.getValue(INPUT_KEY) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
             Direction dir = state.getValue(FACING);
             Block other = worldIn.getBlockState(pos.relative(dir)).getBlock();
             if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                sendPower(worldIn, pos, dir);
+                sendPower(worldIn, pos, dir, 8);
             else
             {
                 dir = state.getValue(FACING).getOpposite();
                 if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                    sendPower(worldIn, pos, dir);
+                    sendPower(worldIn, pos, dir, 8);
                 else
                 {
                      // There was nowhere to output to...
@@ -122,25 +122,25 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
     }
 
     @Override
-    public void receivePower(World world, BlockPos thisPos, Direction sideFrom)
+    public void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)
     {
         world.setBlockAndUpdate(thisPos, world.getBlockState(thisPos).setValue(INPUT_KEY, sideFrom.getAxisDirection() == Direction.AxisDirection.POSITIVE ? true : false));
         world.getBlockTicks().scheduleTick(thisPos, this, 10);
-        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom);
+        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
     }
 
     @Override
     public boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom)
     {
         BlockState state = world.getBlockState(thisPos);
-        return (state.hasProperty(FACING) && (state.getValue(FACING) == sideFrom || state.getValue(FACING).getOpposite() == sideFrom) && state.hasProperty(ModProperties.MECHANICAL_POWER) && state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.SPINNING);
+        return (state.hasProperty(FACING) && (state.getValue(FACING) == sideFrom || state.getValue(FACING).getOpposite() == sideFrom) && state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning());
     }
 
     @Override
-    public boolean sendPower(World world, BlockPos thisPos, Direction face)
+    public boolean sendPower(World world, BlockPos thisPos, Direction face, int amount)
     {
         BlockState state = world.getBlockState(thisPos);
-        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face))
+        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
         {
             world.getBlockTicks().scheduleTick(thisPos, this, 5);
             world.setBlockAndUpdate(thisPos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
@@ -153,7 +153,7 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_)
     {
-        if (state.hasProperty(ModProperties.MECHANICAL_POWER) && (state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.SPINNING || state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.ALMOST_STOPPING))
+        if (state.hasProperty(ModProperties.MECHANICAL_POWER) && (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning() || state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.ALMOST_STOPPING))
         {
             double d0 = (double)p_180655_3_.getX() + 0.25D + (0.5f * p_180655_4_.nextDouble());
             double d1 = (double)p_180655_3_.getY() + 0.25D + (0.5f * p_180655_4_.nextDouble());

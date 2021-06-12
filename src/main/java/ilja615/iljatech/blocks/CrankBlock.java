@@ -44,7 +44,7 @@ public class CrankBlock extends Block implements IMechanicalPowerSender
     {
         if (state.getBlock() == this)
         {
-            sendPower(world, pos, state.getValue(FACING));
+            sendPower(world, pos, state.getValue(FACING), 8);
             world.setBlockAndUpdate(pos, state.setValue(ROTATION, (state.getValue(ROTATION) + 1) % 16));
             return ActionResultType.SUCCESS;
         }

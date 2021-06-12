@@ -44,7 +44,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
         {
             worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
         }
-        else if (state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.SPINNING)
+        else if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
             ArrayList<Direction> directions = new ArrayList<Direction>(); // Potential directions that power could be outputted to.
             for (Direction dir : Direction.values()) {
@@ -56,8 +56,8 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
                 }
             }
             if (directions.size() > 0) {
-                Direction randomlyPickedDirection = directions.get(rand.nextInt(directions.size()));
-                sendPower(worldIn, pos, randomlyPickedDirection);
+                double power = ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt();
+                directions.forEach(direction -> sendPower(worldIn, pos, direction, (int)(Math.floor(power / ((double) directions.size())))));
             } else {
                 // There was nowhere to output to...
                 worldIn.getBlockTicks().scheduleTick(pos, this, 5);
@@ -67,24 +67,24 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     }
 
     @Override
-    public void receivePower(World world, BlockPos thisPos, Direction sideFrom)
+    public void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)
     {
         world.getBlockTicks().scheduleTick(thisPos, this, 10);
-        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom);
+        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
     }
 
     @Override
     public boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom)
     {
         BlockState state = world.getBlockState(thisPos);
-        return (state.hasProperty(FACING) && state.getValue(FACING) == sideFrom && state.hasProperty(ModProperties.MECHANICAL_POWER) && state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.SPINNING);
+        return (state.hasProperty(FACING) && state.getValue(FACING) == sideFrom && state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning());
     }
 
     @Override
-    public boolean sendPower(World world, BlockPos thisPos, Direction face)
+    public boolean sendPower(World world, BlockPos thisPos, Direction face, int amount)
     {
         BlockState state = world.getBlockState(thisPos);
-        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face))
+        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
         {
             world.getBlockTicks().scheduleTick(thisPos, this, 5);
             world.setBlockAndUpdate(thisPos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));

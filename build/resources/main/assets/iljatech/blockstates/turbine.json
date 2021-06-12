@@ -23,26 +23,187 @@
       "model": "iljatech:block/turbine_off",
       "x": 90
     },
-    "facing=east,mechanical_power=spinning": {
+    "facing=east,mechanical_power=spinning_1": {
       "model": "iljatech:block/turbine_on",
       "y": 90
     },
-    "facing=north,mechanical_power=spinning": {
+    "facing=north,mechanical_power=spinning_1": {
       "model": "iljatech:block/turbine_on"
     },
-    "facing=south,mechanical_power=spinning": {
+    "facing=south,mechanical_power=spinning_1": {
       "model": "iljatech:block/turbine_on",
       "y": 180
     },
-    "facing=west,mechanical_power=spinning": {
+    "facing=west,mechanical_power=spinning_1": {
       "model": "iljatech:block/turbine_on",
       "y": 270
     },
-    "facing=up,mechanical_power=spinning": {
+    "facing=up,mechanical_power=spinning_1": {
       "model": "iljatech:block/turbine_on",
       "x": 270
     },
-    "facing=down,mechanical_power=spinning": {
+    "facing=down,mechanical_power=spinning_1": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_2": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_3": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_4": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_5": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_6": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_7": {
+      "model": "iljatech:block/turbine_on",
+      "x": 90
+    },
+    "facing=east,mechanical_power=spinning_8": {
+      "model": "iljatech:block/turbine_on",
+      "y": 90
+    },
+    "facing=north,mechanical_power=spinning_8": {
+      "model": "iljatech:block/turbine_on"
+    },
+    "facing=south,mechanical_power=spinning_8": {
+      "model": "iljatech:block/turbine_on",
+      "y": 180
+    },
+    "facing=west,mechanical_power=spinning_8": {
+      "model": "iljatech:block/turbine_on",
+      "y": 270
+    },
+    "facing=up,mechanical_power=spinning_8": {
+      "model": "iljatech:block/turbine_on",
+      "x": 270
+    },
+    "facing=down,mechanical_power=spinning_8": {
       "model": "iljatech:block/turbine_on",
       "x": 90
     },

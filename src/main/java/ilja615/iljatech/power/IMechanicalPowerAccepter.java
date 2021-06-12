@@ -12,9 +12,9 @@ public interface IMechanicalPowerAccepter
     default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom) { return true; }
 
     // What the block will do upon receiving power
-    default void receivePower(World world, BlockPos thisPos, Direction sideFrom)
+    default void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)
     {
         if (world.getBlockState(thisPos).hasProperty(ModProperties.MECHANICAL_POWER))
-            world.setBlockAndUpdate(thisPos, world.getBlockState(thisPos).setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.SPINNING));
+            world.setBlockAndUpdate(thisPos, world.getBlockState(thisPos).setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.getFromAmount(amount)));
     };
 }
