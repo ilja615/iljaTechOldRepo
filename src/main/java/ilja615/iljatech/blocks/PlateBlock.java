@@ -47,12 +47,12 @@ public class PlateBlock extends Block implements IWaterLoggable
 
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION;
 
-    protected static final VoxelShape UP_AABB = Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-    protected static final VoxelShape WEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
-    protected static final VoxelShape EAST_AABB = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-    protected static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape UP_AABB = Block.box(0.0d, 14.0d, 0.0d, 16.0d, 16.0d, 16.0d);
+    protected static final VoxelShape DOWN_AABB = Block.box(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d);
+    protected static final VoxelShape WEST_AABB = Block.box(0.0d, 0.0d, 0.0d, 2.0d, 16.0d, 16.0d);
+    protected static final VoxelShape EAST_AABB = Block.box(14.0d, 0.0d, 0.0d, 16.0d, 16.0d, 16.0d);
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0d, 0.0d, 0.0d, 16.0d, 16.0d, 2.0d);
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0d, 0.0d, 14.0d, 16.0d, 16.0d, 16.0d);
 
     public PlateBlock(Properties p_i48440_1_)
     {

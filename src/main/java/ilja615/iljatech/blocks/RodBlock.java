@@ -105,12 +105,13 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
             Direction dir = state.getValue(FACING);
             Block other = worldIn.getBlockState(pos.relative(dir)).getBlock();
             if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                sendPower(worldIn, pos, dir, 8);
+                sendPower(worldIn, pos, dir, ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt());
             else
             {
                 dir = state.getValue(FACING).getOpposite();
+                other = worldIn.getBlockState(pos.relative(dir)).getBlock();
                 if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                    sendPower(worldIn, pos, dir, 8);
+                    sendPower(worldIn, pos, dir, ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt());
                 else
                 {
                      // There was nowhere to output to...

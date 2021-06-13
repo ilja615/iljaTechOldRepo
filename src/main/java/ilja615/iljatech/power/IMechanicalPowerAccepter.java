@@ -9,7 +9,11 @@ import net.minecraft.world.World;
 public interface IMechanicalPowerAccepter
 {
     // If the block is able to receive power or not
-    default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom) { return true; }
+    default boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom)
+    {
+        BlockState state = world.getBlockState(thisPos);
+        return (state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning());
+    }
 
     // What the block will do upon receiving power
     default void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)

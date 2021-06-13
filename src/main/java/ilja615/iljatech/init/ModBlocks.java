@@ -15,7 +15,7 @@ public class ModBlocks
 {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IljaTech.MOD_ID);
 
-    public static final RegistryObject<Block> IRON_SCAFFOLDING = BLOCKS.register("iron_scaffolding", () -> new Block(AbstractBlock.Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> IRON_SCAFFOLDING = BLOCKS.register("iron_scaffolding", () -> new Block(AbstractBlock.Properties.of(Material.METAL).noOcclusion()));
 
     public static final RegistryObject<Block> IRON_PLATE = BLOCKS.register("iron_plate", () -> new PlateBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> GOLD_PLATE = BLOCKS.register("gold_plate", () -> new PlateBlock(AbstractBlock.Properties.copy(Blocks.GOLD_BLOCK)));
@@ -41,7 +41,7 @@ public class ModBlocks
     public static final RegistryObject<Block> GEARBOX = BLOCKS.register("gearbox", () -> new GearboxBlock(AbstractBlock.Properties.of(Material.METAL)));
     public static final RegistryObject<Block> CRANK = BLOCKS.register("crank", () -> new CrankBlock(AbstractBlock.Properties.of(Material.WOOD).noOcclusion().noCollission()));
     public static final RegistryObject<Block> TURBINE = BLOCKS.register("turbine", () -> new TurbineBlock(AbstractBlock.Properties.of(Material.METAL)));
-    public static final RegistryObject<Block> CONVEYOR_BELT = BLOCKS.register("conveyor_belt", () -> new ConveyorBeltBlock(AbstractBlock.Properties.of(Material.METAL)));
+    public static final RegistryObject<Block> CONVEYOR_BELT = BLOCKS.register("conveyor_belt", () -> new ConveyorBeltBlock(AbstractBlock.Properties.of(Material.METAL).noOcclusion()));
 
     // Thermal
     public static final RegistryObject<Block> BURNER = BLOCKS.register("burner", () -> new BurnerBlock(AbstractBlock.Properties.copy(Blocks.BRICKS).lightLevel(ModUtils.getLightValueLit(13))));
