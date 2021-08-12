@@ -1,5 +1,6 @@
 package ilja615.iljatech.blocks;
 
+import ilja615.iljatech.util.interactions.Heat;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
@@ -32,6 +33,10 @@ public class StokedFireBlock extends AbstractFireBlock
 
     public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving)
     {
+        if (worldIn.random.nextInt(16) == 0)
+        {
+            Heat.emitHeat(worldIn, pos);
+        }
         worldIn.getBlockTicks().scheduleTick(pos, this, 20);
     }
 
@@ -47,6 +52,10 @@ public class StokedFireBlock extends AbstractFireBlock
         } else {
             worldIn.setBlockAndUpdate(pos, state.setValue(AIR, Math.max(0, air - 1)));
             worldIn.getBlockTicks().scheduleTick(pos, this, 20);
+            if (rand.nextInt(16) == 0)
+            {
+                Heat.emitHeat(worldIn, pos);
+            }
         }
     }
 

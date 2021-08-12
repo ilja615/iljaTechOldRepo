@@ -54,7 +54,6 @@ public abstract class AbstractGasEntity extends Entity
             this.xo = this.getX();
             this.yo = this.getY();
             this.zo = this.getZ();
-            this.setDeltaMovement(this.getDeltaMovement().multiply(0.98D, 1.0D, 0.98D).add(0.0d, this instanceof AirEntity ? 0.002d : 0.0d, 0.0d));
         }
     }
 

@@ -21,9 +21,11 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class ConveyorBeltTileEntity  extends TileEntity implements ITickableTileEntity
 {
@@ -103,20 +105,31 @@ public class ConveyorBeltTileEntity  extends TileEntity implements ITickableTile
 
     private void getAndMoveEntities(World world, Direction face, Vector3d vec)
     {
-        world.getEntitiesOfClass(Entity.class, AABB_BY_DIRECTION.get(face).move(this.getBlockPos())).forEach(
-                entity ->
-                {
-                    if(!entity.isAlive())
-                        return;
-                    if(entity instanceof PlayerEntity && entity.isCrouching())
-                        return;
+        if (!world.getBlockState(this.getBlockPos()).getBlock().equals(ModBlocks.CONVEYOR_BELT.get()))
+            return;
 
-                    if (!entity.noPhysics)
-                    {
-                        entity.setDeltaMovement(vec.add(entity.getDeltaMovement()));
-                        //entity.setPos(entity.position().x + vec.x, entity.position().y + vec.y, entity.position().z + vec.z);
-                    }
+        Vector3i roundedVec = new Vector3i(Math.signum(vec.x), Math.signum(vec.y), Math.signum(vec.z));
+        BlockPos to = this.getBlockPos().relative(face).offset(roundedVec);
+
+//        if (world.getBlockState(to).isFaceSturdy(world, to, Objects.requireNonNull(Direction.fromNormal(roundedVec.getX(), roundedVec.getY(), roundedVec.getZ()))))
+//            return;
+        if (world.getBlockState(this.getBlockPos().relative(face)).isFaceSturdy(world, this.getBlockPos(), face.getOpposite()))
+            return;
+
+        world.getEntitiesOfClass(Entity.class, AABB_BY_DIRECTION.get(face).inflate(0.1d).move(this.getBlockPos())).forEach(
+            entity ->
+            {
+                if (!entity.isAlive())
+                    return;
+                if (entity instanceof PlayerEntity && entity.isCrouching())
+                    return;
+
+                if (!entity.noPhysics)
+                {
+                    System.out.println(entity.getDeltaMovement().lengthSqr());
+                    entity.setDeltaMovement(vec.add(entity.getDeltaMovement()));
                 }
+            }
         );
     }
 }

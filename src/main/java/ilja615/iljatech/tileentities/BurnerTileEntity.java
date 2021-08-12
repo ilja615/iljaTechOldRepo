@@ -5,6 +5,7 @@ import ilja615.iljatech.entity.AbstractGasEntity;
 import ilja615.iljatech.entity.SteamEntity;
 import ilja615.iljatech.init.ModEntities;
 import ilja615.iljatech.init.ModTileEntityTypes;
+import ilja615.iljatech.util.interactions.Heat;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
@@ -55,7 +56,7 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
             --this.burnTime;
             if (this.burnTime % 100 == 0)
             {
-                this.emitHeat();
+                Heat.emitHeat(this.level, this.worldPosition);
             }
         }
         if (!this.level.isClientSide) {
@@ -138,23 +139,6 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
         super.setRemoved();
         if (burnerItemStackHandler != null) {
             burnerItemStackHandler.invalidate();
-        }
-    }
-
-    private void emitHeat()
-    {
-        if (!this.level.isClientSide) {
-            BlockState state = this.level.getBlockState(this.worldPosition.above());
-            if (this.worldPosition.getY() < this.level.getMaxBuildHeight() - 1 && state.getBlock() == Blocks.CAULDRON) {
-                int value = state.getValue(CauldronBlock.LEVEL) - 1; // The value that the cauldron level would be.
-                if (value >= 0) {
-                    this.level.setBlockAndUpdate(this.worldPosition.above(), state.setValue(CauldronBlock.LEVEL, value));
-                    AbstractGasEntity gasEntity = ModEntities.STEAM_CLOUD.get().create(this.level);
-                    gasEntity.moveTo(this.worldPosition.getX() + 0.5f, this.worldPosition.getY() + 1.8f, this.worldPosition.getZ() + 0.5f, 0.0f, 0.0F);
-                    gasEntity.setDeltaMovement(0.0d, 0.05d, 0.0d);
-                    this.level.addFreshEntity(gasEntity);
-                }
-            }
         }
     }
 

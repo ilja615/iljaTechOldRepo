@@ -21,6 +21,7 @@ public class ModItems
     public static final RegistryObject<Item> BRONZE_INGOT = ITEMS.register("bronze_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
 
     public static final RegistryObject<Item> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new IronHammerItem(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> NAILGUN = ITEMS.register("nailgun", () -> new Item(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 
     public static final RegistryObject<Item> BRONZE_GEAR = ITEMS.register("bronze_gear", () -> new Item(ModProperties.ITEM_PROPERTY));
 
