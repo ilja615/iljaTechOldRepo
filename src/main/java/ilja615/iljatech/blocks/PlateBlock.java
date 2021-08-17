@@ -1,30 +1,26 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.SlabType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,9 +28,9 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class PlateBlock extends Block implements IWaterLoggable
+public class PlateBlock extends Block implements SimpleWaterloggedBlock
 {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -45,7 +41,7 @@ public class PlateBlock extends Block implements IWaterLoggable
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION;
+    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = PipeBlock.PROPERTY_BY_DIRECTION;
 
     protected static final VoxelShape UP_AABB = Block.box(0.0d, 14.0d, 0.0d, 16.0d, 16.0d, 16.0d);
     protected static final VoxelShape DOWN_AABB = Block.box(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d);
@@ -60,30 +56,30 @@ public class PlateBlock extends Block implements IWaterLoggable
         this.registerDefaultState(this.stateDefinition.any().setValue(UP, Boolean.valueOf(false)).setValue(DOWN, Boolean.valueOf(false)).setValue(NORTH, Boolean.valueOf(false)).setValue(EAST, Boolean.valueOf(false)).setValue(SOUTH, Boolean.valueOf(false)).setValue(WEST, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        VoxelShape voxelshape = VoxelShapes.empty();
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        VoxelShape voxelshape = Shapes.empty();
         if (state.getValue(UP)) {
-            voxelshape = VoxelShapes.or(voxelshape, UP_AABB);
+            voxelshape = Shapes.or(voxelshape, UP_AABB);
         }
 
         if (state.getValue(DOWN)) {
-            voxelshape = VoxelShapes.or(voxelshape, DOWN_AABB);
+            voxelshape = Shapes.or(voxelshape, DOWN_AABB);
         }
 
         if (state.getValue(NORTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, NORTH_AABB);
+            voxelshape = Shapes.or(voxelshape, NORTH_AABB);
         }
 
         if (state.getValue(EAST)) {
-            voxelshape = VoxelShapes.or(voxelshape, EAST_AABB);
+            voxelshape = Shapes.or(voxelshape, EAST_AABB);
         }
 
         if (state.getValue(SOUTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, SOUTH_AABB);
+            voxelshape = Shapes.or(voxelshape, SOUTH_AABB);
         }
 
         if (state.getValue(WEST)) {
-            voxelshape = VoxelShapes.or(voxelshape, WEST_AABB);
+            voxelshape = Shapes.or(voxelshape, WEST_AABB);
         }
         return voxelshape;
     }
@@ -93,7 +89,7 @@ public class PlateBlock extends Block implements IWaterLoggable
     }
 
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         BlockPos pos = context.getClickedPos();
         BlockState blockState = context.getLevel().getBlockState(pos);
@@ -180,7 +176,7 @@ public class PlateBlock extends Block implements IWaterLoggable
         }
     }
 
-    public boolean canBeReplaced(BlockState blockState, BlockItemUseContext context)
+    public boolean canBeReplaced(BlockState blockState, BlockPlaceContext context)
     {
         if (context.getItemInHand().getItem() == this.asItem())
         {
@@ -204,7 +200,7 @@ public class PlateBlock extends Block implements IWaterLoggable
     // Watterlogging stuff
 
     @Override
-    public boolean isPathfindable(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
+    public boolean isPathfindable(BlockState p_196266_1_, BlockGetter p_196266_2_, BlockPos p_196266_3_, PathComputationType p_196266_4_) {
         switch(p_196266_4_) {
             case LAND:
                 return false;
@@ -221,11 +217,11 @@ public class PlateBlock extends Block implements IWaterLoggable
         return (Boolean)p_204507_1_.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(p_204507_1_);
     }
 
-    public boolean canPlaceLiquid(IBlockReader p_204510_1_, BlockPos p_204510_2_, BlockState p_204510_3_, Fluid p_204510_4_) {
+    public boolean canPlaceLiquid(BlockGetter p_204510_1_, BlockPos p_204510_2_, BlockState p_204510_3_, Fluid p_204510_4_) {
         return true;
     }
 
-    public BlockState updateShape(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
+    public BlockState updateShape(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, LevelAccessor p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
         if ((Boolean)p_196271_1_.getValue(WATERLOGGED)) {
             p_196271_4_.getLiquidTicks().scheduleTick(p_196271_5_, Fluids.WATER, Fluids.WATER.getTickDelay(p_196271_4_));
         }
@@ -233,7 +229,7 @@ public class PlateBlock extends Block implements IWaterLoggable
         return super.updateShape(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST, WATERLOGGED);
     }
 }

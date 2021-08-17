@@ -2,12 +2,12 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.client.render.GassEntityRender;
 import ilja615.iljatech.init.ModEntities;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class ModEntityRenderRegistry
 {
-    public static void registerEntityRenderers()
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
+        event.registerEntityRenderer(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
     }
 }

@@ -1,22 +1,21 @@
 package ilja615.iljatech.entity;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public abstract class AbstractGasEntity extends Entity
 {
-    public AbstractGasEntity(EntityType<? extends AbstractGasEntity> entityTypeIn, World worldIn) {
+    public AbstractGasEntity(EntityType<? extends AbstractGasEntity> entityTypeIn, Level worldIn) {
         super(entityTypeIn, worldIn);
     }
 
-    abstract BasicParticleType getParticle();
+    abstract SimpleParticleType getParticle();
     abstract int maxLifeTime();
 
     @Override
@@ -25,17 +24,17 @@ public abstract class AbstractGasEntity extends Entity
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT compound) {
+    protected void readAdditionalSaveData(CompoundTag compound) {
 
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT compound) {
+    protected void addAdditionalSaveData(CompoundTag compound) {
 
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -48,7 +47,7 @@ public abstract class AbstractGasEntity extends Entity
             if (random.nextFloat() < 0.25 - (((float)this.tickCount) / 2000.0f)) this.level.addParticle(this.getParticle(), this.getX() + r(), this.getY() + r(), this.getZ() + r(), 0.0d, 0.0d, 0.0d);
         } else {
             if (this.tickCount >= this.maxLifeTime()) {
-                this.remove();
+                this.remove(RemovalReason.DISCARDED);
                 return;
             }
             this.xo = this.getX();

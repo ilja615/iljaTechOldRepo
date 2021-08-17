@@ -1,0 +1,7 @@
+/run/
+/logs/
+/gradle/
+/build/
+/.idea/
+/.gradle/
+/src/test/

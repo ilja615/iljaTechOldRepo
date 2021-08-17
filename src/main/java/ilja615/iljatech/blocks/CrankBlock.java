@@ -2,26 +2,24 @@ package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.power.IMechanicalPowerSender;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFaceBlock;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.AttachFace;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class CrankBlock extends Block implements IMechanicalPowerSender
 {
@@ -34,29 +32,29 @@ public class CrankBlock extends Block implements IMechanicalPowerSender
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos)
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos)
     {
-        return HorizontalFaceBlock.canAttach(worldIn, pos, state.getValue(FACING));
+        return FaceAttachedHorizontalDirectionalBlock.canAttach(worldIn, pos, state.getValue(FACING));
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
     {
         if (state.getBlock() == this)
         {
             sendPower(world, pos, state.getValue(FACING), 8);
             world.setBlockAndUpdate(pos, state.setValue(ROTATION, (state.getValue(ROTATION) + 1) % 16));
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         return super.use(state, world, pos, player, hand, rayTraceResult);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(ROTATION, FACING);
     }

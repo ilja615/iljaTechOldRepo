@@ -1,8 +1,8 @@
 package ilja615.iljatech.util;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum RotationDirection implements IStringSerializable
+public enum RotationDirection implements StringRepresentable
 {
     CLOCKWISE("clockwise"),
     COUNTER_CLOCKWISE("counterclockwise");

@@ -2,15 +2,15 @@ package ilja615.iljatech.util.interactions;
 
 import ilja615.iljatech.blocks.StokedFireBlock;
 import ilja615.iljatech.init.ModBlocks;
-import net.minecraft.block.Blocks;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class Wind
 {
-    public static void addWind(World level, BlockPos startPosition, Direction direction, int length, float speed)
+    public static void addWind(Level level, BlockPos startPosition, Direction direction, int length, float speed)
     {
         for (int i = 1; i < length; i++)
         {

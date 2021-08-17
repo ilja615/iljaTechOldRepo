@@ -1,21 +1,18 @@
 package ilja615.iljatech.effects;
 
 import ilja615.iljatech.init.ModParticles;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 
-public class StunnedEffect extends Effect
+public class StunnedEffect extends MobEffect
 {
     public StunnedEffect()
     {
-        super(EffectType.HARMFUL, 0x2E2E34);
+        super(MobEffectCategory.HARMFUL, 0x2E2E34);
     }
 
     @Override
@@ -23,9 +20,9 @@ public class StunnedEffect extends Effect
     {
         entity.setDeltaMovement(0.0d, 0.0d, 0.0d);
 
-        if (entity.level.random.nextFloat() < 0.22f)
+        if (entity.level.random.nextFloat() < 0.22f && !entity.level.isClientSide())
         {
-            ((ServerWorld)entity.level).sendParticles(ModParticles.STAR_PARTICLE.get(), entity.getX(), entity.getY() + entity.getEyeHeight(entity.getPose()) + 1.0d, entity.getZ() - 0.3d, 1, 0.0D, 0.0D, 0.0D, 1.0D);
+            ((ServerLevel)entity.level).sendParticles(ModParticles.STAR_PARTICLE.get(), entity.getX(), entity.getY() + entity.getEyeHeight(entity.getPose()) + 1.0d, entity.getZ() - 0.3d, 1, 0.0D, 0.0D, 0.0D, 1.0D);
         }
     }
 

@@ -1,6 +1,8 @@
 package ilja615.iljatech.items;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class NailGunItem extends Item
 {
@@ -8,6 +10,4 @@ public class NailGunItem extends Item
     {
         super(properties);
     }
-
-
 }

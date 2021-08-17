@@ -1,18 +1,17 @@
 package ilja615.iljatech.particles;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class StarParticle extends SpriteTexturedParticle
+public class StarParticle extends TextureSheetParticle
 {
-    protected StarParticle(ClientWorld world, double x, double y, double z)
+    protected StarParticle(ClientLevel world, double x, double y, double z)
     {
         super(world, x, y, z);
         this.lifetime = 35;
@@ -20,9 +19,9 @@ public class StarParticle extends SpriteTexturedParticle
 
 
     @Override
-    public IParticleRenderType getRenderType()
+    public ParticleRenderType getRenderType()
     {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @Override
@@ -42,17 +41,17 @@ public class StarParticle extends SpriteTexturedParticle
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType>
+    public static class Factory implements ParticleProvider<SimpleParticleType>
     {
-        private final IAnimatedSprite sprite;
+        private final SpriteSet sprite;
 
-        public Factory(IAnimatedSprite p_i232340_1_) {
+        public Factory(SpriteSet p_i232340_1_) {
             this.sprite = p_i232340_1_;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(BasicParticleType p_199234_1_, ClientWorld p_199234_2_, double p_199234_3_, double p_199234_5_, double p_199234_7_, double p_199234_9_, double p_199234_11_, double p_199234_13_) {
+        public Particle createParticle(SimpleParticleType p_199234_1_, ClientLevel p_199234_2_, double p_199234_3_, double p_199234_5_, double p_199234_7_, double p_199234_9_, double p_199234_11_, double p_199234_13_) {
             StarParticle starParticle = new StarParticle(p_199234_2_, p_199234_3_, p_199234_5_, p_199234_7_);
             starParticle.pickSprite(this.sprite);
             starParticle.setColor(1.0F, 1.0F, 1.0F);

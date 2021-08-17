@@ -1,8 +1,8 @@
 package ilja615.iljatech.power;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum MechanicalPower  implements IStringSerializable
+public enum MechanicalPower  implements StringRepresentable
 {
     OFF("off", false),
     ALMOST_STOPPING("almost_stopping", false),

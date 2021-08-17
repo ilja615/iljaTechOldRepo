@@ -1,33 +1,35 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModTileEntityTypes;
+import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.power.IMechanicalPowerAccepter;
 import ilja615.iljatech.power.MechanicalPower;
+import ilja615.iljatech.tileentities.BellowsBlockEntity;
+import ilja615.iljatech.tileentities.ConveyorBeltBlockEntity;
 import ilja615.iljatech.util.RotationDirection;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Random;
 
-public class ConveyorBeltBlock extends Block implements IMechanicalPowerAccepter
+import org.antlr.v4.runtime.misc.NotNull;
+
+public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPowerAccepter
 {
     public static final EnumProperty AXIS = BlockStateProperties.AXIS;
     public static final EnumProperty ROTATION_DIRECTION = EnumProperty.create("rotationdirection", RotationDirection.class);
@@ -63,12 +65,12 @@ public class ConveyorBeltBlock extends Block implements IMechanicalPowerAccepter
 //    }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_)
     {
         p_206840_1_.add(AXIS, ROTATION_DIRECTION, ModProperties.MECHANICAL_POWER);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
         Direction direction = p_196258_1_.getNearestLookingDirection();
         return this.defaultBlockState()
                 .setValue(AXIS, direction.getAxis())
@@ -76,7 +78,7 @@ public class ConveyorBeltBlock extends Block implements IMechanicalPowerAccepter
     }
 
     @Override
-    public void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)
+    public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
     {
         world.getBlockTicks().scheduleTick(thisPos, this, 100);
         IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
@@ -89,7 +91,7 @@ public class ConveyorBeltBlock extends Block implements IMechanicalPowerAccepter
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (state.getBlock() != this) { return; }
@@ -105,16 +107,20 @@ public class ConveyorBeltBlock extends Block implements IMechanicalPowerAccepter
         }
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ModBlockEntityTypes.CONVEYOR_BELT.get(), ConveyorBeltBlockEntity::tick);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return ModTileEntityTypes.CONVEYOR_BELT.get().create();
+        return ModBlockEntityTypes.CONVEYOR_BELT.get().create(pos, state);
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 }

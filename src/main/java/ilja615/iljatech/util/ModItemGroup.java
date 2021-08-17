@@ -1,12 +1,12 @@
 package ilja615.iljatech.util;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
-public class ModItemGroup extends ItemGroup
+public class ModItemGroup extends CreativeModeTab
 {
-    public static final ModItemGroup instance = new ModItemGroup(ItemGroup.TABS.length, "iljatech");
+    public static final ModItemGroup instance = new ModItemGroup(CreativeModeTab.TABS.length, "iljatech");
 
     private ModItemGroup(int index, String label)
     {

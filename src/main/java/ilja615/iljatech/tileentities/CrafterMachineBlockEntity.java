@@ -2,60 +2,61 @@ package ilja615.iljatech.tileentities;
 
 import ilja615.iljatech.blocks.CrafterMachineBlock;
 import ilja615.iljatech.containers.CrafterMachineContainer;
-import ilja615.iljatech.init.ModTileEntityTypes;
+import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.util.CraftingInventoryWrapper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.Position;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IRecipeHolder;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.PositionImpl;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.EmptyHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolder, INamedContainerProvider, INameable
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Nameable;
+
+public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHolder, MenuProvider, Nameable
 {
-    private ITextComponent customName;
+    private Component customName;
     public NonNullList<ItemStack> chestContents = NonNullList.withSize(9, ItemStack.EMPTY);
     protected int numPlayersUsing;
     private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
     public LazyOptional<IItemHandlerModifiable> cmItemStackHandler = LazyOptional.of(() -> new CrafterMachineItemStackHandler(this));
-    protected LazyOptional<CraftingInventory> wrapper = LazyOptional.of(() ->
+    protected LazyOptional<CraftingContainer> wrapper = LazyOptional.of(() ->
             new CraftingInventoryWrapper(cmItemStackHandler.orElse(EMPTYHANDLER)));
-    private Optional<ICraftingRecipe> recipeUsed = Optional.empty();
+    private Optional<CraftingRecipe> recipeUsed = Optional.empty();
 
-    public CrafterMachineTileEntity(TileEntityType<?> typeIn) { super(typeIn); }
-    public CrafterMachineTileEntity() { this(ModTileEntityTypes.CRAFTER_MACHINE.get()); }
+    public CrafterMachineBlockEntity(BlockPos p_155229_, BlockState p_155230_)
+    {
+        super(ModBlockEntityTypes.CRAFTER_MACHINE.get(), p_155229_, p_155230_);
+    }
+
 
     public NonNullList<ItemStack> getItems() {
         return this.chestContents;
@@ -65,49 +66,49 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
         this.chestContents = items;
     }
 
-    public void setCustomName(ITextComponent name) {
+    public void setCustomName(Component name) {
         this.customName = name;
     }
 
-    public ITextComponent getName() {
+    public Component getName() {
         return this.customName != null ? this.customName : this.getDefaultName();
     }
 
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return this.getName();
     }
 
     @Nullable
-    public ITextComponent getCustomName() {
+    public Component getCustomName() {
         return this.customName;
     }
 
-    protected ITextComponent getDefaultName()
+    protected Component getDefaultName()
     {
-        return new TranslationTextComponent("container.crafting_machine");
+        return new TranslatableComponent("container.crafting_machine");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player)
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player)
     {
         return new CrafterMachineContainer(id, playerInventory, this);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound)
+    public CompoundTag save(CompoundTag compound)
     {
         super.save(compound);
-        ItemStackHelper.saveAllItems(compound, this.chestContents);
+        ContainerHelper.saveAllItems(compound, this.chestContents);
         return compound;
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound)
+    public void load(CompoundTag compound)
     {
-        super.load(blockState, compound);
+        super.load(compound);
         this.chestContents = NonNullList.withSize(this.chestContents.size(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.chestContents);
+        ContainerHelper.loadAllItems(compound, this.chestContents);
         cmItemStackHandler.ifPresent(h ->
         {
             for (int i = 0; i < h.getSlots(); i++)
@@ -133,25 +134,26 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
         }
     }
 
-    public static int getPlayersUsing(IBlockReader reader, BlockPos pos) {
+    public static int getPlayersUsing(BlockGetter reader, BlockPos pos) {
         BlockState blockState = reader.getBlockState(pos);
-        if (blockState.hasTileEntity()) {
-            TileEntity tileEntity = reader.getBlockEntity(pos);
-            if (tileEntity instanceof CrafterMachineTileEntity) {
-                return ((CrafterMachineTileEntity) tileEntity).numPlayersUsing;
+        if (blockState.hasBlockEntity()) {
+            BlockEntity tileEntity = reader.getBlockEntity(pos);
+            if (tileEntity instanceof CrafterMachineBlockEntity) {
+                return ((CrafterMachineBlockEntity) tileEntity).numPlayersUsing;
             }
         }
         return 0;
     }
 
-    public static void swapContent(CrafterMachineTileEntity tileEntity, CrafterMachineTileEntity otherTileEntity) {
+    public static void swapContent(CrafterMachineBlockEntity tileEntity, CrafterMachineBlockEntity otherTileEntity) {
         NonNullList<ItemStack> list = tileEntity.getItems();
         tileEntity.setItems(otherTileEntity.getItems());
         otherTileEntity.setItems(list);
     }
 
+
     @Override
-    protected void invalidateCaps()
+    public void invalidateCaps()
     {
         this.cmItemStackHandler.invalidate();
         super.invalidateCaps();
@@ -176,9 +178,9 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
 
     private class CrafterMachineItemStackHandler extends ItemStackHandler implements IItemHandler
     {
-        private final CrafterMachineTileEntity tile;
+        private final CrafterMachineBlockEntity tile;
 
-        public CrafterMachineItemStackHandler(CrafterMachineTileEntity te)
+        public CrafterMachineItemStackHandler(CrafterMachineBlockEntity te)
         {
             super(9);
             tile = te;
@@ -206,13 +208,13 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
     }
 
     @Override
-    public void setRecipeUsed(@Nullable IRecipe<?> recipe) {
-        recipeUsed = Optional.ofNullable((ICraftingRecipe) recipe);
+    public void setRecipeUsed(@Nullable Recipe<?> recipe) {
+        recipeUsed = Optional.ofNullable((CraftingRecipe) recipe);
     }
 
     @Nullable
     @Override
-    public IRecipe<?> getRecipeUsed() {
+    public Recipe<?> getRecipeUsed() {
         return recipeUsed.orElse(null);
     }
 
@@ -227,7 +229,7 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
             });
             wrapper.ifPresent(w ->
             {
-                recipeUsed = level.getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, w, level).filter(r -> setRecipeUsed(level, null, r));
+                recipeUsed = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, w, level).filter(r -> setRecipeUsed(level, null, r));
                 ItemStack outPutStack = recipeUsed.map(r -> r.assemble(w)).orElse(ItemStack.EMPTY);
                 BlockPos pos = this.worldPosition;
                 if (this.getBlockState().hasProperty(CrafterMachineBlock.FACING))
@@ -242,7 +244,7 @@ public class CrafterMachineTileEntity extends TileEntity implements IRecipeHolde
                         y -= 0.2D;
                     }
 
-                    DefaultDispenseItemBehavior.spawnItem(level, outPutStack, 6, side, new Position(x, y, z));
+                    DefaultDispenseItemBehavior.spawnItem(level, outPutStack, 6, side, new PositionImpl(x, y, z));
 
                     level.levelEvent(1000, pos, 0); // Play dispense sound
                     level.levelEvent(2000, pos, side.get3DDataValue()); // Spawn dispense particles

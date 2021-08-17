@@ -1,37 +1,38 @@
 package ilja615.iljatech.blocks;
 
-import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.tileentities.BurnerTileEntity;
-import ilja615.iljatech.tileentities.CrafterMachineTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.*;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import ilja615.iljatech.init.ModBlockEntityTypes;
+import ilja615.iljatech.tileentities.BellowsBlockEntity;
+import ilja615.iljatech.tileentities.BurnerBlockEntity;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import org.antlr.v4.runtime.misc.NotNull;
 
-public class BurnerBlock extends HorizontalBlock
+public class BurnerBlock extends BaseEntityBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty ASH_LEVEL = IntegerProperty.create("ash_level", 0, 5);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
@@ -41,28 +42,27 @@ public class BurnerBlock extends HorizontalBlock
         this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(ASH_LEVEL, 0));
     }
 
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return true;
+        return ModBlockEntityTypes.BURNER.get().create(pos, state);
     }
 
     @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
-    {
-        return ModTileEntityTypes.BURNER.get().create();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ModBlockEntityTypes.BURNER.get(), BurnerBlockEntity::tick);
     }
 
     @Override
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
         if (state.getBlock() != newState.getBlock())
         {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof BurnerTileEntity)
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if (tileEntity instanceof BurnerBlockEntity)
             {
-                InventoryHelper.dropContents(worldIn, pos, ((BurnerTileEntity)tileEntity).getItems());
+                Containers.dropContents(worldIn, pos, ((BurnerBlockEntity)tileEntity).getItems());
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -74,7 +74,7 @@ public class BurnerBlock extends HorizontalBlock
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos)
     {
         if (blockState.hasProperty(ASH_LEVEL))
             return Math.min(blockState.getValue(ASH_LEVEL), 15);
@@ -82,29 +82,42 @@ public class BurnerBlock extends HorizontalBlock
             return 0;
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_)
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_)
     {
         return (BlockState)this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
         ItemStack stack = player.getItemInHand(handIn);
-        int burnTime = ForgeHooks.getBurnTime(stack);
+        int burnTime = ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
         if (burnTime > 0 && !stack.hasContainerItem())
         {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof BurnerTileEntity)
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if (tileEntity instanceof BurnerBlockEntity)
             {
                 final ItemStack[] newStack = new ItemStack[]{stack};
-                ((BurnerTileEntity)tileEntity).burnerItemStackHandler.ifPresent(h -> newStack[0] = h.insertItem(0, stack, false));
+                ((BurnerBlockEntity)tileEntity).burnerItemStackHandler.ifPresent(h -> newStack[0] = h.insertItem(0, stack, false));
                 player.setItemInHand(handIn, newStack[0]);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
         return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(FACING, ASH_LEVEL, LIT); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(FACING, ASH_LEVEL, LIT); }
+
+    public BlockState rotate(BlockState p_54125_, Rotation p_54126_) {
+        return p_54125_.setValue(FACING, p_54126_.rotate(p_54125_.getValue(FACING)));
+    }
+
+    public BlockState mirror(BlockState p_54122_, Mirror p_54123_) {
+        return p_54122_.rotate(p_54123_.getRotation(p_54122_.getValue(FACING)));
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
 }

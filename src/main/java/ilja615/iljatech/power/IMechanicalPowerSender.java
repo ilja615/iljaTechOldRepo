@@ -1,14 +1,14 @@
 package ilja615.iljatech.power;
 
 import ilja615.iljatech.init.ModProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface IMechanicalPowerSender
 {
     // The block will send power
-    default boolean sendPower(World world, BlockPos thisPos, Direction face, int amount)
+    default boolean sendPower(Level world, BlockPos thisPos, Direction face, int amount)
     {
         BlockPos neighborPos = thisPos.relative(face);
         if (world.getBlockState(neighborPos).getBlock() instanceof IMechanicalPowerAccepter) {

@@ -3,30 +3,27 @@ package ilja615.iljatech.containers;
 import ilja615.iljatech.containers.other_stuff.MaxStackSize1Slot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
-import ilja615.iljatech.tileentities.CrafterMachineTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import ilja615.iljatech.tileentities.CrafterMachineBlockEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import java.util.Objects;
 
-public class CrafterMachineContainer extends Container
+public class CrafterMachineContainer extends AbstractContainerMenu
 {
-    private final IWorldPosCallable canInteractWithCallable;
-    private CrafterMachineTileEntity te;
+    private final ContainerLevelAccess canInteractWithCallable;
+    private CrafterMachineBlockEntity te;
 
-    public CrafterMachineContainer(final int windowId, final PlayerInventory playerInventory, final CrafterMachineTileEntity tileEntity)
+    public CrafterMachineContainer(final int windowId, final Inventory playerInventory, final CrafterMachineBlockEntity tileEntity)
     {
         super(ModContainerTypes.CRAFTER_MACHINE.get(), windowId);
-        this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
+        this.canInteractWithCallable = ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos());
         this.te = tileEntity;
 
         // Main Inventory
@@ -62,31 +59,31 @@ public class CrafterMachineContainer extends Container
         }
     }
 
-    private static CrafterMachineTileEntity getTileEntity(final PlayerInventory playerInventory, final PacketBuffer data)
+    private static CrafterMachineBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data)
     {
         Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
         Objects.requireNonNull(data, "data cannot be null");
-        final TileEntity tileAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
-        if (tileAtPos instanceof CrafterMachineTileEntity)
+        final BlockEntity tileAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+        if (tileAtPos instanceof CrafterMachineBlockEntity)
         {
-            return (CrafterMachineTileEntity) tileAtPos;
+            return (CrafterMachineBlockEntity) tileAtPos;
         }
         throw new IllegalStateException("Tile entity is not correct! " + tileAtPos);
     }
 
-    public CrafterMachineContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data)
+    public CrafterMachineContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data)
     {
         this(windowId, playerInventory, getTileEntity(playerInventory, data));
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn)
+    public boolean stillValid(Player playerIn)
     {
         return stillValid(canInteractWithCallable, playerIn, ModBlocks.CRAFTER_MACHINE.get());
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+    public ItemStack quickMoveStack(Player playerIn, int index)
     {
         //this.inventorySlots.forEach(s -> { if (s.getHasStack()) System.out.println("Slot "+index+" : "+s.getStack()); else System.out.println("Slot "+index+" : "+"Empty Item Stack");});
         ItemStack itemStack = ItemStack.EMPTY;

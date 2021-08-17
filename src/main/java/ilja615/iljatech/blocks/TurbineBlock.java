@@ -2,36 +2,35 @@ package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.entity.AbstractGasEntity;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.power.IMechanicalPowerAccepter;
+import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.power.IMechanicalPowerSender;
 import ilja615.iljatech.power.MechanicalPower;
-import ilja615.iljatech.tileentities.BellowsTileEntity;
-import ilja615.iljatech.tileentities.TurbineTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import ilja615.iljatech.tileentities.BellowsBlockEntity;
+import ilja615.iljatech.tileentities.TurbineBlockEntity;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
-public class TurbineBlock extends Block implements IMechanicalPowerSender
+public class TurbineBlock extends BaseEntityBlock implements IMechanicalPowerSender
 {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     protected static final VoxelShape UP_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D);
@@ -47,7 +46,7 @@ public class TurbineBlock extends Block implements IMechanicalPowerSender
         this.registerDefaultState(this.stateDefinition.any().setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
     }
 
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
         switch ((Direction)state.getValue(FACING))
         {
@@ -67,51 +66,56 @@ public class TurbineBlock extends Block implements IMechanicalPowerSender
         }
     }
 
-    public VoxelShape getBlockSupportShape(BlockState state, IBlockReader reader, BlockPos pos) {
-        return VoxelShapes.block();
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+        return Shapes.block();
     }
 
-    public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.block();
+    public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+        return Shapes.block();
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
-    {
-        return ModTileEntityTypes.TURBINE.get().create();
-    }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(ModProperties.MECHANICAL_POWER, FACING);
     }
 
     @Override
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity)
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity)
     {
         if (!world.isClientSide() && entity instanceof AbstractGasEntity)
         {
             if (world.getBlockState(pos).hasProperty(ModProperties.MECHANICAL_POWER))
             {
-                entity.remove();
-                TileEntity tileEntity = world.getBlockEntity(pos);
-                if (tileEntity instanceof TurbineTileEntity)
+                entity.remove(Entity.RemovalReason.DISCARDED);
+                BlockEntity tileEntity = world.getBlockEntity(pos);
+                if (tileEntity instanceof TurbineBlockEntity)
                 {
-                    ((TurbineTileEntity)tileEntity).startSpinning(world, pos, 200);
+                    ((TurbineBlockEntity)tileEntity).startSpinning(world, pos, 200);
                 }
             }
         }
     }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ModBlockEntityTypes.TURBINE.get(), TurbineBlockEntity::tick);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
+    {
+        return ModBlockEntityTypes.TURBINE.get().create(pos, state);
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
+
 }

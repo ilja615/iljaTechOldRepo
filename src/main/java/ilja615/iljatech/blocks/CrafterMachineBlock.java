@@ -1,40 +1,33 @@
 package ilja615.iljatech.blocks;
 
-import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.tileentities.CrafterMachineTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import ilja615.iljatech.init.ModBlockEntityTypes;
+import ilja615.iljatech.tileentities.CrafterMachineBlockEntity;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import org.antlr.v4.runtime.misc.NotNull;
 
-public class CrafterMachineBlock extends HorizontalBlock
+public class CrafterMachineBlock extends BaseEntityBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public CrafterMachineBlock(Properties properties)
     {
@@ -42,43 +35,37 @@ public class CrafterMachineBlock extends HorizontalBlock
         this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH));
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
-    }
-
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return ModTileEntityTypes.CRAFTER_MACHINE.get().create();
+        return ModBlockEntityTypes.CRAFTER_MACHINE.get().create(pos, state);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
     {
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof CrafterMachineTileEntity)
+        BlockEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof CrafterMachineBlockEntity)
         {
             if (!world.isClientSide())
             {
-                NetworkHooks.openGui((ServerPlayerEntity)player, (CrafterMachineTileEntity)tileEntity, pos);
+                NetworkHooks.openGui((ServerPlayer)player, (CrafterMachineBlockEntity)tileEntity, pos);
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
         if (state.getBlock() != newState.getBlock())
         {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof CrafterMachineTileEntity)
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if (tileEntity instanceof CrafterMachineBlockEntity)
             {
-                InventoryHelper.dropContents(worldIn, pos, ((CrafterMachineTileEntity)tileEntity).getItems());
+                Containers.dropContents(worldIn, pos, ((CrafterMachineBlockEntity)tileEntity).getItems());
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -90,37 +77,50 @@ public class CrafterMachineBlock extends HorizontalBlock
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos)
+    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos)
     {
         int j = 0;
-        TileEntity tileEntity = worldIn.getBlockEntity(pos);
-        if (tileEntity instanceof CrafterMachineTileEntity)
+        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+        if (tileEntity instanceof CrafterMachineBlockEntity)
         {
-            for (int i = 0; i < ((CrafterMachineTileEntity)tileEntity).chestContents.size(); i++)
+            for (int i = 0; i < ((CrafterMachineBlockEntity)tileEntity).chestContents.size(); i++)
             {
-                if (((CrafterMachineTileEntity)tileEntity).chestContents.get(i) != ItemStack.EMPTY) j++;
+                if (((CrafterMachineBlockEntity)tileEntity).chestContents.get(i) != ItemStack.EMPTY) j++;
             }
         }
         return Math.min(j, 15);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
     {
         if (worldIn.hasNeighborSignal(pos))
         {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof CrafterMachineTileEntity)
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if (tileEntity instanceof CrafterMachineBlockEntity)
             {
-                ((CrafterMachineTileEntity)tileEntity).craft();
+                ((CrafterMachineBlockEntity)tileEntity).craft();
             }
         }
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_)
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_)
     {
         return (BlockState)this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(new Property[]{FACING}); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) { p_206840_1_.add(new Property[]{FACING}); }
+
+    public BlockState rotate(BlockState p_54125_, Rotation p_54126_) {
+        return p_54125_.setValue(FACING, p_54126_.rotate(p_54125_.getValue(FACING)));
+    }
+
+    public BlockState mirror(BlockState p_54122_, Mirror p_54123_) {
+        return p_54122_.rotate(p_54123_.getRotation(p_54122_.getValue(FACING)));
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
 }

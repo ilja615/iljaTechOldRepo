@@ -1,43 +1,30 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModItems;
-import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModTileEntityTypes;
-import ilja615.iljatech.power.IMechanicalPowerAccepter;
-import ilja615.iljatech.power.IMechanicalPowerSender;
-import ilja615.iljatech.power.MechanicalPower;
-import ilja615.iljatech.tileentities.BellowsTileEntity;
-import ilja615.iljatech.tileentities.BurnerTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import ilja615.iljatech.init.ModBlockEntityTypes;
+import ilja615.iljatech.tileentities.BellowsBlockEntity;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
-public class BellowsBlock extends Block
+public class BellowsBlock extends BaseEntityBlock
 {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final IntegerProperty COMPRESSION = IntegerProperty.create("compression", 0, 2);
@@ -48,31 +35,35 @@ public class BellowsBlock extends Block
         this.registerDefaultState(this.stateDefinition.any().setValue(COMPRESSION, 0));
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ModBlockEntityTypes.BELLOWS.get(), BellowsBlockEntity::tick);
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world)
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
     {
-        return ModTileEntityTypes.BELLOWS.get().create();
+        return ModBlockEntityTypes.BELLOWS.get().create(pos, state);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(FACING, COMPRESSION);
     }
 
     @Override
-    public void attack(BlockState state, World worldIn, BlockPos pos, PlayerEntity player)
+    public void attack(BlockState state, Level worldIn, BlockPos pos, Player player)
     {
         if (player.swingingArm != null && player.getItemInHand(player.swingingArm).getItem() == ModItems.IRON_HAMMER.get())
         {
@@ -82,22 +73,22 @@ public class BellowsBlock extends Block
     }
 
     @Override
-    public void fallOn(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)
+    public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, float fallDistance)
     {
         if (worldIn.getBlockState(pos).hasProperty(FACING) && worldIn.getBlockState(pos).getValue(FACING).getAxis() != Direction.Axis.Y)
         {
             activate(worldIn, pos);
         }
 
-        super.fallOn(worldIn, pos, entityIn, fallDistance);
+        super.fallOn(worldIn, state, pos, entityIn, fallDistance);
     }
 
-    private static void activate(World world, BlockPos pos)
+    private static void activate(Level world, BlockPos pos)
     {
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof BellowsTileEntity)
+        BlockEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof BellowsBlockEntity)
         {
-            ((BellowsTileEntity)tileEntity).compress(world, pos);
+            ((BellowsBlockEntity)tileEntity).compress(world, pos);
         }
     }
 }

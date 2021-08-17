@@ -1,27 +1,27 @@
 package ilja615.iljatech;
 
+import ilja615.iljatech.blocks.NailsBlock;
 import ilja615.iljatech.client.ModEntityRenderRegistry;
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import static ilja615.iljatech.IljaTech.MOD_ID;
@@ -38,7 +38,7 @@ public class IljaTech
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
-        ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+        ModBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
@@ -47,25 +47,13 @@ public class IljaTech
 
     private void setup(final FMLCommonSetupEvent event){ }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientSideRegistryEvents
-    {
-        @SubscribeEvent
-        public static void clientSetup(final FMLClientSetupEvent event)
-        {
-            ModEntityRenderRegistry.registerEntityRenderers();
-
-            event.enqueueWork(() -> ItemModelsProperties.register(ModItems.IRON_HAMMER.get(), new ResourceLocation(MOD_ID, "cooldown"),
-                    (stack, world, entity) -> stack.getTag() == null ? 0 : stack.getTag().getInt("coolDown")));
-        }
-    }
-
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> registry = event.getRegistry();
-            ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
+            ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block ->
+            {
                 final BlockItem blockItem = new BlockItem(block, ModProperties.ITEM_PROPERTY);
                 blockItem.setRegistryName(block.getRegistryName());
                 registry.register(blockItem);
@@ -76,7 +64,6 @@ public class IljaTech
         public static void registerParticles(ParticleFactoryRegisterEvent event) {
             Minecraft.getInstance().particleEngine.register(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
             Minecraft.getInstance().particleEngine.register(ModParticles.STAR_PARTICLE.get(), StarParticle.Factory::new);
-
         }
     }
 }

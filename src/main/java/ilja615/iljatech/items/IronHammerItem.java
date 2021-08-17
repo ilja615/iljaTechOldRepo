@@ -6,29 +6,33 @@ import com.google.common.collect.Multimap;
 import ilja615.iljatech.blocks.NailsBlock;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModEffects;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.Map;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraftforge.common.TierSortingRegistry;
 
 public class IronHammerItem extends TieredItem
 {
@@ -55,8 +59,8 @@ public class IronHammerItem extends TieredItem
 
     public IronHammerItem(Properties properties)
     {
-        super(ItemTier.IRON, properties);
-        this.attackDamage = 5 + ItemTier.IRON.getAttackDamageBonus();
+        super(Tiers.IRON, properties);
+        this.attackDamage = 5 + Tiers.IRON.getAttackDamageBonus();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -2.6f, AttributeModifier.Operation.ADDITION));
@@ -64,14 +68,14 @@ public class IronHammerItem extends TieredItem
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context)
+    public InteractionResult useOn(UseOnContext context)
     {
-        World world = context.getLevel();
+        Level world = context.getLevel();
         BlockPos blockpos = context.getClickedPos();
         BlockState blockstate = world.getBlockState(blockpos);
         if (blockstate.getBlock() instanceof NailsBlock && blockstate.hasProperty(NailsBlock.STAGE))
         {
-            world.playSound(context.getPlayer(), blockpos, SoundEvents.VILLAGER_WORK_TOOLSMITH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(context.getPlayer(), blockpos, SoundEvents.VILLAGER_WORK_TOOLSMITH, SoundSource.BLOCKS, 1.0F, 1.0F);
             int stage = blockstate.getValue(NailsBlock.STAGE);
             if (stage < 3)
                 world.setBlockAndUpdate(blockpos, blockstate.setValue(NailsBlock.STAGE, stage + 1));
@@ -84,15 +88,15 @@ public class IronHammerItem extends TieredItem
                     world.setBlockAndUpdate(blockpos.relative(blockstate.getValue(BlockStateProperties.FACING)), block.defaultBlockState());
                 }
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
             Block block = BLOCK_CRACKING_MAP.get(world.getBlockState(blockpos).getBlock());
             if (block != null)
             {
-                world.playSound(context.getPlayer(), blockpos, SoundEvents.STONE_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(context.getPlayer(), blockpos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
                 world.setBlockAndUpdate(blockpos, block.defaultBlockState());
                 context.getPlayer().getCooldowns().addCooldown(this, 20);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 
@@ -104,56 +108,54 @@ public class IronHammerItem extends TieredItem
     {
         if (getCooldown(stack) == 0)
         {
-            target.addEffect(new EffectInstance(ModEffects.STUNNED.get(), 50, 1));
-            stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+            target.addEffect(new MobEffectInstance(ModEffects.STUNNED.get(), 50, 1));
+            stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             setCooldown(stack, 200);
         }
         return true;
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
             stack.hurtAndBreak(1, entityLiving, (entity) -> {
-                entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+                entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
             });
         }
         return true;
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
+        return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material != Material.METAL && material != Material.HEAVY_METAL && material != Material.STONE ? super.getDestroySpeed(stack, state) : ItemTier.IRON.getSpeed();
+        return material != Material.METAL && material != Material.HEAVY_METAL && material != Material.STONE ? super.getDestroySpeed(stack, state) : Tiers.IRON.getSpeed();
     }
 
     @Override
-    public boolean isCorrectToolForDrops(BlockState blockIn) {
-        int i = this.getTier().getLevel();
-        if (blockIn.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE) {
-            return i >= blockIn.getHarvestLevel();
+    public boolean isCorrectToolForDrops(BlockState state) {
+        if (state.is(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            return TierSortingRegistry.isCorrectTierForDrops(Tiers.IRON, state);
         }
-        Material material = blockIn.getMaterial();
-        return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
+        return false;
     }
 
     public static int getCooldown(ItemStack itemStack) {
-        CompoundNBT compoundnbt = itemStack.getTag();
+        CompoundTag compoundnbt = itemStack.getTag();
         return compoundnbt == null ? 0 : compoundnbt.getInt("coolDown");
     }
 
     public static void setCooldown(ItemStack itemStack, int amount) {
-        CompoundNBT compoundnbt = itemStack.getOrCreateTag();
+        CompoundTag compoundnbt = itemStack.getOrCreateTag();
         compoundnbt.putInt("coolDown", amount);
     }
 
     @Override
-    public void inventoryTick(ItemStack itemStack, World world, Entity entity, int i, boolean b)
+    public void inventoryTick(ItemStack itemStack, Level world, Entity entity, int i, boolean b)
     {
         int cooldown = getCooldown(itemStack);
         if (cooldown > 0) {

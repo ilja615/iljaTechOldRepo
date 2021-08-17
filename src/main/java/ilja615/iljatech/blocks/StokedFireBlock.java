@@ -1,37 +1,42 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.util.interactions.Heat;
-import net.minecraft.block.*;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Map;
 import java.util.Random;
 
-public class StokedFireBlock extends AbstractFireBlock
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class StokedFireBlock extends BaseFireBlock
 {
-    private static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
+    private static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
         return facingProperty.getKey() != Direction.DOWN;
     }).collect(Util.toMap());
     public static final IntegerProperty AIR = IntegerProperty.create("air", 0, 3);
 
-    public StokedFireBlock(AbstractBlock.Properties properties) {
+    public StokedFireBlock(BlockBehaviour.Properties properties) {
         super(properties, 3.0F);
         this.registerDefaultState(this.stateDefinition.any().setValue(AIR, 3));
     }
 
-    public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving)
+    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving)
     {
         if (worldIn.random.nextInt(16) == 0)
         {
@@ -41,7 +46,7 @@ public class StokedFireBlock extends AbstractFireBlock
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (!state.hasProperty(AIR)) return;
@@ -60,7 +65,7 @@ public class StokedFireBlock extends AbstractFireBlock
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState();
     }
@@ -71,13 +76,13 @@ public class StokedFireBlock extends AbstractFireBlock
      * returns its solidified counterpart.
      * Note that this method should ideally consider only the specific face passed in.
      */
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         int amountAir = stateIn.getValue(AIR);
         return this.canSurvive(stateIn, worldIn, currentPos) ? this.defaultBlockState().setValue(AIR, amountAir) : Blocks.AIR.defaultBlockState();
     }
 
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockPos blockpos = pos.below();
         return worldIn.getBlockState(blockpos).isFaceSturdy(worldIn, blockpos, Direction.UP);
     }
@@ -86,7 +91,7 @@ public class StokedFireBlock extends AbstractFireBlock
         return true;
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(AIR);
     }

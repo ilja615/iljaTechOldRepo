@@ -1,23 +1,19 @@
 package ilja615.iljatech.tileentities;
 
 import ilja615.iljatech.blocks.BurnerBlock;
-import ilja615.iljatech.entity.AbstractGasEntity;
-import ilja615.iljatech.entity.SteamEntity;
-import ilja615.iljatech.init.ModEntities;
-import ilja615.iljatech.init.ModTileEntityTypes;
+import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.util.interactions.Heat;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CauldronBlock;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -29,15 +25,17 @@ import net.minecraftforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nonnull;
 
-public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
+public class BurnerBlockEntity extends BlockEntity
 {
     public NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
     private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
-    public LazyOptional<IItemHandlerModifiable> burnerItemStackHandler = LazyOptional.of(() -> new BurnerTileEntity.BurnerItemStackHandler(this));
+    public LazyOptional<IItemHandlerModifiable> burnerItemStackHandler = LazyOptional.of(() -> new BurnerBlockEntity.BurnerItemStackHandler(this));
     private int burnTime;
 
-    public BurnerTileEntity(TileEntityType<?> tileEntityTypeIn) { super(tileEntityTypeIn); }
-    public BurnerTileEntity() { this(ModTileEntityTypes.BURNER.get()); }
+    public BurnerBlockEntity(BlockPos p_155229_, BlockState p_155230_)
+    {
+        super(ModBlockEntityTypes.BURNER.get(), p_155229_, p_155230_);
+    }
 
     public NonNullList<ItemStack> getItems() {
         return this.items;
@@ -47,45 +45,44 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
         this.items = items;
     }
 
-    @Override
-    public void tick()
+    public static void tick(Level level, BlockPos pos, BlockState state, BurnerBlockEntity blockEntity)
     {
-        boolean flag = this.isBurning();
+        boolean flag = blockEntity.isBurning();
         boolean flag1 = false;
-        if (this.isBurning()) {
-            --this.burnTime;
-            if (this.burnTime % 100 == 0)
+        if (blockEntity.isBurning()) {
+            --blockEntity.burnTime;
+            if (blockEntity.burnTime % 100 == 0)
             {
-                Heat.emitHeat(this.level, this.worldPosition);
+                Heat.emitHeat(level, pos);
             }
         }
-        if (!this.level.isClientSide) {
-            ItemStack itemstack = this.items.get(0);
-            if (!this.isBurning())
+        if (!level.isClientSide) {
+            ItemStack itemstack = blockEntity.items.get(0);
+            if (!blockEntity.isBurning())
             {
-                this.burnTime = getBurnTime(itemstack);
-                if (this.isBurning())
+                blockEntity.burnTime = blockEntity.getBurnTime(itemstack);
+                if (blockEntity.isBurning())
                 {
                     flag1 = true;
                     if (itemstack.hasContainerItem())
-                        this.items.set(0, itemstack.getContainerItem());
+                        blockEntity.items.set(0, itemstack.getContainerItem());
                     else
                     if (!itemstack.isEmpty()) {
                         Item item = itemstack.getItem();
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
-                            this.items.set(0, itemstack.getContainerItem());
+                            blockEntity.items.set(0, itemstack.getContainerItem());
                         }
                     }
                 }
             }
-            if (flag != this.isBurning()) {
+            if (flag != blockEntity.isBurning()) {
                 flag1 = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(BurnerBlock.LIT, Boolean.valueOf(this.isBurning())), 3);
+                level.setBlock(pos, level.getBlockState(pos).setValue(BurnerBlock.LIT, Boolean.valueOf(blockEntity.isBurning())), 3);
             }
         }
         if (flag1) {
-            this.setChanged();
+            blockEntity.setChanged();
         }
     }
 
@@ -94,20 +91,20 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound)
+    public CompoundTag save(CompoundTag compound)
     {
         super.save(compound);
-        ItemStackHelper.saveAllItems(compound, this.items);
+        ContainerHelper.saveAllItems(compound, this.items);
         compound.putInt("BurnTime", this.burnTime);
         return compound;
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compound)
+    public void load(CompoundTag compound)
     {
-        super.load(blockState, compound);
+        super.load(compound);
         this.items = NonNullList.withSize(this.items.size(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.items);
+        ContainerHelper.loadAllItems(compound, this.items);
         burnerItemStackHandler.ifPresent(h ->
         {
             for (int i = 0; i < h.getSlots(); i++)
@@ -119,7 +116,7 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    protected void invalidateCaps()
+    public void invalidateCaps()
     {
         this.burnerItemStackHandler.invalidate();
         super.invalidateCaps();
@@ -144,9 +141,9 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
 
     private class BurnerItemStackHandler extends ItemStackHandler implements IItemHandler
     {
-        private final BurnerTileEntity tile;
+        private final BurnerBlockEntity tile;
 
-        public BurnerItemStackHandler(BurnerTileEntity te)
+        public BurnerItemStackHandler(BurnerBlockEntity te)
         {
             super(1);
             tile = te;
@@ -165,7 +162,7 @@ public class BurnerTileEntity extends TileEntity implements ITickableTileEntity
             return 0;
         } else {
             Item item = fuel.getItem();
-            return ForgeHooks.getBurnTime(fuel);
+            return ForgeHooks.getBurnTime(fuel, RecipeType.SMELTING);
         }
     }
 }

@@ -1,12 +1,12 @@
 package ilja615.iljatech.util;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-public class CraftingInventoryWrapper extends CraftingInventory
+public class CraftingInventoryWrapper extends CraftingContainer
 {
 
     private final IItemHandlerModifiable inv;

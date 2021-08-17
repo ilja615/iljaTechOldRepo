@@ -1,0 +1,24 @@
+{
+  "variants":
+  {
+    "facing=east":
+    {
+      "model": "iljatech:block/research_table",
+      "y": 90
+    },
+    "facing=north":
+    {
+      "model": "iljatech:block/research_table"
+    },
+    "facing=south":
+    {
+      "model": "iljatech:block/research_table",
+      "y": 180
+    },
+    "facing=west":
+    {
+      "model": "iljatech:block/research_table",
+      "y": 270
+    }
+  }
+}

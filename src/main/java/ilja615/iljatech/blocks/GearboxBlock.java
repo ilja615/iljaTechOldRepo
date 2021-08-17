@@ -4,25 +4,22 @@ import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.power.IMechanicalPowerAccepter;
 import ilja615.iljatech.power.IMechanicalPowerSender;
 import ilja615.iljatech.power.MechanicalPower;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import org.spongepowered.asm.mixin.Interface;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMechanicalPowerSender
 {
@@ -35,7 +32,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (state.getBlock() != this) { return; }
@@ -68,21 +65,21 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     }
 
     @Override
-    public void receivePower(World world, BlockPos thisPos, Direction sideFrom, int amount)
+    public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
     {
         world.getBlockTicks().scheduleTick(thisPos, this, 10);
         IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
     }
 
     @Override
-    public boolean acceptsPower(World world, BlockPos thisPos, Direction sideFrom)
+    public boolean acceptsPower(Level world, BlockPos thisPos, Direction sideFrom)
     {
         BlockState state = world.getBlockState(thisPos);
         return (state.hasProperty(FACING) && state.getValue(FACING) == sideFrom && state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning());
     }
 
     @Override
-    public boolean sendPower(World world, BlockPos thisPos, Direction face, int amount)
+    public boolean sendPower(Level world, BlockPos thisPos, Direction face, int amount)
     {
         BlockState state = world.getBlockState(thisPos);
         if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
@@ -95,7 +92,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
         }
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection());
     }
@@ -106,7 +103,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
         return PushReaction.NORMAL;
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(ModProperties.MECHANICAL_POWER, FACING);
     }
