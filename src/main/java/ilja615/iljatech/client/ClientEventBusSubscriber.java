@@ -2,9 +2,12 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.client.gui.CrafterMachineScreen;
+import ilja615.iljatech.client.models.PetrolymerHelmetModel;
+import ilja615.iljatech.client.render.ArmorRenderer;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import ilja615.iljatech.init.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -41,5 +44,12 @@ public class ClientEventBusSubscriber
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         ModEntityRenderRegistry.registerEntityRenderers(event);
+    }
+
+    @SubscribeEvent
+    public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)
+    {
+        event.registerLayerDefinition(ModEntityRenderRegistry.PETROLYMER_HELMT_LAYER, PetrolymerHelmetModel::createBodyLayer);
+        ((ArmorRenderer)ModItems.PETROLYMER_HELMET.get().asItem()).armorModel = new PetrolymerHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModEntityRenderRegistry.PETROLYMER_HELMT_LAYER));
     }
 }
