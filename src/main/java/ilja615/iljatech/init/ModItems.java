@@ -1,10 +1,7 @@
 package ilja615.iljatech.init;
 
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.client.models.PetrolymerHelmetModel;
-import ilja615.iljatech.client.render.ArmorRenderer;
 import ilja615.iljatech.items.IronHammerItem;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -30,7 +27,7 @@ public class ModItems
     public static final RegistryObject<Item> BOILED_EGG = ITEMS.register("boiled_egg", () -> new Item(ModProperties.BOILED_EGG_PROPERTY));
 
     // Armor
-    public static final RegistryObject<Item> PETROLYMER_HELMET = ITEMS.register("petrolymer_helmet", () -> new ArmorRenderer(ModArmorMaterials.PETROLYMER, EquipmentSlot.HEAD, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> PETROLYMER_HELMET = ITEMS.register("petrolymer_helmet", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.HEAD, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> PETROLYMER_CHESTPLATE = ITEMS.register("petrolymer_chestplate", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.CHEST, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> PETROLYMER_LEGGINGS = ITEMS.register("petrolymer_leggings", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.LEGS, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> PETROLYMER_BOOTS = ITEMS.register("petrolymer_boots", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
