@@ -18,6 +18,7 @@ public class PetrolymerHelmetModel<T extends LivingEntity> extends EntityModel<T
 	protected final ModelPart whisker2;
 	protected final ModelPart fin1;
 	protected final ModelPart fin2;
+	protected final ModelPart top_fin;
 
 	public PetrolymerHelmetModel(ModelPart part)
 	{
@@ -27,6 +28,7 @@ public class PetrolymerHelmetModel<T extends LivingEntity> extends EntityModel<T
 		this.whisker2 = part.getChild("whisker2");
 		this.fin1 = part.getChild("fin1");
 		this.fin2 = part.getChild("fin2");
+		this.top_fin = part.getChild("top_fin");
 	}
 
 	@Override
@@ -38,11 +40,12 @@ public class PetrolymerHelmetModel<T extends LivingEntity> extends EntityModel<T
 	{
 		MeshDefinition modelDefinition = new MeshDefinition();
 		PartDefinition def = modelDefinition.getRoot();
-		def.addOrReplaceChild("whisker1", CubeListBuilder.create().texOffs(0,0).addBox(-12.0F, -5.0F, -4.0F, 8, 5, 0, LayerDefinitions.INNER_ARMOR_DEFORMATION), PartPose.offset(0.0f, -6.5f,0.0f));
-		def.addOrReplaceChild("whisker2", CubeListBuilder.create().texOffs(0,5).mirror().addBox(4.0F, -5.0F, -4.0F, 8, 5, 0, LayerDefinitions.INNER_ARMOR_DEFORMATION), PartPose.offset(0.0f, -6.5f,0.0f));
+		def.addOrReplaceChild("whisker1", CubeListBuilder.create().texOffs(0,0).addBox(-11.2F, -3.0F, -5.0F, 8, 5, 0, new CubeDeformation(0.5F, 0.5f, 0.0f)), PartPose.offset(0.0f, -6.0f,0.0f));
+		def.addOrReplaceChild("whisker2", CubeListBuilder.create().texOffs(0,5).addBox(3.8F, -3.0F, -5.0F, 8, 5, 0, new CubeDeformation(0.5F, 0.5f, 0.0f)), PartPose.offset(0.0f, -6.0f,0.0f));
 
-		def.addOrReplaceChild("fin1", CubeListBuilder.create().texOffs(16,0).addBox(0.0F, -3.0F, 0.0F, 6, 6, 0, LayerDefinitions.INNER_ARMOR_DEFORMATION), PartPose.offsetAndRotation(4.0F, -10.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
-		def.addOrReplaceChild("fin2", CubeListBuilder.create().texOffs(16,6).addBox(-6.0F, -3.0F, 0.0F, 6, 6, 0, LayerDefinitions.INNER_ARMOR_DEFORMATION), PartPose.offsetAndRotation(-4.0F, -10.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+		def.addOrReplaceChild("fin1", CubeListBuilder.create().texOffs(16,8).addBox(-13.2F, -12.2F, 0.8F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.5F, 0.0f, 0.5f)), PartPose.ZERO);
+		def.addOrReplaceChild("fin2", CubeListBuilder.create().texOffs(32,8).addBox(5.5F, -12.2F, 0.8F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.5F, 0.0f, 0.5f)), PartPose.ZERO);
+		def.addOrReplaceChild("top_fin", CubeListBuilder.create().texOffs(16,0).addBox(0.0F, -25.0F, 0.8F, 0.0F, 8.0F, 8.0F, new CubeDeformation(0.0F, 0.5f, 0.5f)), PartPose.ZERO);
 
 		return LayerDefinition.create(modelDefinition, 64, 32);
 	}
@@ -61,5 +64,6 @@ public class PetrolymerHelmetModel<T extends LivingEntity> extends EntityModel<T
 		this.whisker2.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.fin1.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.fin2.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.top_fin.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

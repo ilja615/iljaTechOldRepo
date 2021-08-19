@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class PetrolymerHelmetLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M>
 {
-    // Absolem Jackdaw (Subaraki)'s help with making this custom armor model was great !! thx
+    // special thx to : Absolem Jackdaw (Subaraki) for helping me out
     private static final ResourceLocation ourTexture = new ResourceLocation(IljaTech.MOD_ID, "textures/models/armor/petrolymer_helmet.png");
 
     private final PetrolymerHelmetModel petrolymerHelmetModel;
