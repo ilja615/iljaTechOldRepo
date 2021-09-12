@@ -1,24 +1,19 @@
 package ilja615.iljatech;
 
-import ilja615.iljatech.blocks.NailsBlock;
-import ilja615.iljatech.client.ModEntityRenderRegistry;
+import ilja615.iljatech.entity.ElectricFishEntity;
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -58,12 +53,18 @@ public class IljaTech
                 blockItem.setRegistryName(block.getRegistryName());
                 registry.register(blockItem);
             });
+            ModEntities.registerEntitySpawnEggs(event); //It registers the spawn egg items
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void registerParticles(ParticleFactoryRegisterEvent event) {
             Minecraft.getInstance().particleEngine.register(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
             Minecraft.getInstance().particleEngine.register(ModParticles.STAR_PARTICLE.get(), StarParticle.Factory::new);
+        }
+
+        @SubscribeEvent
+        public static void entityAttributes(final EntityAttributeCreationEvent event) {
+            event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
         }
     }
 }

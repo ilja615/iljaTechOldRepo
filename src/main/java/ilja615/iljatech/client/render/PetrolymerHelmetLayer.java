@@ -2,7 +2,7 @@ package ilja615.iljatech.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.client.ModEntityRenderRegistry;
+import ilja615.iljatech.client.ClientEventBusSubscriber;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
 import ilja615.iljatech.init.ModItems;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ public class PetrolymerHelmetLayer<T extends LivingEntity, M extends HumanoidMod
     {
         super(owner);
 
-        petrolymerHelmetModel = new PetrolymerHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModEntityRenderRegistry.PETROLYMER_HELMET_LAYER));
+        petrolymerHelmetModel = new PetrolymerHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientEventBusSubscriber.PETROLYMER_HELMET_LAYER));
     }
 
     private void translateToHead(PoseStack matrixStack)

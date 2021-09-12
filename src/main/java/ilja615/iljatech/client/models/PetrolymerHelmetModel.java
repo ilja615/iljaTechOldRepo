@@ -45,7 +45,7 @@ public class PetrolymerHelmetModel<T extends LivingEntity> extends EntityModel<T
 
 		def.addOrReplaceChild("fin1", CubeListBuilder.create().texOffs(16,8).addBox(-13.2F, -12.2F, 0.8F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.5F, 0.0f, 0.5f)), PartPose.ZERO);
 		def.addOrReplaceChild("fin2", CubeListBuilder.create().texOffs(32,8).addBox(5.5F, -12.2F, 0.8F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.5F, 0.0f, 0.5f)), PartPose.ZERO);
-		def.addOrReplaceChild("top_fin", CubeListBuilder.create().texOffs(16,0).addBox(0.0F, -25.0F, 0.8F, 0.0F, 8.0F, 8.0F, new CubeDeformation(0.0F, 0.5f, 0.5f)), PartPose.ZERO);
+		def.addOrReplaceChild("top_fin", CubeListBuilder.create().texOffs(16,16).addBox(0.0F, -25.0F, 0.8F, 0.0F, 8.0F, 8.0F, new CubeDeformation(0.0F, 0.5f, 0.5f)), PartPose.ZERO);
 
 		return LayerDefinition.create(modelDefinition, 64, 32);
 	}

@@ -35,7 +35,8 @@ public class Heat
                     gasEntity.moveTo(startPosition.getX() + 0.5f, startPosition.getY() + 1.8f, startPosition.getZ() + 0.5f, 0.0f, 0.0F);
                     gasEntity.setDeltaMovement(0.0d, 0.05d, 0.0d);
                     level.addFreshEntity(gasEntity);
-// thx basti
+
+                    // Code for thing such as boil egg, thx basti
                     List<ItemEntity> itemEntityList= level.getEntitiesOfClass(ItemEntity.class, AABB.unitCubeFromLowerCorner(new Vec3(startPosition.getX(), startPosition.getY() + 1, startPosition.getZ())));
                     for (ItemEntity itemEntity : itemEntityList)
                     {

@@ -2,18 +2,24 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.client.gui.CrafterMachineScreen;
+import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
+import ilja615.iljatech.client.render.ElectricFishRender;
+import ilja615.iljatech.client.render.GassEntityRender;
 import ilja615.iljatech.client.render.PetrolymerHelmetLayer;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
+import ilja615.iljatech.init.ModEntities;
 import ilja615.iljatech.init.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -28,6 +34,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = IljaTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEventBusSubscriber
 {
+    public static ModelLayerLocation PETROLYMER_HELMET_LAYER = new ModelLayerLocation(new ResourceLocation("minecraft:player"), "petrolymer_helmet");
+
     @SubscribeEvent
     public static void ClientSetup(FMLClientSetupEvent event)
     {
@@ -50,13 +58,16 @@ public class ClientEventBusSubscriber
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event)
     {
-        ModEntityRenderRegistry.registerEntityRenderers(event);
+        event.registerEntityRenderer(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
+        event.registerEntityRenderer(ModEntities.IRON_NAILS_PROJECTILE.get(), (renderManager) -> new ThrownItemRenderer<>(renderManager, 2.0f, true));
+        event.registerEntityRenderer(ModEntities.ELECTRIC_FISH.get(), ElectricFishRender::new);
     }
 
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
-        event.registerLayerDefinition(ModEntityRenderRegistry.PETROLYMER_HELMET_LAYER, PetrolymerHelmetModel::createBodyLayer);
+        event.registerLayerDefinition(PETROLYMER_HELMET_LAYER, PetrolymerHelmetModel::createBodyLayer);
+        event.registerLayerDefinition(ElectricFishRender.ELECTRIC_FISH_LAYER, ElectricFishModel::createBodyLayer);
     }
 
     @SubscribeEvent
