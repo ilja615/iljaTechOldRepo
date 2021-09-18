@@ -38,6 +38,7 @@ public class IljaTech
         ModParticles.PARTICLES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModEffects.EFFECTS.register(modEventBus);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event){ }

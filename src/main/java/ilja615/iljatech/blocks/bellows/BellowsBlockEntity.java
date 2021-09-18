@@ -1,6 +1,5 @@
-package ilja615.iljatech.tileentities;
+package ilja615.iljatech.blocks.bellows;
 
-import ilja615.iljatech.blocks.BellowsBlock;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.util.interactions.Wind;

@@ -1,9 +1,8 @@
 package ilja615.iljatech.init;
 
-import ilja615.iljatech.power.MechanicalPower;
+import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import ilja615.iljatech.util.ModItemGroup;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 

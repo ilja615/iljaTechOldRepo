@@ -1,7 +1,6 @@
 package ilja615.iljatech.blocks;
 
-import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.power.IMechanicalPowerSender;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
@@ -18,8 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class CrankBlock extends Block implements IMechanicalPowerSender
 {

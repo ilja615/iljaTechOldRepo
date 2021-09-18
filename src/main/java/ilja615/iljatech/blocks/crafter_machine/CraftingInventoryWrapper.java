@@ -1,4 +1,4 @@
-package ilja615.iljatech.util;
+package ilja615.iljatech.blocks.crafter_machine;
 
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;

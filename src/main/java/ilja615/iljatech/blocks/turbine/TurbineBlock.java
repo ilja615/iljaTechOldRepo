@@ -1,12 +1,11 @@
-package ilja615.iljatech.blocks;
+package ilja615.iljatech.blocks.turbine;
 
 import ilja615.iljatech.entity.AbstractGasEntity;
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.power.IMechanicalPowerSender;
-import ilja615.iljatech.power.MechanicalPower;
-import ilja615.iljatech.tileentities.BellowsBlockEntity;
-import ilja615.iljatech.tileentities.TurbineBlockEntity;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
+import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.blocks.turbine.TurbineBlockEntity;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;

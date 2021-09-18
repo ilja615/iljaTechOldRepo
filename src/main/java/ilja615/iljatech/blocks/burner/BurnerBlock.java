@@ -1,8 +1,7 @@
-package ilja615.iljatech.blocks;
+package ilja615.iljatech.blocks.burner;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.tileentities.BellowsBlockEntity;
-import ilja615.iljatech.tileentities.BurnerBlockEntity;
+import ilja615.iljatech.blocks.burner.BurnerBlockEntity;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;

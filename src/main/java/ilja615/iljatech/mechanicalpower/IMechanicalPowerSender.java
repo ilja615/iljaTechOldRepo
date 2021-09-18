@@ -1,6 +1,5 @@
-package ilja615.iljatech.power;
+package ilja615.iljatech.mechanicalpower;
 
-import ilja615.iljatech.init.ModProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

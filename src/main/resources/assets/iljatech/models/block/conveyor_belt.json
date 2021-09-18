@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
 	"textures": {
 		"0": "iljatech:block/iron_scaffolding",
 		"1": "iljatech:block/conveyor_belt_side",

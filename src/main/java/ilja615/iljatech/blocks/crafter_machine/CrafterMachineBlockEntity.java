@@ -1,9 +1,7 @@
-package ilja615.iljatech.tileentities;
+package ilja615.iljatech.blocks.crafter_machine;
 
-import ilja615.iljatech.blocks.CrafterMachineBlock;
 import ilja615.iljatech.containers.CrafterMachineContainer;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.util.CraftingInventoryWrapper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;

@@ -1,7 +1,7 @@
-package ilja615.iljatech.blocks;
+package ilja615.iljatech.blocks.crafter_machine;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.tileentities.CrafterMachineBlockEntity;
+import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlockEntity;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;

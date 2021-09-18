@@ -3,8 +3,13 @@ package ilja615.iljatech.init;
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.*;
 import ilja615.iljatech.blocks.RodBlock;
+import ilja615.iljatech.blocks.bellows.BellowsBlock;
+import ilja615.iljatech.blocks.burner.BurnerBlock;
+import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlock;
+import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlock;
+import ilja615.iljatech.blocks.elongating_mill.ElongatingMillBlock;
+import ilja615.iljatech.blocks.turbine.TurbineBlock;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -48,6 +53,7 @@ public class ModBlocks
     public static final RegistryObject<Block> CRANK = BLOCKS.register("crank", () -> new CrankBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().noCollission()));
     public static final RegistryObject<Block> TURBINE = BLOCKS.register("turbine", () -> new TurbineBlock(BlockBehaviour.Properties.of(Material.METAL)));
     public static final RegistryObject<Block> CONVEYOR_BELT = BLOCKS.register("conveyor_belt", () -> new ConveyorBeltBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion()));
+    public static final RegistryObject<Block> ELONGATING_MILL = BLOCKS.register("elongating_mill", () -> new ElongatingMillBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion()));
 
     // Thermal
     public static final RegistryObject<Block> BURNER = BLOCKS.register("burner", () -> new BurnerBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS).lightLevel(ModUtils.getLightValueLit(13))));

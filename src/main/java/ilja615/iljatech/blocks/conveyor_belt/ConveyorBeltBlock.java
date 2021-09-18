@@ -1,11 +1,10 @@
-package ilja615.iljatech.blocks;
+package ilja615.iljatech.blocks.conveyor_belt;
 
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.power.IMechanicalPowerAccepter;
-import ilja615.iljatech.power.MechanicalPower;
-import ilja615.iljatech.tileentities.BellowsBlockEntity;
-import ilja615.iljatech.tileentities.ConveyorBeltBlockEntity;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
+import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlockEntity;
 import ilja615.iljatech.util.RotationDirection;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;

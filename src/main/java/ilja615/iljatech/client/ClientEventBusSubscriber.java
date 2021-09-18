@@ -49,6 +49,7 @@ public class ClientEventBusSubscriber
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.CONVEYOR_BELT.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_SCAFFOLDING.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RESEARCH_TABLE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.ELONGATING_MILL.get(), RenderType.cutout());
 
         //item properties registration
         event.enqueueWork(() -> ItemProperties.register(ModItems.IRON_HAMMER.get(), new ResourceLocation(IljaTech.MOD_ID, "cooldown"),

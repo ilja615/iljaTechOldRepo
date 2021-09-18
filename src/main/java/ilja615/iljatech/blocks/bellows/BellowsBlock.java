@@ -1,8 +1,8 @@
-package ilja615.iljatech.blocks;
+package ilja615.iljatech.blocks.bellows;
 
 import ilja615.iljatech.init.ModItems;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.tileentities.BellowsBlockEntity;
+import ilja615.iljatech.blocks.bellows.BellowsBlockEntity;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;

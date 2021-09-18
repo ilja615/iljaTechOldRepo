@@ -1,6 +1,5 @@
-package ilja615.iljatech.tileentities;
+package ilja615.iljatech.blocks.burner;
 
-import ilja615.iljatech.blocks.BurnerBlock;
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.util.interactions.Heat;
 import net.minecraft.core.BlockPos;

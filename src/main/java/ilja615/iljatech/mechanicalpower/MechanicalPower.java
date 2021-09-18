@@ -1,4 +1,4 @@
-package ilja615.iljatech.power;
+package ilja615.iljatech.mechanicalpower;
 
 import net.minecraft.util.StringRepresentable;
 

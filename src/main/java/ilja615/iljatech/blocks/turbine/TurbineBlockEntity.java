@@ -1,11 +1,10 @@
-package ilja615.iljatech.tileentities;
+package ilja615.iljatech.blocks.turbine;
 
-import ilja615.iljatech.blocks.TurbineBlock;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.power.IMechanicalPowerAccepter;
-import ilja615.iljatech.power.MechanicalPower;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
+import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DirectionalBlock;

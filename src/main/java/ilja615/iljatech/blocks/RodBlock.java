@@ -1,9 +1,9 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.power.IMechanicalPowerAccepter;
-import ilja615.iljatech.power.IMechanicalPowerSender;
-import ilja615.iljatech.power.MechanicalPower;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
+import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
+import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;

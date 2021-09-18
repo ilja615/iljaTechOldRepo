@@ -3,7 +3,7 @@ package ilja615.iljatech.containers;
 import ilja615.iljatech.containers.other_stuff.MaxStackSize1Slot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
-import ilja615.iljatech.tileentities.CrafterMachineBlockEntity;
+import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
