@@ -1,7 +1,13 @@
 package ilja615.iljatech.util;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.function.ToIntFunction;
 
@@ -12,5 +18,17 @@ public class ModUtils
         return (state) -> {
             return state.getValue(BlockStateProperties.LIT) ? lightValue : 0;
         };
+    }
+
+    // Used for any block that has item handler capability, to drop the items
+    public static void DropContentsOfItemHandler(Level level, BlockPos pos, IItemHandlerModifiable handler)
+    {
+        final int size = handler.getSlots();
+        NonNullList<ItemStack> items = NonNullList.withSize(size, ItemStack.EMPTY);
+
+        for (int i = 0; i < size; i++)
+            items.set(i, handler.getStackInSlot(i));
+
+        Containers.dropContents(level, pos, items);
     }
 }

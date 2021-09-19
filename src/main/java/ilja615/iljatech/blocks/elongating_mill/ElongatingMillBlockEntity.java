@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -32,14 +33,13 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.rmi.UnexpectedException;
+import java.util.Arrays;
+import java.util.List;
 
 public class ElongatingMillBlockEntity extends BlockEntity
 {
-    public NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
-    private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
     public LazyOptional<IItemHandlerModifiable> elongatingMillItemStackHandler = LazyOptional.of(() -> new ElongatingMillBlockEntity.ElongatingMillItemStackHandler(this));
     private int processingTime;
-    protected RecipeWrapper wrapper;
 
     public ElongatingMillBlockEntity(BlockPos p_155229_, BlockState p_155230_)
     {
@@ -47,61 +47,35 @@ public class ElongatingMillBlockEntity extends BlockEntity
     }
 
     @Nullable
-    public ElongationRecipeType getRecipe() {
-        assert level != null;
-        if (wrapper == null)
-            wrapper = new RecipeWrapper(elongatingMillItemStackHandler.orElseThrow(NullPointerException::new));
-        return level.getRecipeManager().getRecipeFor(ModRecipeSerializers.Types.ELONGATION, wrapper, level).orElse(null);
+    public List<ElongationRecipeType> getRecipes()
+    {
+        return level.getRecipeManager().getAllRecipesFor(ModRecipeSerializers.Types.ELONGATION);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ElongatingMillBlockEntity blockEntity)
     {
-        boolean flag = blockEntity.isProcessing();
-        boolean flag1 = false;
-        if (blockEntity.isProcessing())
+        blockEntity.processingTime++;
+        if (!level.isClientSide && blockEntity.processingTime == 100)
         {
-            if (state.hasProperty(ModProperties.MECHANICAL_POWER))
+            blockEntity.elongatingMillItemStackHandler.ifPresent(itemHandler ->
             {
-                if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
+                List<ElongationRecipeType> recipes = blockEntity.getRecipes();
+                for (ElongationRecipeType r : recipes)
                 {
-                    --blockEntity.processingTime;
-                }
-            }
-            if (blockEntity.processingTime == 0)
-            {
-                // Now the process is finished.
-                ElongationRecipeType recipe = blockEntity.getRecipe();
-                assert recipe != null;
-                if (recipe.ingredient.getItems()[0].getItem() == blockEntity.items.get(0).getItem())
-                {
-                    blockEntity.items.get(0).shrink(1);
-                    blockEntity.items.set(1, recipe.result);
-                }
-            }
-        }
-        if (!level.isClientSide) {
-            ItemStack itemstack = blockEntity.items.get(0);
-            if (!blockEntity.isProcessing())
-            {
-                blockEntity.processingTime = itemstack.isEmpty() ? 0 : 60;
-                if (blockEntity.isProcessing())
-                {
-                    flag1 = true;
-                    if (!itemstack.isEmpty()) {
-                        Item item = itemstack.getItem();
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            blockEntity.items.set(0, itemstack.getContainerItem());
-                        }
+                    System.out.println("Recipe ingredient: " + Arrays.toString(r.ingredient.getItems()) + " Recipe result: " + r.result + " First item present: " + itemHandler.getStackInSlot(0) + " Second item present: " + itemHandler.getStackInSlot(1));
+                    if (itemHandler.getStackInSlot(1).isEmpty())
+                    {
+                        itemHandler.getStackInSlot(0).shrink(1);
+                        itemHandler.setStackInSlot(1, r.result);
+                    } else if (itemHandler.getStackInSlot(1).getItem() == r.result.getItem() && itemHandler.getStackInSlot(1).getCount() + r.result.getCount() <= itemHandler.getStackInSlot(1).getMaxStackSize()) {
+                        // In this case the result itemstack is added to what was already there
+                        itemHandler.getStackInSlot(0).shrink(1);
+                        itemHandler.getStackInSlot(1).grow(r.result.getCount());
                     }
+                    System.out.println("(AFTER CRAFT) Recipe ingredient: " + Arrays.toString(r.ingredient.getItems()) + " Recipe result: " + r.result + " First item present: " + itemHandler.getStackInSlot(0) + " Second item present: " + itemHandler.getStackInSlot(1));
                 }
-            }
-            if (flag != blockEntity.isProcessing()) {
-                flag1 = true;
-            }
-        }
-        if (flag1) {
-            blockEntity.setChanged();
+            });
+            blockEntity.processingTime = 0;
         }
     }
 
@@ -109,19 +83,11 @@ public class ElongatingMillBlockEntity extends BlockEntity
         return this.processingTime > 0;
     }
 
-    public NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-
-    public void setItems(NonNullList<ItemStack> items) {
-        this.items = items;
-    }
-
     @Override
     public CompoundTag save(CompoundTag compound)
     {
         super.save(compound);
-        ContainerHelper.saveAllItems(compound, this.items);
+        elongatingMillItemStackHandler.ifPresent(iItemHandlerModifiable -> ((ItemStackHandler)iItemHandlerModifiable).serializeNBT());
         compound.putInt("ProcessingTime", this.processingTime);
         return compound;
     }
@@ -130,15 +96,7 @@ public class ElongatingMillBlockEntity extends BlockEntity
     public void load(CompoundTag compound)
     {
         super.load(compound);
-        this.items = NonNullList.withSize(this.items.size(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(compound, this.items);
-        elongatingMillItemStackHandler.ifPresent(h ->
-        {
-            for (int i = 0; i < h.getSlots(); i++)
-            {
-                h.setStackInSlot(i, items.get(i));
-            }
-        });
+        elongatingMillItemStackHandler.ifPresent(iItemHandlerModifiable -> ((ItemStackHandler)iItemHandlerModifiable).deserializeNBT(compound));
         this.processingTime = compound.getInt("ProcessingTime");
     }
 
@@ -179,7 +137,6 @@ public class ElongatingMillBlockEntity extends BlockEntity
         @Override
         protected void onContentsChanged(int slot)
         {
-            tile.items.set(slot, this.stacks.get(slot));
             tile.setChanged();
         }
     }

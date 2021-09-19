@@ -5,9 +5,12 @@ import ilja615.iljatech.blocks.elongating_mill.ElongatingMillBlockEntity;
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.util.ModUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -58,9 +62,9 @@ public class ElongatingMillBlock extends BaseEntityBlock implements IMechanicalP
         if (state.getBlock() != newState.getBlock())
         {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof ElongatingMillBlockEntity)
+            if (tileEntity instanceof ElongatingMillBlockEntity elongatingMillBlockEntity)
             {
-                Containers.dropContents(worldIn, pos, ((ElongatingMillBlockEntity)tileEntity).getItems());
+                elongatingMillBlockEntity.elongatingMillItemStackHandler.ifPresent(itemHandler -> ModUtils.DropContentsOfItemHandler(worldIn, pos, itemHandler));
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -71,22 +75,15 @@ public class ElongatingMillBlock extends BaseEntityBlock implements IMechanicalP
     {
         ItemStack stack = player.getItemInHand(handIn);
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-        if (tileEntity instanceof ElongatingMillBlockEntity)
+        if (tileEntity instanceof ElongatingMillBlockEntity elongatingMillBlockEntity)
         {
-            if (!((ElongatingMillBlockEntity)tileEntity).items.get(1).isEmpty())
+            elongatingMillBlockEntity.elongatingMillItemStackHandler.ifPresent(h ->
             {
-                if (player.getMainHandItem().isEmpty())
-                    player.setItemInHand(InteractionHand.MAIN_HAND, ((ElongatingMillBlockEntity)tileEntity).items.get(1));
-                else
-                    worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), ((ElongatingMillBlockEntity)tileEntity).items.get(1)));
-
-                ((ElongatingMillBlockEntity)tileEntity).items.set(1, ItemStack.EMPTY);
-            } else {
                 final ItemStack[] newStack = new ItemStack[]{stack};
-                ((ElongatingMillBlockEntity)tileEntity).elongatingMillItemStackHandler.ifPresent(h -> newStack[0] = h.insertItem(0, stack, false));
+                newStack[0] = h.insertItem(0, stack, false);
                 player.setItemInHand(handIn, newStack[0]);
-                return InteractionResult.SUCCESS;
-            }
+            });
+            return InteractionResult.SUCCESS;
         }
         return super.use(state, worldIn, pos, player, handIn, hit);
     }

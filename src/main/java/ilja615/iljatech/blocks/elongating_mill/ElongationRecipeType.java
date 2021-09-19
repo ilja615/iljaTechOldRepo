@@ -84,7 +84,7 @@ public class ElongationRecipeType implements Recipe<Container>
         public ElongationRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
         {
             Ingredient ingredient;
-            ingredient = Ingredient.fromJson(GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredient"));
+            ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
             String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
             int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
             ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
