@@ -1,10 +1,13 @@
 package ilja615.iljatech;
 
+import ilja615.iljatech.blocks.elongating_mill.ElongatingMillSpecialRenderer;
 import ilja615.iljatech.entity.ElectricFishEntity;
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -14,10 +17,15 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static ilja615.iljatech.IljaTech.MOD_ID;
 
@@ -30,6 +38,7 @@ public class IljaTech
     {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
+        modEventBus.addListener(this::clientSetup);
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
@@ -41,12 +50,31 @@ public class IljaTech
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
     }
 
-    private void setup(final FMLCommonSetupEvent event){ }
+    private void setup(final FMLCommonSetupEvent event)
+    {
+        event.enqueueWork(IljaTech::afterCommonSetup);
+    }
+
+    static void afterCommonSetup()
+    {
+        System.out.println("IljaTech afterCommonSetup now run.");
+    }
+
+    private void clientSetup(final FMLClientSetupEvent event)
+    {
+        event.enqueueWork(IljaTech::afterClientSetup);
+    }
+
+    static void afterClientSetup()
+    {
+        System.out.println("IljaTech afterClientSetup now run.");
+        BlockEntityRenderers.register(ModBlockEntityTypes.ELONGATING_MILL.get(), ElongatingMillSpecialRenderer::new);
+    }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
+        public static void registerItems(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> registry = event.getRegistry();
             ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block ->
             {

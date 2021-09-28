@@ -9,6 +9,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.Item;
@@ -39,11 +42,17 @@ import java.util.List;
 public class ElongatingMillBlockEntity extends BlockEntity
 {
     public LazyOptional<IItemHandlerModifiable> elongatingMillItemStackHandler = LazyOptional.of(() -> new ElongatingMillBlockEntity.ElongatingMillItemStackHandler(this));
+
     private int processingTime;
 
     public ElongatingMillBlockEntity(BlockPos p_155229_, BlockState p_155230_)
     {
         super(ModBlockEntityTypes.ELONGATING_MILL.get(), p_155229_, p_155230_);
+    }
+
+    public int getProcessingTime()
+    {
+        return processingTime;
     }
 
     @Nullable
@@ -54,21 +63,30 @@ public class ElongatingMillBlockEntity extends BlockEntity
 
     public static void tick(Level level, BlockPos pos, BlockState state, ElongatingMillBlockEntity blockEntity)
     {
-        if (state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.OFF)
-            blockEntity.processingTime++;
-
         blockEntity.elongatingMillItemStackHandler.ifPresent(itemHandler ->
         {
             List<ElongationRecipeType> recipes = blockEntity.getRecipes();
             for (ElongationRecipeType r : recipes)
             {
                 ItemStack resultingStack = r.result.copy();
+                if (r.ingredient.getItems()[0].isEmpty() || itemHandler.getStackInSlot(0).isEmpty())
+                    break;
+
                 if (r.ingredient.getItems()[0].getItem() == itemHandler.getStackInSlot(0).getItem())
                 {
-                    if (!level.isClientSide && blockEntity.processingTime == 100)
+                    // A matching recipe was found. Now then:
+                    if (state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.OFF)
+                    {
+                        blockEntity.processingTime++;
+                        if (level.isClientSide)
+                            level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemHandler.getStackInSlot(0)), pos.getX() + 0.25f + 0.5 * level.random.nextFloat(), pos.getY()  + 0.25f + 0.5 * level.random.nextFloat(), pos.getZ()  + 0.25f + 0.5 * level.random.nextFloat(),  - 0.1f + 0.2 * level.random.nextFloat(), 0.1f + 0.2 * level.random.nextFloat(), - 0.1f + 0.2 * level.random.nextFloat());
+                    }
+
+                    if (blockEntity.processingTime >= 100)
                     {
                         if (itemHandler.getStackInSlot(1).isEmpty())
                         {
+                            // In this case a new result itemstack is added with 1 of the result.
                             itemHandler.getStackInSlot(0).shrink(1);
                             itemHandler.setStackInSlot(1, resultingStack);
                         } else if (itemHandler.getStackInSlot(1).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(1).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(1).getMaxStackSize()) {
@@ -78,9 +96,11 @@ public class ElongatingMillBlockEntity extends BlockEntity
                         }
                         blockEntity.processingTime = 0;
                         blockEntity.setChanged();
-                        return;
                     }
+                    return;
                 }
+                // In this case no recipe match was found. (Because otherwise it would have returned.)
+                blockEntity.processingTime = 0; // Resset the processingtime, in case the recipe got for example interrupted halfway through or so.
             }
         });
     }

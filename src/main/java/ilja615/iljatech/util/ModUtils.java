@@ -37,4 +37,12 @@ public class ModUtils
         for (int i = 0; i < handler.getSlots(); i++)
             handler.setStackInSlot(i, ItemStack.EMPTY);
     }
+
+    public static NonNullList<ItemStack> ListFromItemHandler(IItemHandlerModifiable handler)
+    {
+        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(handler.getSlots(), ItemStack.EMPTY);
+        for (int i = 0; i < handler.getSlots(); i++)
+            nonnulllist.set(i, handler.getStackInSlot(i));
+        return nonnulllist;
+    }
 }
