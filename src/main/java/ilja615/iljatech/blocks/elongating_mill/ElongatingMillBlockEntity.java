@@ -54,29 +54,35 @@ public class ElongatingMillBlockEntity extends BlockEntity
 
     public static void tick(Level level, BlockPos pos, BlockState state, ElongatingMillBlockEntity blockEntity)
     {
-        blockEntity.processingTime++;
-        if (!level.isClientSide && blockEntity.processingTime == 100)
+        if (state.getValue(ModProperties.MECHANICAL_POWER) != MechanicalPower.OFF)
+            blockEntity.processingTime++;
+
+        blockEntity.elongatingMillItemStackHandler.ifPresent(itemHandler ->
         {
-            blockEntity.elongatingMillItemStackHandler.ifPresent(itemHandler ->
+            List<ElongationRecipeType> recipes = blockEntity.getRecipes();
+            for (ElongationRecipeType r : recipes)
             {
-                List<ElongationRecipeType> recipes = blockEntity.getRecipes();
-                for (ElongationRecipeType r : recipes)
+                ItemStack resultingStack = r.result.copy();
+                if (r.ingredient.getItems()[0].getItem() == itemHandler.getStackInSlot(0).getItem())
                 {
-                    System.out.println("Recipe ingredient: " + Arrays.toString(r.ingredient.getItems()) + " Recipe result: " + r.result + " First item present: " + itemHandler.getStackInSlot(0) + " Second item present: " + itemHandler.getStackInSlot(1));
-                    if (itemHandler.getStackInSlot(1).isEmpty())
+                    if (!level.isClientSide && blockEntity.processingTime == 100)
                     {
-                        itemHandler.getStackInSlot(0).shrink(1);
-                        itemHandler.setStackInSlot(1, r.result);
-                    } else if (itemHandler.getStackInSlot(1).getItem() == r.result.getItem() && itemHandler.getStackInSlot(1).getCount() + r.result.getCount() <= itemHandler.getStackInSlot(1).getMaxStackSize()) {
-                        // In this case the result itemstack is added to what was already there
-                        itemHandler.getStackInSlot(0).shrink(1);
-                        itemHandler.getStackInSlot(1).grow(r.result.getCount());
+                        if (itemHandler.getStackInSlot(1).isEmpty())
+                        {
+                            itemHandler.getStackInSlot(0).shrink(1);
+                            itemHandler.setStackInSlot(1, resultingStack);
+                        } else if (itemHandler.getStackInSlot(1).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(1).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(1).getMaxStackSize()) {
+                            // In this case the result itemstack is added to what was already there
+                            itemHandler.getStackInSlot(0).shrink(1);
+                            itemHandler.getStackInSlot(1).grow(resultingStack.getCount());
+                        }
+                        blockEntity.processingTime = 0;
+                        blockEntity.setChanged();
+                        return;
                     }
-                    System.out.println("(AFTER CRAFT) Recipe ingredient: " + Arrays.toString(r.ingredient.getItems()) + " Recipe result: " + r.result + " First item present: " + itemHandler.getStackInSlot(0) + " Second item present: " + itemHandler.getStackInSlot(1));
                 }
-            });
-            blockEntity.processingTime = 0;
-        }
+            }
+        });
     }
 
     private boolean isProcessing() {

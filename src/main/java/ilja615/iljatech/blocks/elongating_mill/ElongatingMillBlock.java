@@ -73,15 +73,28 @@ public class ElongatingMillBlock extends BaseEntityBlock implements IMechanicalP
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
-        ItemStack stack = player.getItemInHand(handIn);
+        ItemStack handStack = player.getItemInHand(handIn);
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
         if (tileEntity instanceof ElongatingMillBlockEntity elongatingMillBlockEntity)
         {
             elongatingMillBlockEntity.elongatingMillItemStackHandler.ifPresent(h ->
             {
-                final ItemStack[] newStack = new ItemStack[]{stack};
-                newStack[0] = h.insertItem(0, stack, false);
-                player.setItemInHand(handIn, newStack[0]);
+                if (player.getMainHandItem().isEmpty()) {
+                    if (!h.getStackInSlot(1).isEmpty()) {
+                        player.setItemInHand(InteractionHand.MAIN_HAND, h.getStackInSlot(1));
+                        h.setStackInSlot(1, ItemStack.EMPTY);
+                    } else if (!h.getStackInSlot(0).isEmpty()) {
+                        player.setItemInHand(InteractionHand.MAIN_HAND, h.getStackInSlot(0));
+                        h.setStackInSlot(0, ItemStack.EMPTY);
+                    }
+                } else if (player.getMainHandItem().getItem() instanceof ShovelItem) {
+                    ModUtils.DropContentsOfItemHandler(worldIn, pos.relative(state.getValue(FACING)), h);
+                    ModUtils.EmptySlotsOfItemHandler(h);
+                } else {
+                    final ItemStack[] newStack = new ItemStack[]{handStack};
+                    newStack[0] = h.insertItem(0, handStack, false);
+                    player.setItemInHand(handIn, newStack[0]);
+                }
             });
             return InteractionResult.SUCCESS;
         }

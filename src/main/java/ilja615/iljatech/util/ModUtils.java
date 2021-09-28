@@ -31,4 +31,10 @@ public class ModUtils
 
         Containers.dropContents(level, pos, items);
     }
+
+    public static void EmptySlotsOfItemHandler(IItemHandlerModifiable handler)
+    {
+        for (int i = 0; i < handler.getSlots(); i++)
+            handler.setStackInSlot(i, ItemStack.EMPTY);
+    }
 }
