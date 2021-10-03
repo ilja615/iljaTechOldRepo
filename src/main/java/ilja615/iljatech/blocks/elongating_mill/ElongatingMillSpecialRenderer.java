@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 
 public class ElongatingMillSpecialRenderer implements BlockEntityRenderer<ElongatingMillBlockEntity>
 {
-    private static final float SIZE = 0.375F;
+    private static final float SIZE = 0.75F;
 
     public ElongatingMillSpecialRenderer(BlockEntityRendererProvider.Context p_173602_) {
     }
