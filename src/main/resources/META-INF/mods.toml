@@ -1,10 +1,10 @@
 modLoader="javafml" #mandatory
-loaderVersion="[33,)" #mandatory
+loaderVersion="[39,)" #mandatory
 license="ARR" #mandatory
 credits="Credit to the people" #optional
 [[mods]] #mandatory
 modId="iljatech" #mandatory
-version="1.16.2-0.1" #mandatory
+version="1.18.1-0.1" #mandatory
 displayName="IljaTech" #mandatory
 description='''
 My tech mod

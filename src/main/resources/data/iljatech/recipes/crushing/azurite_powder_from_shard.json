@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:crushing",
+  "ingredient": {
+    "item": "iljatech:azurite_shard"
+  },
+  "result": "iljatech:azurite_powder",
+  "count": 1
+}

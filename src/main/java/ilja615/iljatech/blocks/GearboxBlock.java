@@ -56,7 +56,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
                     directions.forEach(direction -> sendPower(worldIn, pos, direction, (int)(Math.floor(power / ((double) directions.size())))));
             } else {
                 // There was nowhere to output to...
-                worldIn.getBlockTicks().scheduleTick(pos, this, 5);
+                worldIn.scheduleTick(pos, this, 5);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
             }
         }
@@ -65,7 +65,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     @Override
     public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
     {
-        world.getBlockTicks().scheduleTick(thisPos, this, 10);
+        world.scheduleTick(thisPos, this, 10);
         IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
     }
 
@@ -82,7 +82,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
         BlockState state = world.getBlockState(thisPos);
         if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
         {
-            world.getBlockTicks().scheduleTick(thisPos, this, 5);
+            world.scheduleTick(thisPos, this, 5);
             world.setBlockAndUpdate(thisPos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
             return true;
         } else {

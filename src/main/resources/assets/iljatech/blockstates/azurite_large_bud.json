@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "iljatech:block/azurite_large_bud",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "iljatech:block/azurite_large_bud",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iljatech:block/azurite_large_bud",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "iljatech:block/azurite_large_bud",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "iljatech:block/azurite_large_bud"
+    },
+    "facing=west": {
+      "model": "iljatech:block/azurite_large_bud",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

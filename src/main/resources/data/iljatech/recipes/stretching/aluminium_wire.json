@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:aluminium_rod"
+  },
+  "result": "iljatech:aluminium_wire",
+  "count": 2
+}

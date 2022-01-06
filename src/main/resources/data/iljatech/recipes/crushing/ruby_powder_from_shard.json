@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:crushing",
+  "ingredient": {
+    "item": "iljatech:ruby_shard"
+  },
+  "result": "iljatech:ruby_powder",
+  "count": 1
+}

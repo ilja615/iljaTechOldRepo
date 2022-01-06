@@ -1,0 +1,55 @@
+{
+  "variants":
+  {
+    "mechanical_power=off":
+    {
+      "model": "iljatech:block/crusher",
+      "y": 90
+    },
+    "mechanical_power=spinning_1":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_2":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_3":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_4":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_5":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_6":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_7":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=spinning_8":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    },
+    "mechanical_power=almost_stopping":
+    {
+      "model": "iljatech:block/crusher_on",
+      "y": 90
+    }
+  }
+}

@@ -1,12 +1,11 @@
 package ilja615.iljatech;
 
-import ilja615.iljatech.blocks.elongating_mill.ElongatingMillSpecialRenderer;
+import ilja615.iljatech.blocks.stretcher.StretcherSpecialRenderer;
 import ilja615.iljatech.entity.ElectricFishEntity;
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -20,12 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.HashSet;
-import java.util.Set;
+import net.minecraftforge.registries.RegistryObject;
 
 import static ilja615.iljatech.IljaTech.MOD_ID;
 
@@ -68,7 +63,7 @@ public class IljaTech
     static void afterClientSetup()
     {
         System.out.println("IljaTech afterClientSetup now run.");
-        BlockEntityRenderers.register(ModBlockEntityTypes.ELONGATING_MILL.get(), ElongatingMillSpecialRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntityTypes.STRETCHER.get(), StretcherSpecialRenderer::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

@@ -11,9 +11,9 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -26,6 +26,17 @@ public class ModItems
     public static final RegistryObject<Item> NICKEL_INGOT = ITEMS.register("nickel_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> CHROME_INGOT = ITEMS.register("chrome_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> BRONZE_INGOT = ITEMS.register("bronze_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> CONSTANTAN_INGOT = ITEMS.register("constantan_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> NICHROME_INGOT = ITEMS.register("nichrome_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
+
+    public static final RegistryObject<Item> AZURITE_SHARD = ITEMS.register("azurite_shard", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> CASSITERITE_SHARD = ITEMS.register("cassiterite_shard", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> AZURITE_POWDER = ITEMS.register("azurite_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> CASSITERITE_POWDER = ITEMS.register("cassiterite_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> RUBY_POWDER = ITEMS.register("ruby_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> AMETHYST_POWDER = ITEMS.register("amethyst_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
 
     public static final RegistryObject<Item> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new IronHammerItem(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> NAILGUN = ITEMS.register("nailgun", () -> new NailGunItem(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));

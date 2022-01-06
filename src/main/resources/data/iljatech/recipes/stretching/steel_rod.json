@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:steel_ingot"
+  },
+  "result": "iljatech:steel_rod",
+  "count": 2
+}

@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:iron_rod"
+  },
+  "result": "iljatech:iron_wire",
+  "count": 2
+}

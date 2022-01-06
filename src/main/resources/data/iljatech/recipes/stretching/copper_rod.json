@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": "iljatech:copper_rod",
+  "count": 2
+}

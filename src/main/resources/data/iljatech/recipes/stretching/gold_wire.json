@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:gold_rod"
+  },
+  "result": "iljatech:gold_wire",
+  "count": 2
+}

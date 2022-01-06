@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.ticks.ScheduledTick;
 
 public class StokedFireBlock extends BaseFireBlock
 {
@@ -42,7 +43,7 @@ public class StokedFireBlock extends BaseFireBlock
         {
             Heat.emitHeat(worldIn, pos);
         }
-        worldIn.getBlockTicks().scheduleTick(pos, this, 20);
+        worldIn.scheduleTick(pos, this, 20);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class StokedFireBlock extends BaseFireBlock
             worldIn.setBlockAndUpdate(pos, Blocks.FIRE.defaultBlockState());
         } else {
             worldIn.setBlockAndUpdate(pos, state.setValue(AIR, Math.max(0, air - 1)));
-            worldIn.getBlockTicks().scheduleTick(pos, this, 20);
+            worldIn.scheduleTick(pos, this, 20);
             if (rand.nextInt(16) == 0)
             {
                 Heat.emitHeat(worldIn, pos);

@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:constantan_rod"
+  },
+  "result": "iljatech:constantan_wire",
+  "count": 2
+}

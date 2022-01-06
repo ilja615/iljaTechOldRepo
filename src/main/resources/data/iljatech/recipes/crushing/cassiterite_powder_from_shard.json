@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:crushing",
+  "ingredient": {
+    "item": "iljatech:cassiterite_shard"
+  },
+  "result": "iljatech:cassiterite_powder",
+  "count": 1
+}

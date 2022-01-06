@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:constantan_ingot"
+  },
+  "result": "iljatech:constantan_rod",
+  "count": 2
+}

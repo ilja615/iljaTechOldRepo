@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "iljatech:nichrome_ingot"
+  },
+  "result": "iljatech:nichrome_rod",
+  "count": 2
+}

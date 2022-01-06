@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:crushing",
+  "ingredient": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "result": "iljatech:amethyst_powder",
+  "count": 1
+}

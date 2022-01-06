@@ -1,0 +1,8 @@
+{
+  "type": "iljatech:stretching",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": "iljatech:gold_rod",
+  "count": 2
+}

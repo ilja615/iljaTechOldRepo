@@ -5,5 +5,13 @@
   "block.iljatech.chrome_plate": "Chrome Plate",
   "block.iljatech.nickel_plate": "Nickel Plate",
   "block.iljatech.tin_plate": "Tin Plate",
-  "block.iljatech.crafter_machine": "Crafter Machine"
+  "block.iljatech.copper_plate": "Copper Plate",
+  "block.iljatech.crafter_machine": "Crafter Machine",
+  "block.iljatech.elongating_mill": "Elongating Mill",
+  "block.iljatech.conveyor_belt": "Conveyor Belt",
+  "block.iljatech.turbine": "Turbine",
+  "block.iljatech.gearbox": "Gearbox",
+  "block.iljatech.copper_rod": "Copper Rod",
+  "block.iljatech.copper_wire": "Copper Wire",
+  "death.attack.iljatech.barbed_wire": "%1$s was pricked to death by a barbed wire."
 }

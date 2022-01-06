@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "iljatech:block/azurite_medium_bud"
+  }
+}

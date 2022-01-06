@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.antlr.v4.runtime.misc.NotNull;
 
 public class CrafterMachineBlock extends BaseEntityBlock

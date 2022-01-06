@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "iljatech:block/steel_rod"
+    },
+    "facing=east": {
+      "model": "iljatech:block/steel_rod",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iljatech:block/steel_rod",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "iljatech:block/steel_rod",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "iljatech:block/steel_rod"
+    },
+    "facing=west": {
+      "model": "iljatech:block/steel_rod",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

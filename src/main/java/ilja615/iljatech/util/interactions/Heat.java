@@ -1,8 +1,10 @@
 package ilja615.iljatech.util.interactions;
 
+import ilja615.iljatech.blocks.crusher.CrushingRecipeType;
 import ilja615.iljatech.entity.AbstractGasEntity;
 import ilja615.iljatech.init.ModEntities;
 import ilja615.iljatech.init.ModItems;
+import ilja615.iljatech.init.ModRecipeSerializers;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,15 +38,26 @@ public class Heat
                     gasEntity.setDeltaMovement(0.0d, 0.05d, 0.0d);
                     level.addFreshEntity(gasEntity);
 
-                    // Code for thing such as boil egg, thx basti
+                    // Code for thing such as boil egg, thx basti for help with debugging
                     List<ItemEntity> itemEntityList= level.getEntitiesOfClass(ItemEntity.class, AABB.unitCubeFromLowerCorner(new Vec3(startPosition.getX(), startPosition.getY() + 1, startPosition.getZ())));
                     for (ItemEntity itemEntity : itemEntityList)
                     {
-                        if (itemEntity.getItem().getItem() == Items.EGG)
-                        {
-                            itemEntity.getItem().shrink(1);
-                            level.addFreshEntity(new ItemEntity(level, startPosition.getX() + 0.5d, startPosition.getY() + 1.5d, startPosition.getZ() + 0.5d, new ItemStack(ModItems.BOILED_EGG.get(), 1)));
+                        if (itemEntity.getItem().isEmpty())
                             break;
+
+                        List<BoilingRecipeType> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeSerializers.Types.BOILING);
+                        for (BoilingRecipeType r : recipes)
+                        {
+                            ItemStack resultingStack = r.result.copy();
+                            if (r.ingredient.getItems()[0].isEmpty() || itemEntity.getItem().isEmpty())
+                                break;
+
+                            if (r.ingredient.getItems()[0].getItem() == itemEntity.getItem().getItem())
+                            {
+                                itemEntity.getItem().shrink(1);
+                                level.addFreshEntity(new ItemEntity(level, startPosition.getX() + 0.5d, startPosition.getY() + 1.5d, startPosition.getZ() + 0.5d, resultingStack));
+                                break;
+                            }
                         }
                     }
                 }

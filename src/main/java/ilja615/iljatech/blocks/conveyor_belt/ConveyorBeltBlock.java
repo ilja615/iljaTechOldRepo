@@ -79,7 +79,7 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
     @Override
     public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
     {
-        world.getBlockTicks().scheduleTick(thisPos, this, 100);
+        world.scheduleTick(thisPos, this, 100);
         IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
     }
 
@@ -101,7 +101,7 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
         }
         else if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
-            worldIn.getBlockTicks().scheduleTick(pos, this, 10);
+            worldIn.scheduleTick(pos, this, 10);
             worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
         }
     }

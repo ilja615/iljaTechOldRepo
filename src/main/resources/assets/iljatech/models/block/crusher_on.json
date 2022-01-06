@@ -1,0 +1,62 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"0": "iljatech:block/copper_plate",
+		"2": "iljatech:block/crusher_on",
+		"3": "iljatech:block/crusher_upper_part",
+		"4": "iljatech:block/crusher_top",
+		"5": "iljatech:block/crusher_mill_on",
+		"particle": "iljatech:block/copper_plate"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#2"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#2"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [2, 8, 2],
+			"to": [14, 14, 14],
+			"faces": {
+				"north": {"uv": [0, 10, 12, 16], "texture": "#3"},
+				"east": {"uv": [0, 10, 12, 16], "texture": "#3"},
+				"south": {"uv": [0, 10, 12, 16], "texture": "#3"},
+				"west": {"uv": [0, 10, 12, 16], "texture": "#3"},
+				"up": {"uv": [0, 4, 12, 16], "texture": "#4"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#0"}
+			}
+		},
+		{
+			"from": [14, 14, 14],
+			"to": [2, 8, 2],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 6], "texture": "#3"},
+				"east": {"uv": [0, 0, 12, 6], "texture": "#3"},
+				"south": {"uv": [0, 0, 12, 6], "texture": "#3"},
+				"west": {"uv": [0, 0, 12, 6], "texture": "#3"},
+				"up": {"uv": [15, 0, 16, 1], "texture": "#4"},
+				"down": {"uv": [15, 0, 16, 1], "texture": "#4"}
+			}
+		},
+		{
+			"from": [2, 12, 2],
+			"to": [14, 12, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 0], "texture": "#5"},
+				"east": {"uv": [0, 0, 12, 0], "texture": "#5"},
+				"south": {"uv": [0, 0, 12, 0], "texture": "#5"},
+				"west": {"uv": [0, 0, 12, 0], "texture": "#5"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#5"},
+				"down": {"uv": [0, 0, 12, 12], "texture": "#5"}
+			}
+		}
+	]
+}
