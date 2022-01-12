@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/rail_curved",
-  "textures": {
-    "rail": "iljatech:block/barbed_wire_corner"
-  }
-}

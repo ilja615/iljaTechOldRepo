@@ -54,7 +54,7 @@ public class ModBlocks
     public static final RegistryObject<Block> STEEL_WIRE = BLOCKS.register("steel_wire", () -> new BaseWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
     public static final RegistryObject<Block> CONSTANTAN_WIRE = BLOCKS.register("constantan_wire", () -> new BaseWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
     public static final RegistryObject<Block> NICHROME_WIRE = BLOCKS.register("nichrome_wire", () -> new BaseWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(ModProperties.BARBED_WIRE_PROPERTY));
 
     // Nailed Planks
     public static final RegistryObject<Block> NAILED_OAK_PLANKS = BLOCKS.register("nailed_oak_planks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));

@@ -29,6 +29,7 @@ public class ModProperties
     public static final Block.Properties CRYSTAL_MEDIUM_BUD_PROPERTY = BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel(emission -> 2);
     public static final Block.Properties CRYSTAL_LARGE_BUD_PROPERTY = BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel(emission -> 1);
     public static final Block.Properties BUDDING_CRYSTAL_PROPERTY = BlockBehaviour.Properties.of(Material.AMETHYST).randomTicks().strength(1.5F).sound(SoundType.AMETHYST).requiresCorrectToolForDrops();
+    public static final Block.Properties BARBED_WIRE_PROPERTY = BlockBehaviour.Properties.of(Material.METAL).noCollission().requiresCorrectToolForDrops().strength(4.0F);
 
     //state properties
     public static final EnumProperty MECHANICAL_POWER = EnumProperty.create("mechanical_power", MechanicalPower.class);

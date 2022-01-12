@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -53,6 +54,7 @@ public class IljaTech
     static void afterCommonSetup()
     {
         System.out.println("IljaTech afterCommonSetup now run.");
+        ModFeatures.registerFeatures();
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
@@ -89,6 +91,11 @@ public class IljaTech
         @SubscribeEvent
         public static void entityAttributes(final EntityAttributeCreationEvent event) {
             event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
+        }
+
+        @SubscribeEvent
+        public void biomeModification(final BiomeLoadingEvent event) {
+            ModFeatures.addFeaturesToBiomes(event);
         }
     }
 }

@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/rail_flat",
+  "parent": "minecraft:block/cross",
   "textures": {
-    "rail": "iljatech:block/barbed_wire"
+    "cross": "iljatech:block/barbed_wire"
   }
 }
