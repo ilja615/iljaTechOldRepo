@@ -1,7 +1,9 @@
 package ilja615.iljatech;
 
 import ilja615.iljatech.blocks.stretcher.StretcherSpecialRenderer;
+import ilja615.iljatech.entity.AluminiumGolemEntity;
 import ilja615.iljatech.entity.ElectricFishEntity;
+import ilja615.iljatech.entity.SaltGolemEntity;
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.particles.StarParticle;
 import ilja615.iljatech.particles.SteamParticle;
@@ -10,6 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -36,6 +39,8 @@ public class IljaTech
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::clientSetup);
 
+        MinecraftForge.EVENT_BUS.addListener(this::biomeModification);
+
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
@@ -54,7 +59,7 @@ public class IljaTech
     static void afterCommonSetup()
     {
         System.out.println("IljaTech afterCommonSetup now run.");
-        ModFeatures.registerFeatures();
+        ModFeatures.registerFeatures(); //It registers features
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
@@ -65,7 +70,11 @@ public class IljaTech
     static void afterClientSetup()
     {
         System.out.println("IljaTech afterClientSetup now run.");
-        BlockEntityRenderers.register(ModBlockEntityTypes.STRETCHER.get(), StretcherSpecialRenderer::new);
+        ModBlockEntityTypes.registerBlockEntityRenderers(); //It registers block entity renderers
+    }
+
+    public void biomeModification(final BiomeLoadingEvent event) {
+        ModFeatures.addFeaturesToBiomes(event); //Add worldgen features
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -77,25 +86,19 @@ public class IljaTech
             {
                 final BlockItem blockItem = new BlockItem(block, ModProperties.ITEM_PROPERTY);
                 blockItem.setRegistryName(block.getRegistryName());
-                registry.register(blockItem);
+                registry.register(blockItem); //Register item for all the blocks
             });
             ModEntities.registerEntitySpawnEggs(event); //It registers the spawn egg items
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void registerParticles(ParticleFactoryRegisterEvent event) {
-            Minecraft.getInstance().particleEngine.register(ModParticles.STEAM_PARTICLE.get(), SteamParticle.Factory::new);
-            Minecraft.getInstance().particleEngine.register(ModParticles.STAR_PARTICLE.get(), StarParticle.Factory::new);
+            ModParticles.registerParticles(event); //It registers particles
         }
 
         @SubscribeEvent
         public static void entityAttributes(final EntityAttributeCreationEvent event) {
-            event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
-        }
-
-        @SubscribeEvent
-        public void biomeModification(final BiomeLoadingEvent event) {
-            ModFeatures.addFeaturesToBiomes(event);
+            ModEntities.CreateEntityAttributes(event); //It creates entity attributes
         }
     }
 }

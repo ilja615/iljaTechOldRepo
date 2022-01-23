@@ -69,7 +69,7 @@ public class CrusherBlockEntity extends BlockEntity
                             level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemHandler.getStackInSlot(0)), pos.getX() + 0.25f + 0.5 * level.random.nextFloat(), pos.getY()  + 0.25f + 0.5 * level.random.nextFloat(), pos.getZ()  + 0.25f + 0.5 * level.random.nextFloat(),  - 0.1f + 0.2 * level.random.nextFloat(), 0.1f + 0.2 * level.random.nextFloat(), - 0.1f + 0.2 * level.random.nextFloat());
                     }
 
-                    if (blockEntity.processingTime >= 100)
+                    if (blockEntity.processingTime >= 60)
                     {
                         if (itemHandler.getStackInSlot(1).isEmpty())
                         {

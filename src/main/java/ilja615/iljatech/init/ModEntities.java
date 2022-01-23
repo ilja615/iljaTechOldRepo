@@ -1,10 +1,7 @@
 package ilja615.iljatech.init;
 
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.entity.AbstractGasEntity;
-import ilja615.iljatech.entity.ElectricFishEntity;
-import ilja615.iljatech.entity.NailProjectileEntity;
-import ilja615.iljatech.entity.SteamEntity;
+import ilja615.iljatech.entity.*;
 import ilja615.iljatech.util.ModItemGroup;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -14,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -34,6 +32,14 @@ public class ModEntities
     public static final RegistryObject<EntityType<ElectricFishEntity>> ELECTRIC_FISH = ENTITY_TYPES.register("electric_fish",
             () -> ELECTRIC_FISH_TYPE);
 
+    public static final EntityType<AluminiumGolemEntity> ALUMINIUM_GOLEM_TYPE = EntityType.Builder.of(AluminiumGolemEntity::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:aluminium_golem");
+    public static final RegistryObject<EntityType<AluminiumGolemEntity>> ALUMINIUM_GOLEM = ENTITY_TYPES.register("aluminium_golem",
+            () -> ALUMINIUM_GOLEM_TYPE);
+
+    public static final EntityType<SaltGolemEntity> SALT_GOLEM_TYPE = EntityType.Builder.of(SaltGolemEntity::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:salt_golem");
+    public static final RegistryObject<EntityType<SaltGolemEntity>> SALT_GOLEM = ENTITY_TYPES.register("salt_golem",
+            () -> SALT_GOLEM_TYPE);
+
     public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)
     {
         event.getRegistry().registerAll(
@@ -46,5 +52,11 @@ public class ModEntities
         SpawnEggItem item = new SpawnEggItem(type, color1, color2, new Item.Properties().tab(ModItemGroup.instance));
         item.setRegistryName(name);
         return item;
+    }
+
+    public static void CreateEntityAttributes(final EntityAttributeCreationEvent event) {
+        event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
+        event.put(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolemEntity.createAttributes().build());
+        event.put(ModEntities.SALT_GOLEM.get(), SaltGolemEntity.createAttributes().build());
     }
 }
