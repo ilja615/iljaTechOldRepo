@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -18,13 +17,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.http.impl.conn.Wire;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 
 import java.util.Random;
 
-public class BaseWireBlock extends Block
+public class BaseWireBlock extends Block implements Fallable
 {
     protected static final VoxelShape FLAT_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     protected static final VoxelShape HALF_BLOCK_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
@@ -261,9 +262,20 @@ public class BaseWireBlock extends Block
         int i = getDistance(state, level, pos);
         BlockState blockstate = state.setValue(DISTANCE, Integer.valueOf(i));
         if (i == 7) {
-            level.addFreshEntity(new FallingBlockEntity(level, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, blockstate));
+            if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
+                FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state);
+                this.falling(fallingblockentity);
+            }
         } else if (state != blockstate) {
             level.setBlock(pos, blockstate, 3);
         }
+    }
+
+    public static boolean isFree(BlockState p_53242_) {
+        Material material = p_53242_.getMaterial();
+        return p_53242_.isAir() || p_53242_.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+    }
+
+    protected void falling(FallingBlockEntity p_53206_) {
     }
 }

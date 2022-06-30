@@ -57,11 +57,10 @@ public class BellowsBlockEntity extends BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         compound.putInt("CompressTimer", this.compressTimer);
-        return compound;
     }
 
     @Override

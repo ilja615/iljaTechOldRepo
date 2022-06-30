@@ -1,6 +1,7 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.util.interactions.Heat;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -47,7 +48,7 @@ public class StokedFireBlock extends BaseFireBlock
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (!state.hasProperty(AIR)) return;

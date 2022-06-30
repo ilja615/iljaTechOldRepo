@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -40,19 +39,21 @@ public class ModEntities
     public static final RegistryObject<EntityType<SaltGolemEntity>> SALT_GOLEM = ENTITY_TYPES.register("salt_golem",
             () -> SALT_GOLEM_TYPE);
 
-    public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)
-    {
-        event.getRegistry().registerAll(
-                registerEntitySpawnEgg(ELECTRIC_FISH_TYPE, 0x1b6f5b, 0x7b7e6e, "electric_fish_spawn_egg")
-        );
-    }
+//    public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)
+//    {
+//        event.getRegistry().registerAll(
+//                registerEntitySpawnEgg(ELECTRIC_FISH_TYPE, 0x1b6f5b, 0x7b7e6e, "electric_fish_spawn_egg")
+//        );
+//    }
+//
+//    public static Item registerEntitySpawnEgg(EntityType<? extends Mob> type, int color1, int color2, String name)
+//    {
+//        SpawnEggItem item = new SpawnEggItem(type, color1, color2, new Item.Properties().tab(ModItemGroup.instance));
+//        item.setRegistryName(name);
+//        return item;
+//    }
 
-    public static Item registerEntitySpawnEgg(EntityType<? extends Mob> type, int color1, int color2, String name)
-    {
-        SpawnEggItem item = new SpawnEggItem(type, color1, color2, new Item.Properties().tab(ModItemGroup.instance));
-        item.setRegistryName(name);
-        return item;
-    }
+    // TODO spawnegg
 
     public static void CreateEntityAttributes(final EntityAttributeCreationEvent event) {
         event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());

@@ -2,7 +2,7 @@ package ilja615.iljatech.blocks.stretcher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipe;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,7 +43,7 @@ public class StretcherBlockEntity extends BlockEntity
     @Nullable
     public List<StretchingRecipeType> getRecipes()
     {
-        return level.getRecipeManager().getAllRecipesFor(ModRecipeSerializers.Types.STRETCHING);
+        return level.getRecipeManager().getAllRecipesFor(ModRecipe.Types.STRETCHING.get());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, StretcherBlockEntity blockEntity)
@@ -100,12 +100,11 @@ public class StretcherBlockEntity extends BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         stretcherItemStackHandler.ifPresent(iItemHandlerModifiable -> ((ItemStackHandler)iItemHandlerModifiable).serializeNBT());
         compound.putInt("ProcessingTime", this.processingTime);
-        return compound;
     }
 
     @Override

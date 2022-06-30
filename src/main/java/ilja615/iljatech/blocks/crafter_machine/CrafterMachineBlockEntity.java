@@ -2,6 +2,8 @@ package ilja615.iljatech.blocks.crafter_machine;
 
 import ilja615.iljatech.containers.CrafterMachineContainer;
 import ilja615.iljatech.init.ModBlockEntityTypes;
+import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
@@ -21,7 +23,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -83,7 +84,7 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
 
     protected Component getDefaultName()
     {
-        return new TranslatableComponent("container.crafting_machine");
+        return Component.translatable("container.crafting_machine");
     }
 
     @Nullable
@@ -94,11 +95,10 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.chestContents);
-        return compound;
     }
 
     @Override

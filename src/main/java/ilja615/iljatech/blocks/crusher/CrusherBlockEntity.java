@@ -2,7 +2,7 @@ package ilja615.iljatech.blocks.crusher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipe;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,7 +43,7 @@ public class CrusherBlockEntity extends BlockEntity
     @Nullable
     public List<CrushingRecipeType> getRecipes()
     {
-        return level.getRecipeManager().getAllRecipesFor(ModRecipeSerializers.Types.CRUSHING);
+        return level.getRecipeManager().getAllRecipesFor(ModRecipe.Types.CRUSHING.get());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CrusherBlockEntity blockEntity)
@@ -99,13 +99,13 @@ public class CrusherBlockEntity extends BlockEntity
         return this.processingTime > 0;
     }
 
+
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         crusherItemStackHandler.ifPresent(iItemHandlerModifiable -> ((ItemStackHandler)iItemHandlerModifiable).serializeNBT());
         compound.putInt("ProcessingTime", this.processingTime);
-        return compound;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package ilja615.iljatech.blocks.crusher;
 
 import com.google.gson.JsonObject;
+import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipe;
+import ilja615.iljatech.util.interactions.BoilingRecipeType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -80,31 +82,39 @@ public ItemStack assemble(Container p_44427_) {
         return this.result.copy();
         }
 
-public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrushingRecipeType>
-{
-    public CrushingRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
+    public static class Serializer implements RecipeSerializer<CrushingRecipeType>
     {
-        Ingredient ingredient;
-        ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
-        String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
-        int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
-        ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
-        return new CrushingRecipeType(ModRecipeSerializers.Types.CRUSHING, ModRecipeSerializers.CRUSHING.get(), recipeId, ingredient, itemstack);
+        public CrushingRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
+        {
+            Ingredient ingredient;
+            ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
+            String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
+            int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
+            ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            return new CrushingRecipeType(ModRecipe.Types.CRUSHING.get(), ModRecipe.CRUSHING.get(), recipeId, ingredient, itemstack);
+        }
+
+        public CrushingRecipeType fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
+        {
+            String s = buffer.readUtf();
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            ItemStack itemstack = buffer.readItem();
+            return new CrushingRecipeType(ModRecipe.Types.CRUSHING.get(), ModRecipe.CRUSHING.get(), recipeId, ingredient, itemstack);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buffer, CrushingRecipeType recipeType)
+        {
+            recipeType.ingredient.toNetwork(buffer);
+            buffer.writeItem(recipeType.result);
+        }
     }
 
-    public CrushingRecipeType fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
+    public static class Type implements RecipeType<CrushingRecipeType>
     {
-        String s = buffer.readUtf();
-        Ingredient ingredient = Ingredient.fromNetwork(buffer);
-        ItemStack itemstack = buffer.readItem();
-        return new CrushingRecipeType(ModRecipeSerializers.Types.CRUSHING, ModRecipeSerializers.CRUSHING.get(), recipeId, ingredient, itemstack);
+        @Override
+        public String toString() {
+            return new ResourceLocation(IljaTech.MOD_ID, "crushing").toString();
+        }
     }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buffer, CrushingRecipeType recipeType)
-    {
-        recipeType.ingredient.toNetwork(buffer);
-        buffer.writeItem(recipeType.result);
-    }
-}
 }

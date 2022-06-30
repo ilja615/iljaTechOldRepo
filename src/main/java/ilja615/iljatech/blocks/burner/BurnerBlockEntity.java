@@ -90,12 +90,11 @@ public class BurnerBlockEntity extends BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.items);
         compound.putInt("BurnTime", this.burnTime);
-        return compound;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package ilja615.iljatech.blocks.stretcher;
 
 import com.google.gson.JsonObject;
+import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipe;
+import ilja615.iljatech.util.interactions.BoilingRecipeType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -77,7 +79,7 @@ public class StretchingRecipeType implements Recipe<Container>
         return this.result.copy();
     }
 
-    public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<StretchingRecipeType>
+    public static class Serializer implements RecipeSerializer<StretchingRecipeType>
     {
         public StretchingRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
         {
@@ -86,7 +88,7 @@ public class StretchingRecipeType implements Recipe<Container>
             String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
             int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
             ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
-            return new StretchingRecipeType(ModRecipeSerializers.Types.STRETCHING, ModRecipeSerializers.STRETCHING.get(), recipeId, ingredient, itemstack);
+            return new StretchingRecipeType(ModRecipe.Types.STRETCHING.get(), ModRecipe.STRETCHING.get(), recipeId, ingredient, itemstack);
         }
 
         public StretchingRecipeType fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
@@ -94,7 +96,7 @@ public class StretchingRecipeType implements Recipe<Container>
             String s = buffer.readUtf();
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             ItemStack itemstack = buffer.readItem();
-            return new StretchingRecipeType(ModRecipeSerializers.Types.STRETCHING, ModRecipeSerializers.STRETCHING.get(), recipeId, ingredient, itemstack);
+            return new StretchingRecipeType(ModRecipe.Types.STRETCHING.get(), ModRecipe.STRETCHING.get(), recipeId, ingredient, itemstack);
         }
 
         @Override
@@ -102,6 +104,14 @@ public class StretchingRecipeType implements Recipe<Container>
         {
             recipeType.ingredient.toNetwork(buffer);
             buffer.writeItem(recipeType.result);
+        }
+    }
+
+    public static class Type implements RecipeType<StretchingRecipeType>
+    {
+        @Override
+        public String toString() {
+            return new ResourceLocation(IljaTech.MOD_ID, "stretching").toString();
         }
     }
 }

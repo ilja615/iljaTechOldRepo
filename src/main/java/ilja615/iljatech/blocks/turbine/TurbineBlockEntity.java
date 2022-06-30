@@ -74,11 +74,10 @@ public class TurbineBlockEntity extends BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    public void saveAdditional(CompoundTag compound)
     {
-        super.save(compound);
+        super.saveAdditional(compound);
         compound.putInt("amountTicks", this.amountTicks);
-        return compound;
     }
 
     @Override

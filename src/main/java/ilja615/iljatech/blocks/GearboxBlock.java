@@ -4,6 +4,7 @@ import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
 import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DirectionalBlock;
@@ -30,7 +31,7 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (state.getBlock() != this) { return; }

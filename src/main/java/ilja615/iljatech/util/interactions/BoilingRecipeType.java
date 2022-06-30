@@ -1,8 +1,8 @@
 package ilja615.iljatech.util.interactions;
 
 import com.google.gson.JsonObject;
-import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.IljaTech;
+import ilja615.iljatech.init.ModRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 
@@ -73,38 +74,46 @@ public boolean matches(Container p_44483_, Level p_44484_) {
 
 @Override
 public ItemStack getToastSymbol() {
-        return new ItemStack(ModBlocks.CRUSHER.get());
+        return new ItemStack(Blocks.WATER_CAULDRON);
         }
 
 public ItemStack assemble(Container p_44427_) {
         return this.result.copy();
         }
 
-public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<BoilingRecipeType>
-{
-    public BoilingRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
+    public static class Serializer implements RecipeSerializer<BoilingRecipeType>
     {
-        Ingredient ingredient;
-        ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
-        String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
-        int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
-        ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
-        return new BoilingRecipeType(ModRecipeSerializers.Types.BOILING, ModRecipeSerializers.BOILING.get(), recipeId, ingredient, itemstack);
+        public BoilingRecipeType fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject pSerializedRecipe)
+        {
+            Ingredient ingredient;
+            ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
+            String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
+            int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
+            ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            return new BoilingRecipeType(ModRecipe.Types.BOILING.get(), ModRecipe.BOILING.get(), recipeId, ingredient, itemstack);
+        }
+
+        public BoilingRecipeType fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
+        {
+            String s = buffer.readUtf();
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            ItemStack itemstack = buffer.readItem();
+            return new BoilingRecipeType(ModRecipe.Types.BOILING.get(), ModRecipe.BOILING.get(), recipeId, ingredient, itemstack);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buffer, BoilingRecipeType recipeType)
+        {
+            recipeType.ingredient.toNetwork(buffer);
+            buffer.writeItem(recipeType.result);
+        }
     }
 
-    public BoilingRecipeType fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
+    public static class Type implements RecipeType<BoilingRecipeType>
     {
-        String s = buffer.readUtf();
-        Ingredient ingredient = Ingredient.fromNetwork(buffer);
-        ItemStack itemstack = buffer.readItem();
-        return new BoilingRecipeType(ModRecipeSerializers.Types.BOILING, ModRecipeSerializers.BOILING.get(), recipeId, ingredient, itemstack);
+        @Override
+        public String toString() {
+            return new ResourceLocation(IljaTech.MOD_ID, "boiling").toString();
+        }
     }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buffer, BoilingRecipeType recipeType)
-    {
-        recipeType.ingredient.toNetwork(buffer);
-        buffer.writeItem(recipeType.result);
-    }
-}
 }

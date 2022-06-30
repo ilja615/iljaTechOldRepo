@@ -4,6 +4,7 @@ import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
 import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -95,7 +96,7 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (state.getBlock() != this) { return; }

@@ -6,6 +6,7 @@ import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlockEntity;
 import ilja615.iljatech.util.RotationDirection;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -33,35 +34,11 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
     public static final EnumProperty AXIS = BlockStateProperties.AXIS;
     public static final EnumProperty ROTATION_DIRECTION = EnumProperty.create("rotationdirection", RotationDirection.class);
 
-//    protected static final VoxelShape Y_AXIS_AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
-//    protected static final VoxelShape Z_AXIS_AABB = Block.box(1.0D, 1.0D, 0.0D, 15.0D, 15.0D, 16.0D);
-//    protected static final VoxelShape X_AXIS_AABB = Block.box(0.0D, 1.0D, 1.0D, 16.0D, 15.0D, 15.0D);
-
     public ConveyorBeltBlock(Properties properties)
     {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.Y).setValue(ROTATION_DIRECTION, RotationDirection.CLOCKWISE).setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
     }
-
-//    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-//        switch((Direction.Axis)p_220053_1_.getValue(AXIS)) {
-//            case X:
-//            default:
-//                return X_AXIS_AABB;
-//            case Z:
-//                return Z_AXIS_AABB;
-//            case Y:
-//                return Y_AXIS_AABB;
-//        }
-//    }
-//
-//    public VoxelShape getBlockSupportShape(BlockState state, IBlockReader reader, BlockPos pos) {
-//        return VoxelShapes.block();
-//    }
-//
-//    public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-//        return VoxelShapes.block();
-//    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_)
@@ -90,7 +67,7 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand)
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand)
     {
         super.tick(state, worldIn, pos, rand);
         if (state.getBlock() != this) { return; }

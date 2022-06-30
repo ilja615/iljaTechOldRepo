@@ -1,0 +1,6 @@
+{
+  "type" : "forge:add_features",
+  "biomes" : "#minecraft:is_overworld",
+  "features": ["iljatech:azurite_geode", "iljatech:cassiterite_geode", "iljatech:ruby_geode"],
+  "step": "underground_ores"
+}
