@@ -53,7 +53,7 @@ public class AluminiumGolemModel<T extends LivingEntity> extends EntityModel<T> 
 	@Override
 	public void setupAnim(T p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_)
 	{
-		this.propellor.yRot = Mth.cos(p_102619_ / 20.0f);
+		//this.propellor.yRot = ;
 	}
 
 	@Override

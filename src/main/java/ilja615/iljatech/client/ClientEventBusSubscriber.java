@@ -2,11 +2,13 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.client.gui.CrafterMachineScreen;
+import ilja615.iljatech.client.models.AluminiumGolemModel;
 import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
-import ilja615.iljatech.client.render.ElectricFishRender;
-import ilja615.iljatech.client.render.GassEntityRender;
-import ilja615.iljatech.client.render.PetrolymerHelmetLayer;
+import ilja615.iljatech.client.models.SaltGolemModel;
+import ilja615.iljatech.client.render.*;
+import ilja615.iljatech.entity.AluminiumGolemEntity;
+import ilja615.iljatech.entity.SaltGolemEntity;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import ilja615.iljatech.init.ModEntities;
@@ -82,6 +84,8 @@ public class ClientEventBusSubscriber
         event.registerEntityRenderer(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
         event.registerEntityRenderer(ModEntities.IRON_NAILS_PROJECTILE.get(), (renderManager) -> new ThrownItemRenderer<>(renderManager, 2.0f, true));
         event.registerEntityRenderer(ModEntities.ELECTRIC_FISH.get(), ElectricFishRender::new);
+        event.registerEntityRenderer(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolemRender::new);
+        event.registerEntityRenderer(ModEntities.SALT_GOLEM.get(), SaltGolemRender::new);
     }
 
     @SubscribeEvent
@@ -89,6 +93,8 @@ public class ClientEventBusSubscriber
     {
         event.registerLayerDefinition(PETROLYMER_HELMET_LAYER, PetrolymerHelmetModel::createBodyLayer);
         event.registerLayerDefinition(ElectricFishRender.ELECTRIC_FISH_LAYER, ElectricFishModel::createBodyLayer);
+        event.registerLayerDefinition(AluminiumGolemRender.ALUMINIUM_GOLEM_LAYER, AluminiumGolemModel::createBodyLayer);
+        event.registerLayerDefinition(SaltGolemRender.SALT_GOLEM_LAYER, SaltGolemModel::createBodyLayer);
     }
 
     @SubscribeEvent
