@@ -28,13 +28,4 @@ public class ModRecipe
         public static final RegistryObject<RecipeType> CRUSHING = RECIPE_TYPES.register("crushing", CrushingRecipeType.Type::new);
         public static final RegistryObject<RecipeType> BOILING = RECIPE_TYPES.register("boiling", BoilingRecipeType.Type::new);
     }
-
-//    private static <T extends Recipe<?>> RecipeType<T> registerType(String name) {
-//        return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(IljaTech.MOD_ID, name), new RecipeType<T>() {
-//            @Override
-//            public String toString() {
-//                return new ResourceLocation(IljaTech.MOD_ID, name).toString();
-//            }
-//        });
-//    }
 }

@@ -51,5 +51,5 @@ public class ModItems
     public static final RegistryObject<Item> PETROLYMER_LEGGINGS = ITEMS.register("petrolymer_leggings", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.LEGS, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> PETROLYMER_BOOTS = ITEMS.register("petrolymer_boots", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 
-    public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH_TYPE, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1).tab(ModItemGroup.instance))));
+    public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1).tab(ModItemGroup.instance))));
 }
