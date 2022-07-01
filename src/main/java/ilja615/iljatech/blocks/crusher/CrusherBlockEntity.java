@@ -2,7 +2,8 @@ package ilja615.iljatech.blocks.crusher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModRecipe;
+import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipeTypes;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,9 +42,9 @@ public class CrusherBlockEntity extends BlockEntity
     }
 
     @Nullable
-    public List<CrushingRecipeType> getRecipes()
+    public List<CrushingRecipe> getRecipes()
     {
-        return level.getRecipeManager().getAllRecipesFor(ModRecipe.Types.CRUSHING.get());
+        return level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.CRUSHING.get());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CrusherBlockEntity blockEntity)
@@ -51,8 +52,8 @@ public class CrusherBlockEntity extends BlockEntity
         blockEntity.crusherItemStackHandler.ifPresent(itemHandler ->
         {
             boolean foundRecipe = false;
-            List<CrushingRecipeType> recipes = blockEntity.getRecipes();
-            for (CrushingRecipeType r : recipes)
+            List<CrushingRecipe> recipes = blockEntity.getRecipes();
+            for (CrushingRecipe r : recipes)
             {
                 ItemStack resultingStack = r.result.copy();
                 if (r.ingredient.getItems()[0].isEmpty() || itemHandler.getStackInSlot(0).isEmpty())

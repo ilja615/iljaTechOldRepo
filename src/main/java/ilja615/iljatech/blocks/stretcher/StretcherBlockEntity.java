@@ -2,7 +2,8 @@ package ilja615.iljatech.blocks.stretcher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModRecipe;
+import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipeTypes;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,9 +42,9 @@ public class StretcherBlockEntity extends BlockEntity
     }
 
     @Nullable
-    public List<StretchingRecipeType> getRecipes()
+    public List<StretchingRecipe> getRecipes()
     {
-        return level.getRecipeManager().getAllRecipesFor(ModRecipe.Types.STRETCHING.get());
+        return level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.STRETCHING.get());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, StretcherBlockEntity blockEntity)
@@ -51,8 +52,8 @@ public class StretcherBlockEntity extends BlockEntity
         blockEntity.stretcherItemStackHandler.ifPresent(itemHandler ->
         {
             boolean foundRecipe = false;
-            List<StretchingRecipeType> recipes = blockEntity.getRecipes();
-            for (StretchingRecipeType r : recipes)
+            List<StretchingRecipe> recipes = blockEntity.getRecipes();
+            for (StretchingRecipe r : recipes)
             {
                 ItemStack resultingStack = r.result.copy();
                 if (r.ingredient.getItems()[0].isEmpty() || itemHandler.getStackInSlot(0).isEmpty())

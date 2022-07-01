@@ -2,7 +2,8 @@ package ilja615.iljatech.util.interactions;
 
 import ilja615.iljatech.entity.AbstractGasEntity;
 import ilja615.iljatech.init.ModEntities;
-import ilja615.iljatech.init.ModRecipe;
+import ilja615.iljatech.init.ModRecipeSerializers;
+import ilja615.iljatech.init.ModRecipeTypes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -41,8 +42,8 @@ public class Heat
                         if (itemEntity.getItem().isEmpty())
                             break;
 
-                        List<BoilingRecipeType> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipe.Types.BOILING.get());
-                        for (BoilingRecipeType r : recipes)
+                        List<BoilingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.BOILING.get());
+                        for (BoilingRecipe r : recipes)
                         {
                             ItemStack resultingStack = r.result.copy();
                             if (r.ingredient.getItems()[0].isEmpty() || itemEntity.getItem().isEmpty())

@@ -2,7 +2,6 @@ package ilja615.iljatech;
 
 import ilja615.iljatech.init.*;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,8 +31,8 @@ public class IljaTech
         ModParticles.PARTICLES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModEffects.EFFECTS.register(modEventBus);
-        ModRecipe.RECIPE_SERIALIZERS.register(modEventBus);
-        ModRecipe.RECIPE_TYPES.register(modEventBus);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event)
