@@ -23,21 +23,21 @@
       },
       "inner_placements": [
         {
-          "Name": "iljatech:small_ruby_bud",
+          "Name": "iljatech:ruby_small_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:medium_ruby_bud",
+          "Name": "iljatech:ruby_medium_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:large_ruby_bud",
+          "Name": "iljatech:ruby_large_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"

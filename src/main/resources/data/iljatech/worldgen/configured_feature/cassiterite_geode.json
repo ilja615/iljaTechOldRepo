@@ -23,21 +23,21 @@
       },
       "inner_placements": [
         {
-          "Name": "iljatech:small_cassiterite_bud",
+          "Name": "iljatech:cassiterite_small_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:medium_cassiterite_bud",
+          "Name": "iljatech:cassiterite_medium_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:large_cassiterite_bud",
+          "Name": "iljatech:cassiterite_large_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"

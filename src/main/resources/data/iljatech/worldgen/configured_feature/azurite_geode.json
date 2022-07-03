@@ -23,21 +23,21 @@
       },
       "inner_placements": [
         {
-          "Name": "iljatech:small_azurite_bud",
+          "Name": "iljatech:azurite_small_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:medium_azurite_bud",
+          "Name": "iljatech:azurite_medium_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"
           }
         },
         {
-          "Name": "iljatech:large_azurite_bud",
+          "Name": "iljatech:azurite_large_bud",
           "Properties": {
             "facing": "up",
             "waterlogged": "false"

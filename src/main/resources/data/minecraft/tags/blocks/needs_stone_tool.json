@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "iljatech:nickel_ore",
+    "iljatech:nickel_ore_deepslate",
+    "iljatech:raw_nickel_ore_block"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "iljatech:aluminium_ore",
+    "iljatech:aluminium_ore_deepslate",
+    "iljatech:raw_aluminium_ore_block",
+    "iljatech:chrome_ore",
+    "iljatech:chrome_ore_deepslate",
+    "iljatech:raw_chrome_ore_deepslate",
+    "iljatech:nickel_ore",
+    "iljatech:nickel_ore_deepslate",
+    "iljatech:raw_nickel_ore_block",
+    "iljatech:tin_ore",
+    "iljatech:tin_ore_deepslate",
+    "iljatech:raw_tin_ore_block"
+  ]
+}
