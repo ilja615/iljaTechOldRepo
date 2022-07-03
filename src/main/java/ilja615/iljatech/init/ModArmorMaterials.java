@@ -16,6 +16,8 @@ public enum ModArmorMaterials implements ArmorMaterial
 {
     PETROLYMER(IljaTech.MOD_ID + ":petrolymer", 5, new int[] {7, 9, 11, 7}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, () -> {return Ingredient.of(ModItems.TIN_INGOT.get());}, 0.0f);
 
+    // TODO : fix this armor material by adding petrolymer sheet item or smth
+
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {16, 16, 16, 16};
     private final String name;
     private final int maxDamageFactor;

@@ -30,6 +30,11 @@ public class ModItems
     public static final RegistryObject<Item> CONSTANTAN_INGOT = ITEMS.register("constantan_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> NICHROME_INGOT = ITEMS.register("nichrome_ingot", () -> new Item(ModProperties.ITEM_PROPERTY));
 
+    public static final RegistryObject<Item> RAW_ALUMINIUM_ORE = ITEMS.register("raw_aluminium_ore", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> RAW_TIN_ORE = ITEMS.register("raw_tin_ore", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> RAW_CHROME_ORE = ITEMS.register("raw_chrome_ore", () -> new Item(ModProperties.ITEM_PROPERTY));
+    public static final RegistryObject<Item> RAW_NICKEL_ORE = ITEMS.register("raw_nickel_ore", () -> new Item(ModProperties.ITEM_PROPERTY));
+
     public static final RegistryObject<Item> AZURITE_SHARD = ITEMS.register("azurite_shard", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> CASSITERITE_SHARD = ITEMS.register("cassiterite_shard", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(ModProperties.ITEM_PROPERTY));

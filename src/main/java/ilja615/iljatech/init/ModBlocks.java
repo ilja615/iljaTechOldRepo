@@ -70,6 +70,20 @@ public class ModBlocks
     public static final RegistryObject<Block> NAILED_CRIMSON_PLANKS = registerBlockWithItem("nailed_crimson_planks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
     public static final RegistryObject<Block> NAILED_WARPED_PLANKS = registerBlockWithItem("nailed_warped_planks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
 
+    // Ores
+    public static final RegistryObject<Block> ALUMINIUM_ORE = registerBlockWithItem("aluminium_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+    public static final RegistryObject<Block> TIN_ORE = registerBlockWithItem("tin_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+    public static final RegistryObject<Block> CHROME_ORE = registerBlockWithItem("chrome_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+    public static final RegistryObject<Block> NICKEL_ORE = registerBlockWithItem("nickel_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
+    public static final RegistryObject<Block> ALUMINIUM_ORE_DEEPSLATE = registerBlockWithItem("aluminium_ore_deepslate", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_IRON_ORE)));
+    public static final RegistryObject<Block> TIN_ORE_DEEPSLATE = registerBlockWithItem("tin_ore_deepslate", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_IRON_ORE)));
+    public static final RegistryObject<Block> CHROME_ORE_DEEPSLATE = registerBlockWithItem("chrome_ore_deepslate", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_IRON_ORE)));
+    public static final RegistryObject<Block> NICKEL_ORE_DEEPSLATE = registerBlockWithItem("nickel_ore_deepslate", () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_IRON_ORE)));
+    public static final RegistryObject<Block> RAW_ALUMINIUM_ORE_BLOCK = registerBlockWithItem("raw_aluminium_ore_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.RAW_IRON_BLOCK)));
+    public static final RegistryObject<Block> RAW_TIN_ORE_BLOCK = registerBlockWithItem("raw_tin_ore_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.RAW_IRON_BLOCK)));
+    public static final RegistryObject<Block> RAW_CHROME_ORE_BLOCK = registerBlockWithItem("raw_chrome_ore_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.RAW_IRON_BLOCK)));
+    public static final RegistryObject<Block> RAW_NICKEL_ORE_BLOCK = registerBlockWithItem("raw_nickel_ore_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.RAW_IRON_BLOCK)));
+
     // Crystals
     public static final RegistryObject<Block> AZURITE_BLOCK = registerBlockWithItem("azurite_block", () -> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK)));
     public static final RegistryObject<Block> RUBY_BLOCK = registerBlockWithItem("ruby_block", () -> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK)));
