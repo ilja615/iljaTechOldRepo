@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "iljatech:block/brick_foundry_channel",
+		"north": "iljatech:block/brick_foundry_channel",
+		"south": "iljatech:block/special_brick_side",
+		"east": "iljatech:block/special_brick_side",
+		"west": "iljatech:block/special_brick_side",
+		"up": "iljatech:block/specialbrick",
+		"down": "iljatech:block/specialbrick"
+	}
+}

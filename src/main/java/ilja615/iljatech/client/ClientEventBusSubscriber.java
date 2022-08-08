@@ -1,20 +1,17 @@
 package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.client.gui.CrafterMachineScreen;
+import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
 import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
 import ilja615.iljatech.client.models.SaltGolemModel;
 import ilja615.iljatech.client.render.*;
-import ilja615.iljatech.entity.AluminiumGolemEntity;
-import ilja615.iljatech.entity.SaltGolemEntity;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import ilja615.iljatech.init.ModEntities;
 import ilja615.iljatech.init.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;

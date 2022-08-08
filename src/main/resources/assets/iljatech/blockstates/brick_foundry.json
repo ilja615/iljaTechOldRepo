@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "iljatech:block/brick_foundry",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iljatech:block/brick_foundry",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "iljatech:block/brick_foundry",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "iljatech:block/brick_foundry",
+      "y": 270
+    }
+  }
+}

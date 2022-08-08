@@ -9,6 +9,8 @@ import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlock;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlock;
 import ilja615.iljatech.blocks.crusher.CrusherBlock;
 import ilja615.iljatech.blocks.crystals.*;
+import ilja615.iljatech.blocks.foundry.FoundryBlock;
+import ilja615.iljatech.blocks.foundry.FoundryChannelBlock;
 import ilja615.iljatech.blocks.stretcher.StretcherBlock;
 import ilja615.iljatech.blocks.turbine.TurbineBlock;
 import ilja615.iljatech.blocks.wire.BarbedWireBlock;
@@ -119,6 +121,8 @@ public class ModBlocks
     public static final RegistryObject<Block> BURNER = registerBlockWithItem("burner", () -> new BurnerBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS).lightLevel(ModUtils.getLightValueLit(13))));
     public static final RegistryObject<Block> BELLOWS = registerBlockWithItem("bellows", () -> new BellowsBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> STOKED_FIRE = registerBlockWithItem("stoked_fire", () -> new StokedFireBlock(BlockBehaviour.Properties.copy(Blocks.FIRE).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BRICK_FOUNDRY = registerBlockWithItem("brick_foundry", () -> new FoundryBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
+    public static final RegistryObject<Block> BRICK_FOUNDRY_CHANNEL = registerBlockWithItem("brick_foundry_channel", () -> new FoundryChannelBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
     public static <BLOCK extends Block> RegistryObject<BLOCK> registerBlockWithItem(String name, Supplier<BLOCK> blockSupplier, Item.Properties properties)
     {

@@ -1,4 +1,4 @@
-package ilja615.iljatech.containers.other_stuff;
+package ilja615.iljatech.containers;
 
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;

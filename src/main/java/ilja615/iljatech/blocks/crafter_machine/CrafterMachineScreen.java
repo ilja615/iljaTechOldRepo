@@ -1,9 +1,9 @@
-package ilja615.iljatech.client.gui;
+package ilja615.iljatech.blocks.crafter_machine;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.containers.CrafterMachineContainer;
+import ilja615.iljatech.blocks.crafter_machine.CrafterMachineContainer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;

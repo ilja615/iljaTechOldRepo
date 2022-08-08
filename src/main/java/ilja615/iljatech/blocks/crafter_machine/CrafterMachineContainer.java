@@ -1,6 +1,6 @@
-package ilja615.iljatech.containers;
+package ilja615.iljatech.blocks.crafter_machine;
 
-import ilja615.iljatech.containers.other_stuff.MaxStackSize1Slot;
+import ilja615.iljatech.containers.MaxStackSize1Slot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlockEntity;

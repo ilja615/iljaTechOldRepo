@@ -1,26 +1,29 @@
-package ilja615.iljatech.blocks.crafter_machine;
+package ilja615.iljatech.blocks.foundry;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.PositionImpl;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.RecipeHolder;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -33,24 +36,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.Nameable;
-
-public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHolder, MenuProvider, Nameable
+public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nameable
 {
     private Component customName;
-    public NonNullList<ItemStack> chestContents = NonNullList.withSize(9, ItemStack.EMPTY);
+    public NonNullList<ItemStack> chestContents = NonNullList.withSize(7, ItemStack.EMPTY);
     protected int numPlayersUsing;
     private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
-    public LazyOptional<IItemHandlerModifiable> cmItemStackHandler = LazyOptional.of(() -> new CrafterMachineItemStackHandler(this));
+    public LazyOptional<IItemHandlerModifiable> cmItemStackHandler = LazyOptional.of(() -> new FoundryBlockEntity.FoundryItemStackHandler(this));
     protected LazyOptional<CraftingContainer> wrapper = LazyOptional.of(() ->
-            new CraftingInventoryWrapper(cmItemStackHandler.orElse(EMPTYHANDLER)));
+            new FoundryInventoryWrapper(cmItemStackHandler.orElse(EMPTYHANDLER)));
     private Optional<CraftingRecipe> recipeUsed = Optional.empty();
 
-    public CrafterMachineBlockEntity(BlockPos p_155229_, BlockState p_155230_)
+    public FoundryBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ModBlockEntityTypes.CRAFTER_MACHINE.get(), p_155229_, p_155230_);
+        super(ModBlockEntityTypes.FOUNDRY.get(), pos, state);
     }
 
 
@@ -81,14 +80,14 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
 
     protected Component getDefaultName()
     {
-        return Component.translatable("container.crafting_machine");
+        return Component.translatable("container.foundry");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player)
     {
-        return new CrafterMachineContainer(id, playerInventory, this);
+        return new FoundryContainer(id, playerInventory, this);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
 
     protected void onOpenOrClose() {
         Block block = this.getBlockState().getBlock();
-        if (block instanceof CrafterMachineBlock) {
+        if (block instanceof FoundryBlock) {
             this.level.blockEvent(this.worldPosition, block, 1, this.numPlayersUsing);
             this.level.updateNeighborsAt(this.worldPosition, block);
         }
@@ -133,14 +132,14 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
         BlockState blockState = reader.getBlockState(pos);
         if (blockState.hasBlockEntity()) {
             BlockEntity tileEntity = reader.getBlockEntity(pos);
-            if (tileEntity instanceof CrafterMachineBlockEntity) {
-                return ((CrafterMachineBlockEntity) tileEntity).numPlayersUsing;
+            if (tileEntity instanceof FoundryBlockEntity) {
+                return ((FoundryBlockEntity) tileEntity).numPlayersUsing;
             }
         }
         return 0;
     }
 
-    public static void swapContent(CrafterMachineBlockEntity tileEntity, CrafterMachineBlockEntity otherTileEntity) {
+    public static void swapContent(FoundryBlockEntity tileEntity, FoundryBlockEntity otherTileEntity) {
         NonNullList<ItemStack> list = tileEntity.getItems();
         tileEntity.setItems(otherTileEntity.getItems());
         otherTileEntity.setItems(list);
@@ -171,20 +170,20 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
         }
     }
 
-    private class CrafterMachineItemStackHandler extends ItemStackHandler implements IItemHandler
+    private class FoundryItemStackHandler extends ItemStackHandler implements IItemHandler
     {
-        private final CrafterMachineBlockEntity tile;
+        private final FoundryBlockEntity tile;
 
-        public CrafterMachineItemStackHandler(CrafterMachineBlockEntity te)
+        public FoundryItemStackHandler(FoundryBlockEntity te)
         {
-            super(9);
+            super(7);
             tile = te;
         }
 
         @Override
         protected void onContentsChanged(int slot)
         {
-            if (slot < 9) tile.chestContents.set(slot, this.stacks.get(slot));
+            if (slot < 7) tile.chestContents.set(slot, this.stacks.get(slot));
             tile.setChanged();
         }
 
@@ -202,57 +201,4 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 2);
     }
 
-    @Override
-    public void setRecipeUsed(@Nullable Recipe<?> recipe) {
-        recipeUsed = Optional.ofNullable((CraftingRecipe) recipe);
-    }
-
-    @Nullable
-    @Override
-    public Recipe<?> getRecipeUsed() {
-        return recipeUsed.orElse(null);
-    }
-
-    public void craft() {
-        if (this.hasLevel()) {
-            cmItemStackHandler.ifPresent(h ->
-            {
-                for (int i = 0; i < h.getSlots(); i++)
-                {
-                    h.setStackInSlot(i, chestContents.get(i));
-                }
-            });
-            wrapper.ifPresent(w ->
-            {
-                recipeUsed = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, w, level).filter(r -> setRecipeUsed(level, null, r));
-                ItemStack outPutStack = recipeUsed.map(r -> r.assemble(w)).orElse(ItemStack.EMPTY);
-                BlockPos pos = this.worldPosition;
-                if (this.getBlockState().hasProperty(CrafterMachineBlock.FACING))
-                {
-                    Direction side = this.getBlockState().getValue(CrafterMachineBlock.FACING);
-                    double x = pos.getX() + 0.5D + 0.7D * (double) side.getStepX();
-                    double y = pos.getY() + 0.5D + 0.7D * (double) side.getStepY();
-                    double z = pos.getZ() + 0.5D + 0.7D * (double) side.getStepZ();
-
-                    // Lower the dispense position slightly when shooting from the side
-                    if (side.getAxis().isHorizontal()) {
-                        y -= 0.2D;
-                    }
-
-                    DefaultDispenseItemBehavior.spawnItem(level, outPutStack, 6, side, new PositionImpl(x, y, z));
-
-                    level.levelEvent(1000, pos, 0); // Play dispense sound
-                    level.levelEvent(2000, pos, side.get3DDataValue()); // Spawn dispense particles
-                }
-                if (outPutStack != ItemStack.EMPTY) {
-                    for (int i = 0; i < chestContents.size(); i++)
-                    {
-                        if (chestContents.get(i).hasContainerItem())
-                            chestContents.set(i, chestContents.get(i).getContainerItem());
-                        else chestContents.set(i, ItemStack.EMPTY);
-                    }
-                }
-            });
-        }
-    }
 }
