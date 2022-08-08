@@ -2,6 +2,7 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
+import ilja615.iljatech.blocks.foundry.FoundryScreen;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
 import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
@@ -39,6 +40,7 @@ public class ClientEventBusSubscriber
     public static void ClientSetup(FMLClientSetupEvent event)
     {
         MenuScreens.register(ModContainerTypes.CRAFTER_MACHINE.get(), CrafterMachineScreen::new);
+        MenuScreens.register(ModContainerTypes.FOUNDRY.get(), FoundryScreen::new);
 
         //render layers
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_NAILS.get(), RenderType.cutout());
