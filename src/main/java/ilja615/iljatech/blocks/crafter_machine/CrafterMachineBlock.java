@@ -50,7 +50,7 @@ public class CrafterMachineBlock extends BaseEntityBlock
         {
             if (!world.isClientSide())
             {
-                NetworkHooks.openGui((ServerPlayer)player, (CrafterMachineBlockEntity)tileEntity, pos);
+                NetworkHooks.openScreen((ServerPlayer)player, (CrafterMachineBlockEntity)tileEntity, pos);
             }
             return InteractionResult.SUCCESS;
         }

@@ -247,8 +247,8 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
                 if (outPutStack != ItemStack.EMPTY) {
                     for (int i = 0; i < chestContents.size(); i++)
                     {
-                        if (chestContents.get(i).hasContainerItem())
-                            chestContents.set(i, chestContents.get(i).getContainerItem());
+                        if (chestContents.get(i).hasCraftingRemainingItem())
+                            chestContents.set(i, chestContents.get(i).getCraftingRemainingItem());
                         else chestContents.set(i, ItemStack.EMPTY);
                     }
                 }

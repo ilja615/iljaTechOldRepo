@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntityTypes
 {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, IljaTech.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, IljaTech.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<CrafterMachineBlockEntity>> CRAFTER_MACHINE = BLOCK_ENTITY_TYPES.register("crafter_machine", () -> BlockEntityType.Builder.of(CrafterMachineBlockEntity::new, ModBlocks.CRAFTER_MACHINE.get()).build(null));
     public static final RegistryObject<BlockEntityType<BurnerBlockEntity>> BURNER = BLOCK_ENTITY_TYPES.register("burner", () -> BlockEntityType.Builder.of(BurnerBlockEntity::new, ModBlocks.BURNER.get()).build(null));

@@ -64,7 +64,7 @@ public class FoundryBlock extends BaseEntityBlock
         {
             if (!world.isClientSide())
             {
-                NetworkHooks.openGui((ServerPlayer)player, (FoundryBlockEntity)tileEntity, pos);
+                NetworkHooks.openScreen((ServerPlayer)player, (FoundryBlockEntity)tileEntity, pos);
             }
             return InteractionResult.SUCCESS;
         }

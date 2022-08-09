@@ -25,3 +25,8 @@ My tech mod
     versionRange="[1.19,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.iljatech]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.19-75,)"

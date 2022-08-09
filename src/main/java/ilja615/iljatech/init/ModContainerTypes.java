@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModContainerTypes
 {
-    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, IljaTech.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, IljaTech.MOD_ID);
 
     public static final RegistryObject<MenuType<CrafterMachineContainer>> CRAFTER_MACHINE = CONTAINER_TYPES
             .register("crafter_machine", () -> IForgeMenuType.create(CrafterMachineContainer::new));

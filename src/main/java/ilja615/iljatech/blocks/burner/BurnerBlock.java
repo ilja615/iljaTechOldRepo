@@ -91,7 +91,7 @@ public class BurnerBlock extends BaseEntityBlock
     {
         ItemStack stack = player.getItemInHand(handIn);
         int burnTime = ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
-        if (burnTime > 0 && !stack.hasContainerItem())
+        if (burnTime > 0 && !stack.hasCraftingRemainingItem())
         {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof BurnerBlockEntity)

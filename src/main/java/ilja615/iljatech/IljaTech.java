@@ -1,7 +1,7 @@
 package ilja615.iljatech;
 
 import ilja615.iljatech.init.*;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -62,7 +62,7 @@ public class IljaTech
         // TODO add spawn egg registry back somewhere
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void registerParticles(ParticleFactoryRegisterEvent event) {
+        public static void registerParticles(RegisterParticleProvidersEvent event) {
             ModParticles.registerParticles(event); //It registers particles
         }
 

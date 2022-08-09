@@ -63,14 +63,14 @@ public class BurnerBlockEntity extends BlockEntity
                 if (blockEntity.isBurning())
                 {
                     flag1 = true;
-                    if (itemstack.hasContainerItem())
-                        blockEntity.items.set(0, itemstack.getContainerItem());
+                    if (itemstack.hasCraftingRemainingItem())
+                        blockEntity.items.set(0, itemstack.getCraftingRemainingItem());
                     else
                     if (!itemstack.isEmpty()) {
                         Item item = itemstack.getItem();
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
-                            blockEntity.items.set(0, itemstack.getContainerItem());
+                            blockEntity.items.set(0, itemstack.getCraftingRemainingItem());
                         }
                     }
                 }
