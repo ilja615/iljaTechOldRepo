@@ -1,27 +1,7 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "iljatech:block/brick_foundry_channel",
-      "x": 90
-    },
-    "facing=east": {
-      "model": "iljatech:block/brick_foundry_channel",
-      "y": 90
-    },
-    "facing=north": {
+    "": {
       "model": "iljatech:block/brick_foundry_channel"
-    },
-    "facing=south": {
-      "model": "iljatech:block/brick_foundry_channel",
-      "y": 180
-    },
-    "facing=up": {
-      "model": "iljatech:block/brick_foundry_channel",
-      "x": 270
-    },
-    "facing=west": {
-      "model": "iljatech:block/brick_foundry_channel",
-      "y": 270
     }
   }
 }

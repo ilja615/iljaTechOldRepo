@@ -38,6 +38,8 @@ public class IljaTech
     private void setup(final FMLCommonSetupEvent event)
     {
         event.enqueueWork(IljaTech::afterCommonSetup);
+
+        ModMultiBlocks.registerMultiBlocks();
     }
 
     static void afterCommonSetup()

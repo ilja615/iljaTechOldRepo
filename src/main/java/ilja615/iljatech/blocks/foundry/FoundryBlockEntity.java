@@ -1,17 +1,14 @@
 package ilja615.iljatech.blocks.foundry;
 
-import ilja615.iljatech.blocks.crusher.CrusherBlockEntity;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.init.ModBlocks;
-import net.minecraft.client.renderer.texture.Tickable;
+import ilja615.iljatech.init.ModMultiBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.PositionImpl;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
@@ -19,15 +16,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -37,10 +30,10 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nameable
@@ -206,49 +199,13 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 2);
     }
 
-    public boolean isMultiBlockBuilt()
-    {
-        Level level = this.getLevel();
-        Direction d = level.getBlockState(this.worldPosition).getValue(FoundryBlock.FACING);
-        BlockPos centerOrigin = this.worldPosition.relative(d.getOpposite(), 1).below();
-        if (level.getBlockState(centerOrigin.above()).isAir() && level.getBlockState(centerOrigin.above(2)).isAir()) // Check hollow
-        {
-            if (level.getBlockState(centerOrigin.above(3)).is(ModBlocks.BRICK_FOUNDRY_CHANNEL.get()) && level.getBlockState(centerOrigin.above(3)).getValue(FoundryChannelBlock.FACING) == Direction.UP) // Check chimney
-            {
-                if (checkFourBlocks(level, centerOrigin.relative(d.getOpposite())) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getClockWise())) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getCounterClockWise())) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getClockWise()).relative(d)) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getCounterClockWise()).relative(d)) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getClockWise()).relative(d.getOpposite())) &&
-                        checkFourBlocks(level, centerOrigin.relative(d.getCounterClockWise()).relative(d.getOpposite()))
-                )
-                {
-                    if (checkBlock(level, this.worldPosition.above()) && checkBlock(level, this.worldPosition.below()) && checkBlock(level, this.worldPosition.above(2)))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean checkBlock(Level level, BlockPos pos)
-    {
-        return level.getBlockState(pos).is(Blocks.BRICKS) || level.getBlockState(pos).is(ModBlocks.BRICK_FOUNDRY_CHANNEL.get());
-    }
-
-    public boolean checkFourBlocks(Level level, BlockPos pos)
-    {
-        return checkBlock(level, pos) && checkBlock(level, pos.above()) && checkBlock(level, pos.above(2)) && checkBlock(level, pos.above(3));
-    }
-
     public static void tick(Level level, BlockPos blockPos, BlockState blockState, FoundryBlockEntity foundryBlockEntity)
     {
-        if (foundryBlockEntity.isMultiBlockBuilt())
+        Direction d = blockState.getValue(FoundryBlock.FACING);
+        BlockPos midBlock = blockPos.relative(d.getOpposite());
+        if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(level, midBlock) != null)
         {
-            level.addParticle(ParticleTypes.SMOKE, blockPos.getX() + level.random.nextFloat()*0.6f - 0.3f, blockPos.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, blockPos.getZ() + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
+            level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
         }
     }
 }
