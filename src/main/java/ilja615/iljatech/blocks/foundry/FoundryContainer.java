@@ -1,6 +1,7 @@
 package ilja615.iljatech.blocks.foundry;
 
 import ilja615.iljatech.containers.MaxStackSize1Slot;
+import ilja615.iljatech.containers.ResultSlot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,6 +12,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Objects;
 
@@ -32,11 +34,11 @@ public class FoundryContainer extends AbstractContainerMenu
         for (int i = 0 ; i < 4 ; ++i)
         {
             int finalColumn = i;
-            tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, finalColumn, startX + (finalColumn * slotSizePlus2), startY)));
+            tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, finalColumn, startX + (finalColumn * slotSizePlus2), startY)));
         }
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 4, 35, 53)));
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 5, 83, 35)));
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 6, 143, 35)));
+        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, 4, 35, 53))); // Fuel
+        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 5, 83, 35))); // Casting mold
+        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new ResultSlot(h, 6, 143, 35))); // Output
 
         // HotBar
         final int hotBarStartY = 142;

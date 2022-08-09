@@ -3,10 +3,10 @@
 	"textures": {
 		"particle": "iljatech:block/brick_foundry_channel",
 		"north": "iljatech:block/brick_foundry_channel",
-		"south": "iljatech:block/special_brick_side",
-		"east": "iljatech:block/special_brick_side",
-		"west": "iljatech:block/special_brick_side",
-		"up": "iljatech:block/specialbrick",
-		"down": "iljatech:block/specialbrick"
+		"south": "minecraft:block/bricks",
+		"east": "minecraft:block/bricks",
+		"west": "minecraft:block/bricks",
+		"up": "minecraft:block/bricks",
+		"down": "minecraft:block/bricks"
 	}
 }
