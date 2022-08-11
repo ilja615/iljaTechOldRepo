@@ -1,10 +1,12 @@
 package ilja615.iljatech.blocks.foundry;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.init.ModMultiBlocks;
+import ilja615.iljatech.init.ModProperties;
+import ilja615.iljatech.init.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -15,9 +17,9 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +36,10 @@ import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nameable
 {
@@ -42,14 +47,19 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     public NonNullList<ItemStack> chestContents = NonNullList.withSize(7, ItemStack.EMPTY);
     protected int numPlayersUsing;
     private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
-    public LazyOptional<IItemHandlerModifiable> cmItemStackHandler = LazyOptional.of(() -> new FoundryBlockEntity.FoundryItemStackHandler(this));
-    protected LazyOptional<CraftingContainer> wrapper = LazyOptional.of(() ->
-            new FoundryInventoryWrapper(cmItemStackHandler.orElse(EMPTYHANDLER)));
-    private Optional<CraftingRecipe> recipeUsed = Optional.empty();
+    public LazyOptional<IItemHandlerModifiable> foundryItemStackHandler = LazyOptional.of(() -> new FoundryBlockEntity.FoundryItemStackHandler(this));
+
+    private int processingTime;
 
     public FoundryBlockEntity(BlockPos pos, BlockState state)
     {
         super(ModBlockEntityTypes.FOUNDRY.get(), pos, state);
+    }
+
+    @Nullable
+    public List<FoundryRecipe> getRecipes()
+    {
+        return level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.FOUNDRY.get());
     }
 
     public NonNullList<ItemStack> getItems() {
@@ -94,6 +104,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     {
         super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.chestContents);
+        compound.putInt("ProcessingTime", this.processingTime);
     }
 
     @Override
@@ -102,13 +113,14 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         super.load(compound);
         this.chestContents = NonNullList.withSize(this.chestContents.size(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(compound, this.chestContents);
-        cmItemStackHandler.ifPresent(h ->
+        foundryItemStackHandler.ifPresent(h ->
         {
             for (int i = 0; i < h.getSlots(); i++)
             {
                 h.setStackInSlot(i, chestContents.get(i));
             }
         });
+        this.processingTime = compound.getInt("ProcessingTime");
     }
 
     @Override
@@ -147,7 +159,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     @Override
     public void invalidateCaps()
     {
-        this.cmItemStackHandler.invalidate();
+        this.foundryItemStackHandler.invalidate();
         super.invalidateCaps();
     }
 
@@ -155,7 +167,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction direction)
     {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return cmItemStackHandler.cast();
+            return foundryItemStackHandler.cast();
         }
         return super.getCapability(capability, direction);
     }
@@ -163,8 +175,8 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     @Override
     public void setRemoved() {
         super.setRemoved();
-        if (cmItemStackHandler != null) {
-            cmItemStackHandler.invalidate();
+        if (foundryItemStackHandler != null) {
+            foundryItemStackHandler.invalidate();
         }
     }
 
@@ -199,13 +211,67 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 2);
     }
 
-    public static void tick(Level level, BlockPos blockPos, BlockState blockState, FoundryBlockEntity foundryBlockEntity)
+    public static void tick(Level level, BlockPos blockPos, BlockState state, FoundryBlockEntity blockEntity)
     {
-        Direction d = blockState.getValue(FoundryBlock.FACING);
+        Direction d = state.getValue(FoundryBlock.FACING);
         BlockPos midBlock = blockPos.relative(d.getOpposite());
-        if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(level, midBlock) != null)
+        if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(level, blockPos) != null)
         {
-            level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
+            blockEntity.foundryItemStackHandler.ifPresent(itemHandler ->
+            {
+                boolean foundRecipe = false;
+                List<FoundryRecipe> recipes = blockEntity.getRecipes();
+                for (FoundryRecipe r : recipes)
+                {
+                    ItemStack resultingStack = r.result.copy();
+
+                    HashSet<Item> listOfRecipe = new HashSet();
+                    for (Ingredient i : r.ingredients)
+                    {
+                        listOfRecipe.add(i.getItems()[0].getItem());
+                    }
+                    HashSet<Item> listOfInventory = new HashSet();
+                    listOfInventory.add(blockEntity.chestContents.get(0).getItem()); listOfInventory.add(blockEntity.chestContents.get(1).getItem()); listOfInventory.add(blockEntity.chestContents.get(2).getItem()); listOfInventory.add(blockEntity.chestContents.get(3).getItem());
+
+                    if (listOfRecipe.equals(listOfInventory))
+                    {
+                        // A matching recipe was found. Now then:
+                        foundRecipe = true;
+
+                        blockEntity.processingTime++;
+                        if (level.isClientSide)
+                            level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
+
+                        if (blockEntity.processingTime >= 60)
+                        {
+                            if (itemHandler.getStackInSlot(6).isEmpty()) // 6 is output slot
+                            {
+                                // In this case a new result itemstack is added with 1 of the result.
+                                itemHandler.getStackInSlot(0).shrink(1);
+                                itemHandler.getStackInSlot(1).shrink(1);
+                                itemHandler.getStackInSlot(2).shrink(1);
+                                itemHandler.getStackInSlot(3).shrink(1);
+                                itemHandler.setStackInSlot(6, resultingStack);
+                            } else if (itemHandler.getStackInSlot(6).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(6).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(6).getMaxStackSize()) {
+                                // In this case the result itemstack is added to what was already there
+                                itemHandler.getStackInSlot(0).shrink(1);
+                                itemHandler.getStackInSlot(1).shrink(1);
+                                itemHandler.getStackInSlot(2).shrink(1);
+                                itemHandler.getStackInSlot(3).shrink(1);
+                                itemHandler.getStackInSlot(6).grow(resultingStack.getCount());
+                            }
+                            blockEntity.processingTime = 0;
+                            blockEntity.setChanged();
+                        }
+                        return;
+                    }
+                }
+                if (!foundRecipe)
+                {
+                    // In this case no recipe match was found. (Because otherwise it would have returned.)
+                    blockEntity.processingTime = 0; // Resset the processingtime, in case the recipe got for example interrupted halfway through or so.
+                }
+            });
         }
     }
 }

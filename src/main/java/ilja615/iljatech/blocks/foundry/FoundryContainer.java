@@ -11,6 +11,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -34,11 +36,11 @@ public class FoundryContainer extends AbstractContainerMenu
         for (int i = 0 ; i < 4 ; ++i)
         {
             int finalColumn = i;
-            tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, finalColumn, startX + (finalColumn * slotSizePlus2), startY)));
+            tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, finalColumn, startX + (finalColumn * slotSizePlus2), startY)));
         }
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, 4, 35, 53))); // Fuel
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 5, 83, 35))); // Casting mold
-        tileEntity.cmItemStackHandler.ifPresent(h -> this.addSlot(new ResultSlot(h, 6, 143, 35))); // Output
+        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, 4, 35, 53))); // Fuel
+        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 5, 83, 35))); // Casting mold
+        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new ResultSlot(h, 6, 143, 35))); // Output
 
         // HotBar
         final int hotBarStartY = 142;
@@ -82,37 +84,62 @@ public class FoundryContainer extends AbstractContainerMenu
         return stillValid(canInteractWithCallable, playerIn, ModBlocks.BRICK_FOUNDRY.get());
     }
 
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index)
-    {
-        //this.inventorySlots.forEach(s -> { if (s.getHasStack()) System.out.println("Slot "+index+" : "+s.getStack()); else System.out.println("Slot "+index+" : "+"Empty Item Stack");});
-        ItemStack itemStack = ItemStack.EMPTY;
-        final Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem())
-        {
-            final ItemStack itemStack1 = slot.getItem();
-            itemStack = itemStack1.copy();
-            if (index < 9)
-            {
-                if (!this.moveItemStackTo(itemStack1, 9, this.slots.size(), true))
-                {
+    public ItemStack quickMoveStack(Player p_38986_, int p_38987_) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(p_38987_);
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (p_38987_ == 6) {
+                if (!this.moveItemStackTo(itemstack1, 7, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.moveItemStackTo(itemStack1, 0, 9, false))
-            {
+
+                slot.onQuickCraft(itemstack1, itemstack);
+            } else if (p_38987_ > 5) {
+                if (this.isCastMold(itemstack1)) {
+                    if (!this.moveItemStackTo(itemstack1, 5, 6, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (this.isFuel(itemstack1)) {
+                    if (!this.moveItemStackTo(itemstack1, 4, 5, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (!this.moveItemStackTo(itemstack1, 0, 4, false)) {
+                        return ItemStack.EMPTY;
+                }
+                else if (p_38987_ >= 7 && p_38987_ < 30) {
+                    if (!this.moveItemStackTo(itemstack1, this.slots.size() - 9, this.slots.size(), false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (p_38987_ >= 30 && p_38987_ < 39 && !this.moveItemStackTo(itemstack1, 7, this.slots.size() - 9, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 7, this.slots.size(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemStack1.isEmpty())
-            {
+            if (itemstack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
-            }
-            else
-            {
+            } else {
                 slot.setChanged();
             }
+
+            if (itemstack1.getCount() == itemstack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(p_38986_, itemstack1);
         }
-        return itemStack;
+
+        return itemstack;
+    }
+
+    protected boolean isFuel(ItemStack itemStack) {
+        return net.minecraftforge.common.ForgeHooks.getBurnTime(itemStack, RecipeType.SMELTING) > 0;
+    }
+
+    protected boolean isCastMold(ItemStack itemStack) {
+        return itemStack.is(Items.STICK); // TODO : make actual correct thing
     }
 }

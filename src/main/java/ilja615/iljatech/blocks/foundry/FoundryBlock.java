@@ -3,6 +3,7 @@ package ilja615.iljatech.blocks.foundry;
 import ilja615.iljatech.blocks.crusher.CrusherBlockEntity;
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nullable;
 
@@ -59,6 +61,9 @@ public class FoundryBlock extends BaseEntityBlock
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
     {
+        if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(world, pos) == null)
+            return InteractionResult.FAIL; // Fails to open gui when the multiblock structure was not built
+
         BlockEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof FoundryBlockEntity)
         {

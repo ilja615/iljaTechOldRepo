@@ -27,14 +27,13 @@ public class ModMultiBlocks
         return api.makeMultiblock(new String[][] {
                         {"BBB", "BCB", "BBB"},
                         {"BBB", "B B", "BBB"},
-                        {"BBB", "B B", "BBB"},
-                        {"BBB", "F0B", "BBB"}
+                        {"BBB", "0 B", "BBB"},
+                        {"BBB", "BBB", "BBB"}
                 },
-                'F', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY.get()),
+                '0', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY.get()),
                 ' ', api.airMatcher(),
                 'B', api.predicateMatcher(Blocks.BRICKS, state -> state.is(Blocks.BRICKS) || state.is(ModBlocks.BRICK_FOUNDRY_CHANNEL.get())),
-                'C', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY_CHANNEL.get()),
-                '0', api.predicateMatcher(Blocks.BRICKS, state -> state.is(Blocks.BRICKS) || state.is(ModBlocks.BRICK_FOUNDRY_CHANNEL.get()))
+                'C', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY_CHANNEL.get())
         );
     }
 }
