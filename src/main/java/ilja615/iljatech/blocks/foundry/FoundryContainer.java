@@ -5,9 +5,11 @@ import ilja615.iljatech.containers.ResultSlot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +23,7 @@ import java.util.Objects;
 public class FoundryContainer extends AbstractContainerMenu
 {
     private final ContainerLevelAccess canInteractWithCallable;
-    private FoundryBlockEntity te;
+    public FoundryBlockEntity te;
 
     public FoundryContainer(final int windowId, final Inventory playerInventory, final FoundryBlockEntity tileEntity)
     {

@@ -88,11 +88,8 @@ public class CrusherBlockEntity extends BlockEntity
                     return;
                 }
             }
-            if (!foundRecipe)
-            {
-                // In this case no recipe match was found. (Because otherwise it would have returned.)
-                blockEntity.processingTime = 0; // Resset the processingtime, in case the recipe got for example interrupted halfway through or so.
-            }
+            // In this case no recipe match was found. (Because otherwise it would have returned.)
+            blockEntity.processingTime = 0; // Resset the processingtime, in case the recipe got for example interrupted halfway through or so.
         });
     }
 

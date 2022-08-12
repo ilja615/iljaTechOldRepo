@@ -65,11 +65,7 @@ public class FoundryRecipe implements Recipe<Container>
 
     @Override
     public boolean matches(Container container, Level p_44484_) {
-        HashSet<Item> listOfRecipe = new HashSet();
-        listOfRecipe.add(this.ingredients.get(0).getItems()[0].getItem()); listOfRecipe.add(this.ingredients.get(1).getItems()[0].getItem()); listOfRecipe.add(this.ingredients.get(2).getItems()[0].getItem()); listOfRecipe.add(this.ingredients.get(3).getItems()[0].getItem());
-        HashSet<Item> listOfInventory = new HashSet();
-        listOfInventory.add(container.getItem(0).getItem()); listOfInventory.add(container.getItem(1).getItem()); listOfInventory.add(container.getItem(2).getItem()); listOfInventory.add(container.getItem(3).getItem());
-        return (listOfRecipe.equals(listOfInventory));
+        return true;
     }
 
     @Override

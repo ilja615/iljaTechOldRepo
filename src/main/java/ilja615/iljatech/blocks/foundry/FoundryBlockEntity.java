@@ -1,5 +1,6 @@
 package ilja615.iljatech.blocks.foundry;
 
+import ilja615.iljatech.blocks.crafter_machine.CraftingInventoryWrapper;
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModRecipeTypes;
@@ -17,14 +18,17 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -46,10 +50,11 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     private Component customName;
     public NonNullList<ItemStack> chestContents = NonNullList.withSize(7, ItemStack.EMPTY);
     protected int numPlayersUsing;
-    private final static EmptyHandler EMPTYHANDLER = new EmptyHandler();
     public LazyOptional<IItemHandlerModifiable> foundryItemStackHandler = LazyOptional.of(() -> new FoundryBlockEntity.FoundryItemStackHandler(this));
 
     private int processingTime;
+    private int fuelTime;
+    private int maxTimeOfFuel;
 
     public FoundryBlockEntity(BlockPos pos, BlockState state)
     {
@@ -105,6 +110,8 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.chestContents);
         compound.putInt("ProcessingTime", this.processingTime);
+        compound.putInt("FuelTime", this.fuelTime);
+        compound.putInt("MaxTimeOfFuel", this.maxTimeOfFuel);
     }
 
     @Override
@@ -121,6 +128,8 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
             }
         });
         this.processingTime = compound.getInt("ProcessingTime");
+        this.fuelTime = compound.getInt("FuelTime");
+        this.maxTimeOfFuel = compound.getInt("MaxTimeOfFuel");
     }
 
     @Override
@@ -196,12 +205,6 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
             if (slot < 7) tile.chestContents.set(slot, this.stacks.get(slot));
             tile.setChanged();
         }
-
-        @Override
-        public int getSlotLimit(int slot)
-        {
-            return 1;
-        }
     }
 
     public void setItemStackAndSaveAndSync(int slot, ItemStack itemStack)
@@ -209,6 +212,25 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         this.chestContents.set(slot, itemStack);
         this.setChanged();
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 2);
+    }
+
+    public boolean isBurning()
+    {
+        return this.fuelTime > 0;
+    }
+
+    public int getLitProgress() {
+        int i = this.maxTimeOfFuel;
+        if (i == 0) {
+            i = 200;
+        }
+
+        return this.fuelTime * 13 / i;
+    }
+
+    public int getProgress()
+    {
+        return this.processingTime * 24 / 60;
     }
 
     public static void tick(Level level, BlockPos blockPos, BlockState state, FoundryBlockEntity blockEntity)
@@ -220,27 +242,44 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
             blockEntity.foundryItemStackHandler.ifPresent(itemHandler ->
             {
                 boolean foundRecipe = false;
+
+                // Burns the current fuel
+                if (blockEntity.isBurning())
+                {
+                    blockEntity.fuelTime--;
+                    if (level.isClientSide)
+                        level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
+                }
+
+                ArrayList<Item> listOfInventory = new ArrayList();
+                for (int i = 0; i <= 3; i++)
+                {
+                    if (!itemHandler.getStackInSlot(i).isEmpty()) listOfInventory.add(itemHandler.getStackInSlot(i).getItem());
+                }
                 List<FoundryRecipe> recipes = blockEntity.getRecipes();
                 for (FoundryRecipe r : recipes)
                 {
                     ItemStack resultingStack = r.result.copy();
 
-                    HashSet<Item> listOfRecipe = new HashSet();
+                    ArrayList<Item> listOfRecipe = new ArrayList();
                     for (Ingredient i : r.ingredients)
                     {
-                        listOfRecipe.add(i.getItems()[0].getItem());
+                        if (!i.getItems()[0].isEmpty()) listOfRecipe.add(i.getItems()[0].getItem());
                     }
-                    HashSet<Item> listOfInventory = new HashSet();
-                    listOfInventory.add(blockEntity.chestContents.get(0).getItem()); listOfInventory.add(blockEntity.chestContents.get(1).getItem()); listOfInventory.add(blockEntity.chestContents.get(2).getItem()); listOfInventory.add(blockEntity.chestContents.get(3).getItem());
 
-                    if (listOfRecipe.equals(listOfInventory))
+                    if (listOfRecipe.containsAll(listOfInventory) && listOfInventory.containsAll(listOfRecipe))
                     {
                         // A matching recipe was found. Now then:
                         foundRecipe = true;
 
+                        if (!blockEntity.isBurning() && ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING) > 0)
+                        {
+                            // There is no fuel currently being burned but there is a fuel in the slot that can be started with burning
+                            itemHandler.getStackInSlot(4).shrink(1);
+                            blockEntity.fuelTime += ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING);
+                        }
+
                         blockEntity.processingTime++;
-                        if (level.isClientSide)
-                            level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
 
                         if (blockEntity.processingTime >= 60)
                         {
@@ -272,6 +311,11 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
                     blockEntity.processingTime = 0; // Resset the processingtime, in case the recipe got for example interrupted halfway through or so.
                 }
             });
+        } else {
+            // The structure was not properly built or was broken down in the process
+            blockEntity.processingTime = 0;
+            blockEntity.fuelTime = 0;
+            blockEntity.maxTimeOfFuel = 0;
         }
     }
 }

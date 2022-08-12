@@ -15,5 +15,4 @@ public class ModRecipeTypes
     public static final RegistryObject<RecipeType> CRUSHING = RECIPE_TYPES.register("crushing", () -> RecipeType.simple(new ResourceLocation(IljaTech.MOD_ID, "crushing")));
     public static final RegistryObject<RecipeType> BOILING = RECIPE_TYPES.register("boiling", () -> RecipeType.simple(new ResourceLocation(IljaTech.MOD_ID, "boiling")));
     public static final RegistryObject<RecipeType> FOUNDRY = RECIPE_TYPES.register("foundry", () -> RecipeType.simple(new ResourceLocation(IljaTech.MOD_ID, "foundry")));
-
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,9 +17,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class FoundryScreen extends AbstractContainerScreen<FoundryContainer>
 {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(IljaTech.MOD_ID, "textures/gui/foundry.png");
+    FoundryContainer container;
 
     public FoundryScreen(FoundryContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
+        this.container = container;
         this.leftPos = 0;
         this.topPos = 0;
         this.imageWidth = 175;
@@ -44,5 +47,15 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryContainer>
         int y = (this.height - this.imageHeight) / 2;
 
         this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
+
+        int i = this.leftPos;
+        int j = this.topPos;
+        if (this.container.te.isBurning()) {
+            int k = this.container.te.getLitProgress();
+            this.blit(matrixStack, i + 10, j + 48 - k, 176, 12 - k, 64, k + 1);
+        }
+
+        int l = this.container.te.getProgress();
+        this.blit(matrixStack, i + 106, j + 34, 176, 84, l + 1, 16);
     }
 }
