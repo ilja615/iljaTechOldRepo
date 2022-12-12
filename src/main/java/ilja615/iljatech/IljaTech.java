@@ -45,6 +45,8 @@ public class IljaTech
     static void afterCommonSetup()
     {
         System.out.println("IljaTech afterCommonSetup now run.");
+
+        ModIngredient.registerIngredient();
     }
 
     private void clientSetup(final FMLClientSetupEvent event)

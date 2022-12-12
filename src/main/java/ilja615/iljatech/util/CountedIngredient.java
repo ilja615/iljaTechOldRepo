@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 public class CountedIngredient extends AbstractIngredient
 {
     private final Item item;
+
     private final int count;
 
     public CountedIngredient(Item item, int count)
@@ -25,6 +26,11 @@ public class CountedIngredient extends AbstractIngredient
 
         this.item = item;
         this.count = count;
+    }
+
+    public int getCount()
+    {
+        return count;
     }
 
     @Override

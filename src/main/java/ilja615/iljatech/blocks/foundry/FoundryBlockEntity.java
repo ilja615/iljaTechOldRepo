@@ -4,6 +4,7 @@ import ilja615.iljatech.blocks.crafter_machine.CraftingInventoryWrapper;
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModRecipeTypes;
+import ilja615.iljatech.util.CountedIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -269,40 +270,76 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
 
                     if (listOfRecipe.containsAll(listOfInventory) && listOfInventory.containsAll(listOfRecipe))
                     {
-                        // A matching recipe was found. Now then:
                         foundRecipe = true;
+                        int[] amountsToBeSubstracted = {1, 1, 1, 1};
 
-                        if (!blockEntity.isBurning() && ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING) > 0)
+                        // Technically a matching recipe was found but amounts have to be still checked
+                        for (Ingredient i : r.ingredients)
                         {
-                            // There is no fuel currently being burned but there is a fuel in the slot that can be started with burning
-                            itemHandler.getStackInSlot(4).shrink(1);
-                            blockEntity.fuelTime += ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING);
-                        }
-
-                        blockEntity.processingTime++;
-
-                        if (blockEntity.processingTime >= 60)
-                        {
-                            if (itemHandler.getStackInSlot(6).isEmpty()) // 6 is output slot
+                            if (i instanceof CountedIngredient countedIngredient)
                             {
-                                // In this case a new result itemstack is added with 1 of the result.
-                                itemHandler.getStackInSlot(0).shrink(1);
-                                itemHandler.getStackInSlot(1).shrink(1);
-                                itemHandler.getStackInSlot(2).shrink(1);
-                                itemHandler.getStackInSlot(3).shrink(1);
-                                itemHandler.setStackInSlot(6, resultingStack);
-                            } else if (itemHandler.getStackInSlot(6).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(6).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(6).getMaxStackSize()) {
-                                // In this case the result itemstack is added to what was already there
-                                itemHandler.getStackInSlot(0).shrink(1);
-                                itemHandler.getStackInSlot(1).shrink(1);
-                                itemHandler.getStackInSlot(2).shrink(1);
-                                itemHandler.getStackInSlot(3).shrink(1);
-                                itemHandler.getStackInSlot(6).grow(resultingStack.getCount());
+                                // Find all the CountedIngredients
+                                int count = countedIngredient.getCount();
+                                boolean hasEnoughOfThis = false;
+                                for (int h = 0; h <= 3; h++) // Check all the slots if there is enough of the CountedIngredient
+                                {
+                                    if (itemHandler.getStackInSlot(h).getItem().equals(countedIngredient.getItems()[0].getItem()))
+                                    {
+                                        if (itemHandler.getStackInSlot(h).getCount() >= count)
+                                        {
+                                            hasEnoughOfThis = true;
+                                            amountsToBeSubstracted[h] = count;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!hasEnoughOfThis)
+                                {
+                                    foundRecipe = false;
+                                }
                             }
-                            blockEntity.processingTime = 0;
-                            blockEntity.setChanged();
                         }
-                        return;
+
+                        // A matching recipe was found. Now then:
+                        if (foundRecipe)
+                        {
+                            if (!blockEntity.isBurning() && ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING) > 0)
+                            {
+                                // There is no fuel currently being burned but there is a fuel in the slot that can be started with burning
+                                itemHandler.getStackInSlot(4).shrink(1);
+                                blockEntity.fuelTime += ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING);
+                                blockEntity.maxTimeOfFuel = ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING); // Store the max burn time for progress calculation
+                            }
+
+                            blockEntity.processingTime++;
+
+                            if (blockEntity.processingTime >= 60)
+                            {
+                                if (itemHandler.getStackInSlot(6).isEmpty()) // 6 is output slot
+                                {
+                                    // In this case a new result itemstack is added with 1 of the result.
+                                    // The items have to be subtracted
+                                    for (int i = 0; i <= 3; i++)
+                                    {
+                                        itemHandler.getStackInSlot(i).shrink(amountsToBeSubstracted[i]);
+                                    }
+                                    itemHandler.setStackInSlot(6, resultingStack);
+                                } else if (itemHandler.getStackInSlot(6).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(6).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(6).getMaxStackSize()) {
+                                    // In this case the result itemstack is added to what was already there
+                                    // The items have to be subtracted
+                                    for (int i = 0; i <= 3; i++)
+                                    {
+                                        itemHandler.getStackInSlot(i).shrink(amountsToBeSubstracted[i]);
+                                    }
+                                    itemHandler.getStackInSlot(6).grow(resultingStack.getCount());
+                                }
+                                blockEntity.processingTime = 0;
+                                blockEntity.setChanged();
+                            }
+
+                            // Successful
+                            return;
+                        }
                     }
                 }
                 if (!foundRecipe)

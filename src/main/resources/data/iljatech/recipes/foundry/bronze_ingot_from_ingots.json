@@ -2,12 +2,14 @@
   "type": "iljatech:foundry",
   "ingredients": [
     {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:copper_ingot",
+      "type": "iljatech:counted_ingredient",
+      "count": 3
     },
     {
       "item": "iljatech:tin_ingot"
     }
   ],
   "result": "iljatech:bronze_ingot",
-  "count": 2
+  "count": 4
 }
