@@ -8,10 +8,7 @@ import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.PetrolymerHelmetModel;
 import ilja615.iljatech.client.models.SaltGolemModel;
 import ilja615.iljatech.client.render.*;
-import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModContainerTypes;
-import ilja615.iljatech.init.ModEntities;
-import ilja615.iljatech.init.ModItems;
+import ilja615.iljatech.init.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -71,6 +68,8 @@ public class ClientEventBusSubscriber
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.CONSTANTAN_WIRE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.NICHROME_WIRE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.BARBED_WIRE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_OIL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_OIL.get(), RenderType.translucent());
 
         //item properties registration
         event.enqueueWork(() -> ItemProperties.register(ModItems.IRON_HAMMER.get(), new ResourceLocation(IljaTech.MOD_ID, "cooldown"),

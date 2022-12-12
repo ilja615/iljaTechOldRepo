@@ -33,6 +33,8 @@ public class IljaTech
         ModEffects.EFFECTS.register(modEventBus);
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
+        ModFluids.FLUIDS.register(modEventBus);
+        ModFluidTypes.FLUID_TYPES.register(modEventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event)

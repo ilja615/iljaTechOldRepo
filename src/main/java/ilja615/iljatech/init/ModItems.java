@@ -7,9 +7,7 @@ import ilja615.iljatech.util.ModItemGroup;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.MobBucketItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -57,4 +55,11 @@ public class ModItems
     public static final RegistryObject<Item> PETROLYMER_BOOTS = ITEMS.register("petrolymer_boots", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 
     public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1).tab(ModItemGroup.instance))));
+
+    // Fluids
+    public static final RegistryObject<Item> OIL_BUCKET = ITEMS.register("oil_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_OIL,
+                    new Item.Properties().tab(ModItemGroup.instance).craftRemainder(Items.BUCKET).stacksTo(1)));
+
+
 }

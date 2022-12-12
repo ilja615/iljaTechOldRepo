@@ -106,6 +106,10 @@ public class ModBlocks
     public static final RegistryObject<Block> BUDDING_RUBY_BLOCK = registerBlockWithItem("budding_ruby_block", () -> new RubyBuddingBlock(ModProperties.BUDDING_CRYSTAL_PROPERTY));
     public static final RegistryObject<Block> BUDDING_CASSITERITE_BLOCK = registerBlockWithItem("budding_cassiterite_block", () -> new CassiteriteBuddingBlock(ModProperties.BUDDING_CRYSTAL_PROPERTY));
 
+    // Fluids
+    public static final RegistryObject<LiquidBlock> OIL_BLOCK = BLOCKS.register("oil_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_OIL, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
     // Technical
     public static final RegistryObject<Block> CRAFTER_MACHINE = registerBlockWithItem("crafter_machine", () -> new CrafterMachineBlock(BlockBehaviour.Properties.of(Material.METAL)));
 
@@ -120,7 +124,7 @@ public class ModBlocks
     // Thermal
     public static final RegistryObject<Block> BURNER = registerBlockWithItem("burner", () -> new BurnerBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS).lightLevel(ModUtils.getLightValueLit(13))));
     public static final RegistryObject<Block> BELLOWS = registerBlockWithItem("bellows", () -> new BellowsBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> STOKED_FIRE = registerBlockWithItem("stoked_fire", () -> new StokedFireBlock(BlockBehaviour.Properties.copy(Blocks.FIRE).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> STOKED_FIRE = ModBlocks.BLOCKS.register("stoked_fire", () -> new StokedFireBlock(BlockBehaviour.Properties.copy(Blocks.FIRE).noOcclusion().noCollission()));
     public static final RegistryObject<Block> BRICK_FOUNDRY = registerBlockWithItem("brick_foundry", () -> new FoundryBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
     public static final RegistryObject<Block> BRICK_FOUNDRY_CHANNEL = registerBlockWithItem("brick_foundry_channel", () -> new FoundryChannelBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
