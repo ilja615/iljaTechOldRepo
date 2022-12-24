@@ -15,6 +15,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModFluidTypes {
     public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");
     public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
+    public static final ResourceLocation OIL_STILL_RL = new ResourceLocation(IljaTech.MOD_ID, "block/oil_still");
+    public static final ResourceLocation OIL_FLOWING_RL = new ResourceLocation(IljaTech.MOD_ID, "block/oil_flowing");
     public static final ResourceLocation OIL_OVERLAY_RL = new ResourceLocation(IljaTech.MOD_ID, "misc/in_oil");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
@@ -25,8 +27,8 @@ public class ModFluidTypes {
                     SoundEvents.HONEY_DRINK));
 
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
-        return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, OIL_OVERLAY_RL,
-                0xFF1F2219, new Vector3f(31f / 255f, 22f / 255f, 19f / 255f), properties));
+        return FLUID_TYPES.register(name, () -> new BaseFluidType(OIL_STILL_RL, OIL_FLOWING_RL, OIL_OVERLAY_RL,
+                0x00000000, new Vector3f(0.0f, 0.0f, 0.0f), properties));
     }
 
     public static void register(IEventBus eventBus) {
