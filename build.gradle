@@ -148,3 +148,9 @@ publishing {
         }
     }
 }
+
+mixin {
+    add sourceSets.main, "iljatech.refmap.json"
+
+    config "iljatech.mixins.json"
+}

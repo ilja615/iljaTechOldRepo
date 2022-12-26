@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "ilja615.iljatech.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "modid.refmap.json",
+  "mixins": [
+    "LivingEntityMixin"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}
