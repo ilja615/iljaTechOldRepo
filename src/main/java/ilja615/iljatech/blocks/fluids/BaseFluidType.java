@@ -2,8 +2,10 @@ package ilja615.iljatech.blocks.fluids;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class BaseFluidType extends FluidType
+public class BaseFluidType extends FluidType implements IClientFluidTypeExtensions
 {
     private final ResourceLocation stillTexture;
     private final ResourceLocation flowingTexture;
@@ -51,6 +53,16 @@ public class BaseFluidType extends FluidType
 
     public Vector3f getFogColor() {
         return fogColor;
+    }
+
+    @Override
+    public @Nullable ResourceLocation getRenderOverlayTexture(Minecraft mc) {
+        return this.getOverlayTexture();
+    }
+    @Override
+    public void renderOverlay(Minecraft mc, PoseStack poseStack) {
+
+        IClientFluidTypeExtensions.super.renderOverlay(mc, poseStack);
     }
 
     @Override

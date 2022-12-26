@@ -10,18 +10,6 @@ public class SlipperyEffect extends MobEffect
 {
     public SlipperyEffect()
     {
-        super(MobEffectCategory.HARMFUL, 0x2E2E34);
-    }
-
-    @Override
-    public void applyEffectTick(LivingEntity entity, int p_76394_2_)
-    {
-
-    }
-
-    @Override
-    public boolean isDurationEffectTick(int p_76397_1_, int p_76397_2_)
-    {
-        return true;
+        super(MobEffectCategory.NEUTRAL, 0xD8E5F5);
     }
 }
