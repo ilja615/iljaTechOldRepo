@@ -3,6 +3,7 @@ package ilja615.iljatech.init;
 import com.mojang.math.Vector3f;
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.fluids.BaseFluidType;
+import ilja615.iljatech.blocks.fluids.OilFluidType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.SoundAction;
@@ -27,7 +28,7 @@ public class ModFluidTypes {
                     SoundEvents.HONEY_DRINK));
 
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
-        return FLUID_TYPES.register(name, () -> new BaseFluidType(OIL_STILL_RL, OIL_FLOWING_RL, OIL_OVERLAY_RL,
+        return FLUID_TYPES.register(name, () -> new OilFluidType(OIL_STILL_RL, OIL_FLOWING_RL, OIL_OVERLAY_RL,
                 0xFFFFFFFF, new Vector3f(0.0f, 0.0f, 0.0f), properties));
     }
 

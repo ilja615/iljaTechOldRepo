@@ -59,6 +59,7 @@ public class BaseFluidType extends FluidType implements IClientFluidTypeExtensio
     public @Nullable ResourceLocation getRenderOverlayTexture(Minecraft mc) {
         return this.getOverlayTexture();
     }
+
     @Override
     public void renderOverlay(Minecraft mc, PoseStack poseStack) {
 
