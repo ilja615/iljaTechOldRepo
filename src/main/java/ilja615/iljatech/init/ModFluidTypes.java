@@ -1,6 +1,5 @@
 package ilja615.iljatech.init;
 
-import com.mojang.math.Vector3f;
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.fluids.BaseFluidType;
 import ilja615.iljatech.blocks.fluids.OilFluidType;
@@ -12,6 +11,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.joml.Vector3f;
 
 public class ModFluidTypes {
     public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");

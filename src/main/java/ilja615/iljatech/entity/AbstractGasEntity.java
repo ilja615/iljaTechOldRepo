@@ -34,11 +34,6 @@ public abstract class AbstractGasEntity extends Entity
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
     public void tick()
     {
         this.move(MoverType.SELF, this.getDeltaMovement());

@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -84,7 +85,9 @@ public class FoundryRecipe implements Recipe<Container>
             NonNullList<Ingredient> nonnulllist = itemsFromJson(GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients"));
             String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
             int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
-            ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            // TODO : check if it works
+            //ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            ItemStack itemstack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(s1)), i);
             return new FoundryRecipe(ModRecipeSerializers.FOUNDRY.get(), recipeId, nonnulllist, itemstack);
         }
 

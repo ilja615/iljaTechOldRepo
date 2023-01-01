@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -86,7 +87,9 @@ public class BoilingRecipe implements Recipe<Container>
             ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "ingredient"));
             String s1 = GsonHelper.getAsString(pSerializedRecipe, "result");
             int i = GsonHelper.getAsInt(pSerializedRecipe, "count");
-            ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            // TODO : check if it works
+            //ItemStack itemstack = new ItemStack(Registry.ITEM.get(new ResourceLocation(s1)), i);
+            ItemStack itemstack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(s1)), i);
             return new BoilingRecipe(ModRecipeSerializers.BOILING.get(), recipeId, ingredient, itemstack);
         }
 

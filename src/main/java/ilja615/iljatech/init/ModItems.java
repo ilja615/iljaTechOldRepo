@@ -3,8 +3,6 @@ package ilja615.iljatech.init;
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.items.IronHammerItem;
 import ilja615.iljatech.items.NailGunItem;
-import ilja615.iljatech.util.ModItemGroup;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -12,8 +10,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
 
 public class ModItems
 {
@@ -56,12 +52,12 @@ public class ModItems
     public static final RegistryObject<Item> VINYL_LEGGINGS = ITEMS.register("vinyl_leggings", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.LEGS, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> VINYL_BOOTS = ITEMS.register("vinyl_boots", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 
-    public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1).tab(ModItemGroup.instance))));
+    public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1))));
 
     // Fluids
     public static final RegistryObject<Item> OIL_BUCKET = ITEMS.register("oil_bucket",
             () -> new BucketItem(ModFluids.SOURCE_OIL,
-                    new Item.Properties().tab(ModItemGroup.instance).craftRemainder(Items.BUCKET).stacksTo(1)));
+                    new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 
 }

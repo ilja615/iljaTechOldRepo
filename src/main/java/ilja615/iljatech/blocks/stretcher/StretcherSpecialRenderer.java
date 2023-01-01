@@ -1,7 +1,7 @@
 package ilja615.iljatech.blocks.stretcher;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import ilja615.iljatech.util.ModUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Vector3f;
 
 public class StretcherSpecialRenderer implements BlockEntityRenderer<StretcherBlockEntity>
 {
@@ -37,7 +38,7 @@ public class StretcherSpecialRenderer implements BlockEntityRenderer<StretcherBl
             if (itemstack != ItemStack.EMPTY) {
                 poseStack.pushPose();
                 poseStack.translate(0.5d, 0.5d, 0.5d);
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
                 poseStack.scale(SIZE, SIZE, SIZE);
                 Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemTransforms.TransformType.FIXED, p_112348_, p_112349_, poseStack, p_112347_, i);
                 poseStack.popPose();

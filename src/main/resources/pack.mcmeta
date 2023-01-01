@@ -1,7 +1,9 @@
 {
     "pack": {
         "description": "iljaTech resource thing",
-        "pack_format": 8,
+        "pack_format": 12,
+        "forge:resource_pack_format": 12,
+        "forge:data_pack_format": 10,
         "_comment": "iljaTech resource thing."
     }
 }

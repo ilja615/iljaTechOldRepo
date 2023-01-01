@@ -9,7 +9,7 @@ public class ModEvents
 {
     @SubscribeEvent
     public static void onPlacePumpkin(final BlockEvent.EntityPlaceEvent event) {
-        if (!event.isCanceled() && event.getPlacedBlock().getBlock() == Blocks.CARVED_PUMPKIN
+        if (event.getPlacedBlock().getBlock() == Blocks.CARVED_PUMPKIN
                 && event.getLevel() instanceof Level) {
             // spawn golem
 

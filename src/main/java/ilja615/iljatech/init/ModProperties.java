@@ -2,14 +2,12 @@ package ilja615.iljatech.init;
 
 import ilja615.iljatech.blocks.wire.WireShape;
 import ilja615.iljatech.mechanicalpower.MechanicalPower;
-import ilja615.iljatech.util.ModItemGroup;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.level.material.Material;
 
 public class ModProperties
@@ -18,9 +16,9 @@ public class ModProperties
     public static final FoodProperties BOILED_EGG = new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build();
 
     //items properties
-    public static final Item.Properties ITEM_PROPERTY = new Item.Properties().tab(ModItemGroup.instance);
-    public static final Item.Properties ITEM_PROPERTY_NOT_STACKABLE = new Item.Properties().tab(ModItemGroup.instance).stacksTo(1);
-    public static final Item.Properties BOILED_EGG_PROPERTY = new Item.Properties().tab(ModItemGroup.instance).food(BOILED_EGG);
+    public static final Item.Properties ITEM_PROPERTY = new Item.Properties();
+    public static final Item.Properties ITEM_PROPERTY_NOT_STACKABLE = new Item.Properties().stacksTo(1);
+    public static final Item.Properties BOILED_EGG_PROPERTY = new Item.Properties().food(BOILED_EGG);
 
     //block properties
     public static final Block.Properties CRYSTAL_CLUSTER_PROPERTY = BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel(emission -> 5);

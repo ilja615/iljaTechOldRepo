@@ -60,9 +60,4 @@ public class NailProjectileEntity extends ThrowableItemProjectile implements Ite
             this.remove(RemovalReason.DISCARDED);
         }
     }
-
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

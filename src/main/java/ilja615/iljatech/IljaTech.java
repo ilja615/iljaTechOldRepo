@@ -2,8 +2,14 @@ package ilja615.iljatech;
 
 import ilja615.iljatech.init.*;
 import ilja615.iljatech.util.ModEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,6 +25,7 @@ import static ilja615.iljatech.IljaTech.MOD_ID;
 public class IljaTech
 {
     public static final String MOD_ID = "iljatech";
+    public static CreativeModeTab CREATIVE_TAB;
 
     public IljaTech()
     {
@@ -78,6 +85,28 @@ public class IljaTech
         @SubscribeEvent
         public static void entityAttributes(final EntityAttributeCreationEvent event) {
             ModEntities.CreateEntityAttributes(event); //It creates entity attributes
+        }
+
+        @SubscribeEvent
+        public static void registerTabs(CreativeModeTabEvent.Register event)
+        {
+            CREATIVE_TAB = event.registerCreativeModeTab(new ResourceLocation(MOD_ID, "worldupgrade_tab"), builder -> builder
+                    .icon(() -> new ItemStack(ModItems.BRONZE_GEAR.get()))
+                    .title(Component.translatable("tabs.worldupgrade.worldupgrade_tab"))
+                    .displayItems((featureFlags, output, hasOp) -> {
+                        output.accept(ModItems.BRONZE_GEAR.get());
+                    })
+            );
+        }
+
+        @SubscribeEvent
+        public static void fillTabs(CreativeModeTabEvent.BuildContents event)
+        {
+            if (event.getTab() == CREATIVE_TAB)
+            {
+                ModItems.ITEMS.getEntries().forEach(itemRegistryObject -> event.accept(itemRegistryObject.get()));
+                ModBlocks.BLOCKS.getEntries().forEach(blockRegistryObject -> event.accept(blockRegistryObject.get()));
+            }
         }
     }
 }

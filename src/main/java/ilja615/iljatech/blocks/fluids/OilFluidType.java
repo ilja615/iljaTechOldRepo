@@ -1,12 +1,12 @@
 package ilja615.iljatech.blocks.fluids;
 
-import com.mojang.math.Vector3f;
 import ilja615.iljatech.init.ModEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class OilFluidType extends BaseFluidType
 {
