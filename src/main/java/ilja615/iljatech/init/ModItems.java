@@ -41,6 +41,8 @@ public class ModItems
     public static final RegistryObject<Item> RUBY_POWDER = ITEMS.register("ruby_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
     public static final RegistryObject<Item> AMETHYST_POWDER = ITEMS.register("amethyst_powder", () -> new Item(ModProperties.ITEM_PROPERTY));
 
+    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(ModProperties.ITEM_PROPERTY));
+
     public static final RegistryObject<Item> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new IronHammerItem(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
     public static final RegistryObject<Item> NAILGUN = ITEMS.register("nailgun", () -> new NailGunItem(ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 

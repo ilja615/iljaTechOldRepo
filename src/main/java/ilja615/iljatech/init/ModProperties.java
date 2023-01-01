@@ -31,6 +31,10 @@ public class ModProperties
     public static final Block.Properties BARBED_WIRE_PROPERTY = BlockBehaviour.Properties.of(Material.METAL).noCollission().requiresCorrectToolForDrops().strength(4.0F);
     public static final Block.Properties ORE_PROPERTY = BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F);
     public static final Block.Properties DEEPSLATE_ORE_PROPERTY = BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(4.5F, 3.0F);
+    public static final Block.Properties SALT_PROPERTY = BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F).sound(SoundType.CALCITE);
+    public static final Block.Properties SALT_LAMP_PROPERTY = BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F).sound(SoundType.CALCITE). lightLevel((blockState) -> 3);
+    public static final Block.Properties SALT_POWDER_PROPERTY = BlockBehaviour.Properties.of(Material.SAND).requiresCorrectToolForDrops().strength(2.0F, 2.0F).sound(SoundType.SAND);
+    // TODO : add a custom sound for salt :)
 
     //state properties
     public static final EnumProperty MECHANICAL_POWER = EnumProperty.create("mechanical_power", MechanicalPower.class);

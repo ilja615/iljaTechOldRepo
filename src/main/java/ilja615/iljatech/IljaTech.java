@@ -1,7 +1,9 @@
 package ilja615.iljatech;
 
 import ilja615.iljatech.init.*;
+import ilja615.iljatech.util.ModEvents;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,6 +25,7 @@ public class IljaTech
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::clientSetup);
+        MinecraftForge.EVENT_BUS.register(ModEvents.class);
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);

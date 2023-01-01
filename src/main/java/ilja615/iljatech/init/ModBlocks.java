@@ -107,6 +107,11 @@ public class ModBlocks
     public static final RegistryObject<Block> BUDDING_RUBY_BLOCK = registerBlockWithItem("budding_ruby_block", () -> new RubyBuddingBlock(ModProperties.BUDDING_CRYSTAL_PROPERTY));
     public static final RegistryObject<Block> BUDDING_CASSITERITE_BLOCK = registerBlockWithItem("budding_cassiterite_block", () -> new CassiteriteBuddingBlock(ModProperties.BUDDING_CRYSTAL_PROPERTY));
 
+    // Salt
+    public static final RegistryObject<Block> SALT_CRYSTAL_BLOCK = registerBlockWithItem("salt_crystal_block", () -> new Block(ModProperties.SALT_PROPERTY));
+    public static final RegistryObject<Block> SALT_LAMP = registerBlockWithItem("salt_lamp", () -> new Block(ModProperties.SALT_LAMP_PROPERTY));
+    public static final RegistryObject<Block> SALT_POWDER_BLOCK = registerBlockWithItem("salt_powder_block", () -> new SaltPowderBlock(ModProperties.SALT_LAMP_PROPERTY));
+
     // Fluids
     public static final RegistryObject<LiquidBlock> OIL_BLOCK = BLOCKS.register("oil_block",
             () -> new LiquidBlock(ModFluids.SOURCE_OIL, BlockBehaviour.Properties.copy(Blocks.WATER)));

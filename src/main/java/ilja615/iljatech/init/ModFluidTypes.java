@@ -18,7 +18,7 @@ public class ModFluidTypes {
     public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
     public static final ResourceLocation OIL_STILL_RL = new ResourceLocation(IljaTech.MOD_ID, "block/oil_still");
     public static final ResourceLocation OIL_FLOWING_RL = new ResourceLocation(IljaTech.MOD_ID, "block/oil_flowing");
-    public static final ResourceLocation OIL_OVERLAY_RL = new ResourceLocation(IljaTech.MOD_ID, "textures/misc/in_oil");
+    public static final ResourceLocation OIL_OVERLAY_RL = new ResourceLocation(IljaTech.MOD_ID, "textures/misc/in_oil.png");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, IljaTech.MOD_ID);
