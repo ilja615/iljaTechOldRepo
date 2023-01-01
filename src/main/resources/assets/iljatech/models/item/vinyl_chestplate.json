@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "iljatech:item/petrolymer_boots"
+    "layer0": "iljatech:item/vinyl_chestplate"
   }
 }

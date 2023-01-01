@@ -43,6 +43,7 @@ public class ModBlocks
     public static final RegistryObject<Block> ALUMINIUM_PLATE = registerBlockWithItem("aluminium_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> TIN_PLATE = registerBlockWithItem("tin_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> COPPER_PLATE = registerBlockWithItem("copper_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
+    public static final RegistryObject<Block> VINYL_SHEET = registerBlockWithItem("vinyl_sheet", () -> new PlateBlock(BlockBehaviour.Properties.copy(Blocks.HONEYCOMB_BLOCK)));
 
     public static final RegistryObject<Block> IRON_ROD = registerBlockWithItem("iron_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> GOLD_ROD = registerBlockWithItem("gold_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)));

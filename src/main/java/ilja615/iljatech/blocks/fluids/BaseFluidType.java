@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class BaseFluidType extends FluidType implements IClientFluidTypeExtensions
+public class BaseFluidType extends FluidType
 {
     private final ResourceLocation stillTexture;
     private final ResourceLocation flowingTexture;
@@ -56,17 +56,6 @@ public class BaseFluidType extends FluidType implements IClientFluidTypeExtensio
     }
 
     @Override
-    public @Nullable ResourceLocation getRenderOverlayTexture(Minecraft mc) {
-        return this.getOverlayTexture();
-    }
-
-    @Override
-    public void renderOverlay(Minecraft mc, PoseStack poseStack) {
-
-        IClientFluidTypeExtensions.super.renderOverlay(mc, poseStack);
-    }
-
-    @Override
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
         consumer.accept(new IClientFluidTypeExtensions() {
             @Override
@@ -82,6 +71,11 @@ public class BaseFluidType extends FluidType implements IClientFluidTypeExtensio
             @Override
             public @Nullable ResourceLocation getOverlayTexture() {
                 return overlayTexture;
+            }
+
+            @Override
+            public @Nullable ResourceLocation getRenderOverlayTexture(Minecraft mc) {
+                return this.getOverlayTexture();
             }
 
             @Override

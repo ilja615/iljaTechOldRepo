@@ -5,7 +5,6 @@ import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
 import ilja615.iljatech.blocks.foundry.FoundryScreen;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
 import ilja615.iljatech.client.models.ElectricFishModel;
-import ilja615.iljatech.client.models.PetrolymerHelmetModel;
 import ilja615.iljatech.client.models.SaltGolemModel;
 import ilja615.iljatech.client.render.*;
 import ilja615.iljatech.init.*;
@@ -31,8 +30,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = IljaTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEventBusSubscriber
 {
-    public static ModelLayerLocation PETROLYMER_HELMET_LAYER = new ModelLayerLocation(new ResourceLocation("minecraft:player"), "petrolymer_helmet");
-
     @SubscribeEvent
     public static void ClientSetup(FMLClientSetupEvent event)
     {
@@ -89,40 +86,8 @@ public class ClientEventBusSubscriber
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
-        event.registerLayerDefinition(PETROLYMER_HELMET_LAYER, PetrolymerHelmetModel::createBodyLayer);
         event.registerLayerDefinition(ElectricFishRender.ELECTRIC_FISH_LAYER, ElectricFishModel::createBodyLayer);
         event.registerLayerDefinition(AluminiumGolemRender.ALUMINIUM_GOLEM_LAYER, AluminiumGolemModel::createBodyLayer);
         event.registerLayerDefinition(SaltGolemRender.SALT_GOLEM_LAYER, SaltGolemModel::createBodyLayer);
-    }
-
-    @SubscribeEvent
-    public static void construct(EntityRenderersEvent.AddLayers event)
-    {
-        addLayerToEntity(event, EntityType.ARMOR_STAND);
-        addLayerToEntity(event, EntityType.ZOMBIE);
-        addLayerToEntity(event, EntityType.SKELETON);
-        addLayerToEntity(event, EntityType.HUSK);
-        addLayerToEntity(event, EntityType.DROWNED);
-        addLayerToEntity(event, EntityType.STRAY);
-
-        addLayerToPlayerSkin(event, "default");
-        addLayerToPlayerSkin(event, "slim");
-    }
-
-    private static <T extends LivingEntity, M extends HumanoidModel<T>, R extends LivingEntityRenderer<T, M>> void addLayerToEntity(
-            EntityRenderersEvent.AddLayers event, EntityType<? extends T> entityType)
-    {
-        R renderer = event.getRenderer(entityType);
-        if (renderer != null) renderer.addLayer(new PetrolymerHelmetLayer<>(renderer));
-
-    }
-
-    private static void addLayerToPlayerSkin(EntityRenderersEvent.AddLayers event, String skinName)
-    {
-        EntityRenderer<? extends Player> render = event.getSkin(skinName);
-        if (render instanceof LivingEntityRenderer livingRenderer)
-        {
-            livingRenderer.addLayer(new PetrolymerHelmetLayer(livingRenderer));
-        }
     }
 }

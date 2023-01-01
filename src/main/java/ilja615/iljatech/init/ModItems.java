@@ -49,10 +49,10 @@ public class ModItems
     public static final RegistryObject<Item> BOILED_EGG = ITEMS.register("boiled_egg", () -> new Item(ModProperties.BOILED_EGG_PROPERTY));
 
     // Armor
-    public static final RegistryObject<Item> PETROLYMER_HELMET = ITEMS.register("petrolymer_helmet", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.HEAD, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
-    public static final RegistryObject<Item> PETROLYMER_CHESTPLATE = ITEMS.register("petrolymer_chestplate", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.CHEST, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
-    public static final RegistryObject<Item> PETROLYMER_LEGGINGS = ITEMS.register("petrolymer_leggings", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.LEGS, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
-    public static final RegistryObject<Item> PETROLYMER_BOOTS = ITEMS.register("petrolymer_boots", () -> new ArmorItem(ModArmorMaterials.PETROLYMER, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> VINYL_HELMET = ITEMS.register("vinyl_helmet", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.HEAD, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> VINYL_CHESTPLATE = ITEMS.register("vinyl_chestplate", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.CHEST, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> VINYL_LEGGINGS = ITEMS.register("vinyl_leggings", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.LEGS, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
+    public static final RegistryObject<Item> VINYL_BOOTS = ITEMS.register("vinyl_boots", () -> new ArmorItem(ModArmorMaterials.VINYL, EquipmentSlot.FEET, ModProperties.ITEM_PROPERTY_NOT_STACKABLE));
 
     public static final RegistryObject<Item> ELECTRIC_FISH_BUCKET = ITEMS.register("electric_fish_bucket", () -> new MobBucketItem(ModEntities.ELECTRIC_FISH.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties().stacksTo(1).tab(ModItemGroup.instance))));
 
