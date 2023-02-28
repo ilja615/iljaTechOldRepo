@@ -1,24 +1,18 @@
 package ilja615.iljatech.items;
 
-import ilja615.iljatech.blocks.NailsBlock;
-import ilja615.iljatech.entity.NailProjectileEntity;
+import ilja615.iljatech.entity.NailProjectile;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModEntities;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -51,7 +45,7 @@ public class NailGunItem extends ProjectileWeaponItem
                 float f = getPowerForTime(i);
                 if (!((double)f < 0.1D)) {
                     if (!level.isClientSide) {
-                        NailProjectileEntity nailProjectile = ModEntities.IRON_NAILS_PROJECTILE.get().create(level);
+                        NailProjectile nailProjectile = ModEntities.IRON_NAILS_PROJECTILE.get().create(level);
                         nailProjectile.setPos(player.position().x, player.position().y + 1, player.position().z);
                         Vec3 vec3 = player.getLookAngle();
                         nailProjectile.move(MoverType.SELF, vec3);

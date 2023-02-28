@@ -1,28 +1,23 @@
 package ilja615.iljatech.entity;
 
 import ilja615.iljatech.init.ModBlocks;
-import ilja615.iljatech.init.ModEntities;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
 
-public class NailProjectileEntity extends ThrowableItemProjectile implements ItemSupplier
+public class NailProjectile extends ThrowableItemProjectile implements ItemSupplier
 {
-    public NailProjectileEntity(EntityType<NailProjectileEntity> p_i50159_1_, Level p_i50159_2_) { super(p_i50159_1_, p_i50159_2_); }
+    public NailProjectile(EntityType<NailProjectile> p_i50159_1_, Level p_i50159_2_) { super(p_i50159_1_, p_i50159_2_); }
 
     @Override
     protected Item getDefaultItem()

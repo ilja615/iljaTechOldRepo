@@ -4,14 +4,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
-public abstract class AbstractGasEntity extends Entity
+public abstract class AbstractGasCloud extends Entity
 {
-    public AbstractGasEntity(EntityType<? extends AbstractGasEntity> entityTypeIn, Level worldIn) {
+    public AbstractGasCloud(EntityType<? extends AbstractGasCloud> entityTypeIn, Level worldIn) {
         super(entityTypeIn, worldIn);
     }
 

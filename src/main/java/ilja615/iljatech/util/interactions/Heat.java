@@ -1,8 +1,7 @@
 package ilja615.iljatech.util.interactions;
 
-import ilja615.iljatech.entity.AbstractGasEntity;
+import ilja615.iljatech.entity.AbstractGasCloud;
 import ilja615.iljatech.init.ModEntities;
-import ilja615.iljatech.init.ModRecipeSerializers;
 import ilja615.iljatech.init.ModRecipeTypes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +29,7 @@ public class Heat
                     else
                         level.setBlockAndUpdate(startPosition.above(), state.setValue(LayeredCauldronBlock.LEVEL, value));
 
-                    AbstractGasEntity gasEntity = ModEntities.STEAM_CLOUD.get().create(level);
+                    AbstractGasCloud gasEntity = ModEntities.STEAM_CLOUD.get().create(level);
                     gasEntity.moveTo(startPosition.getX() + 0.5f, startPosition.getY() + 1.8f, startPosition.getZ() + 0.5f, 0.0f, 0.0F);
                     gasEntity.setDeltaMovement(0.0d, 0.05d, 0.0d);
                     level.addFreshEntity(gasEntity);

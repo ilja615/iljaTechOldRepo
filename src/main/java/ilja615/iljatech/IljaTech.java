@@ -91,10 +91,11 @@ public class IljaTech
         public static void registerTabs(CreativeModeTabEvent.Register event)
         {
             CREATIVE_TAB = event.registerCreativeModeTab(new ResourceLocation(MOD_ID, "worldupgrade_tab"), builder -> builder
-                    .icon(() -> new ItemStack(ModItems.BRONZE_GEAR.get()))
+                    .icon(() -> new ItemStack(ModItems.BRONZE_GEAR.get(), 1))
                     .title(Component.translatable("tabs.worldupgrade.worldupgrade_tab"))
                     .displayItems((featureFlags, output, hasOp) -> {
                         output.accept(ModItems.BRONZE_GEAR.get());
+                        output.accept(ModItems.BRONZE_GEAR.get(), CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
                     })
             );
         }

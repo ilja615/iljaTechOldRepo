@@ -1,11 +1,11 @@
 package ilja615.iljatech.entity;
 
 import ilja615.iljatech.init.ModItems;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -13,18 +13,11 @@ import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
-public class AluminiumGolemEntity extends AbstractGolem
+public class SaltGolem extends AbstractGolem
 {
-    public AluminiumGolemEntity(EntityType<? extends AluminiumGolemEntity> p_28276_, Level p_28277_) {
+    public SaltGolem(EntityType<? extends SaltGolem> p_28276_, Level p_28277_) {
         super(p_28276_, p_28277_);
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound()
-    {
-        return SoundEvents.COD_AMBIENT;
     }
 
     @Override

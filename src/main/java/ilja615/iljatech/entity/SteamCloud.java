@@ -5,9 +5,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.Level;
 
-public class SteamEntity extends AbstractGasEntity
+public class SteamCloud extends AbstractGasCloud
 {
-    public SteamEntity(EntityType<? extends AbstractGasEntity> entityTypeIn, Level worldIn)
+    public SteamCloud(EntityType<? extends AbstractGasCloud> entityTypeIn, Level worldIn)
     {
         super(entityTypeIn, worldIn);
     }

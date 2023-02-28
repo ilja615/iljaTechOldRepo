@@ -2,7 +2,7 @@ package ilja615.iljatech.client.render;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.client.models.SaltGolemModel;
-import ilja615.iljatech.entity.SaltGolemEntity;
+import ilja615.iljatech.entity.SaltGolem;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SaltGolemRender<T extends SaltGolemEntity> extends MobRenderer<T, SaltGolemModel<T>>
+public class SaltGolemRender<T extends SaltGolem> extends MobRenderer<T, SaltGolemModel<T>>
 {
 
     public static final ModelLayerLocation SALT_GOLEM_LAYER = new ModelLayerLocation(

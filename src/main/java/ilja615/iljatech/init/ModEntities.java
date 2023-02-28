@@ -13,20 +13,17 @@ public class ModEntities
 {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, IljaTech.MOD_ID);
 
-    public static final RegistryObject<EntityType<AbstractGasEntity>> STEAM_CLOUD = ENTITY_TYPES.register("steam_cloud",
-            () -> EntityType.Builder.<AbstractGasEntity>of(SteamEntity::new, MobCategory.MISC).fireImmune().sized(0.4F, 0.4F).build("iljatech:steam_cloud"));
+    public static final RegistryObject<EntityType<AbstractGasCloud>> STEAM_CLOUD = ENTITY_TYPES.register("steam_cloud",
+            () -> EntityType.Builder.<AbstractGasCloud>of(SteamCloud::new, MobCategory.MISC).fireImmune().sized(0.4F, 0.4F).build("iljatech:steam_cloud"));
 
-    public static final RegistryObject<EntityType<NailProjectileEntity>> IRON_NAILS_PROJECTILE = ENTITY_TYPES.register("iron_nails_projectile",
-            () -> EntityType.Builder.of(NailProjectileEntity::new, MobCategory.MISC).fireImmune().sized(0.25F, 0.25F).build("iljatech:iron_nails_projectile"));
+    public static final RegistryObject<EntityType<NailProjectile>> IRON_NAILS_PROJECTILE = ENTITY_TYPES.register("iron_nails_projectile",
+            () -> EntityType.Builder.of(NailProjectile::new, MobCategory.MISC).fireImmune().sized(0.25F, 0.25F).build("iljatech:iron_nails_projectile"));
 
-    public static final RegistryObject<EntityType<ElectricFishEntity>> ELECTRIC_FISH = ENTITY_TYPES.register("electric_fish",
-            () -> EntityType.Builder.of(ElectricFishEntity::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:electric_fish"));
+    public static final RegistryObject<EntityType<AluminiumGolem>> ALUMINIUM_GOLEM = ENTITY_TYPES.register("aluminium_golem",
+            () -> EntityType.Builder.of(AluminiumGolem::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:aluminium_golem"));
 
-    public static final RegistryObject<EntityType<AluminiumGolemEntity>> ALUMINIUM_GOLEM = ENTITY_TYPES.register("aluminium_golem",
-            () -> EntityType.Builder.of(AluminiumGolemEntity::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:aluminium_golem"));
-
-    public static final RegistryObject<EntityType<SaltGolemEntity>> SALT_GOLEM = ENTITY_TYPES.register("salt_golem",
-            () -> EntityType.Builder.of(SaltGolemEntity::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:salt_golem"));
+    public static final RegistryObject<EntityType<SaltGolem>> SALT_GOLEM = ENTITY_TYPES.register("salt_golem",
+            () -> EntityType.Builder.of(SaltGolem::new, MobCategory.MISC).sized(0.6F, 0.8F).build("iljatech:salt_golem"));
 
 //    public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)
 //    {
@@ -46,8 +43,7 @@ public class ModEntities
 
     // The event is passed in via main class
     public static void CreateEntityAttributes(final EntityAttributeCreationEvent event) {
-        event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
-        event.put(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolemEntity.createAttributes().build());
-        event.put(ModEntities.SALT_GOLEM.get(), SaltGolemEntity.createAttributes().build());
+        event.put(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolem.createAttributes().build());
+        event.put(ModEntities.SALT_GOLEM.get(), SaltGolem.createAttributes().build());
     }
 }

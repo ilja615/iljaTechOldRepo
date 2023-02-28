@@ -4,7 +4,6 @@ import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
 import ilja615.iljatech.blocks.foundry.FoundryScreen;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
-import ilja615.iljatech.client.models.ElectricFishModel;
 import ilja615.iljatech.client.models.SaltGolemModel;
 import ilja615.iljatech.client.render.*;
 import ilja615.iljatech.init.*;
@@ -78,7 +77,6 @@ public class ClientEventBusSubscriber
     {
         event.registerEntityRenderer(ModEntities.STEAM_CLOUD.get(), GassEntityRender::new);
         event.registerEntityRenderer(ModEntities.IRON_NAILS_PROJECTILE.get(), (renderManager) -> new ThrownItemRenderer<>(renderManager, 2.0f, true));
-        event.registerEntityRenderer(ModEntities.ELECTRIC_FISH.get(), ElectricFishRender::new);
         event.registerEntityRenderer(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolemRender::new);
         event.registerEntityRenderer(ModEntities.SALT_GOLEM.get(), SaltGolemRender::new);
     }
@@ -86,7 +84,6 @@ public class ClientEventBusSubscriber
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
-        event.registerLayerDefinition(ElectricFishRender.ELECTRIC_FISH_LAYER, ElectricFishModel::createBodyLayer);
         event.registerLayerDefinition(AluminiumGolemRender.ALUMINIUM_GOLEM_LAYER, AluminiumGolemModel::createBodyLayer);
         event.registerLayerDefinition(SaltGolemRender.SALT_GOLEM_LAYER, SaltGolemModel::createBodyLayer);
     }

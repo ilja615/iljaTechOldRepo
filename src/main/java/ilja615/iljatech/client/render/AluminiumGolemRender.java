@@ -2,9 +2,7 @@ package ilja615.iljatech.client.render;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
-import ilja615.iljatech.client.models.ElectricFishModel;
-import ilja615.iljatech.entity.AluminiumGolemEntity;
-import ilja615.iljatech.entity.ElectricFishEntity;
+import ilja615.iljatech.entity.AluminiumGolem;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -13,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AluminiumGolemRender<T extends AluminiumGolemEntity> extends MobRenderer<T, AluminiumGolemModel<T>>
+public class AluminiumGolemRender<T extends AluminiumGolem> extends MobRenderer<T, AluminiumGolemModel<T>>
 {
 
     public static final ModelLayerLocation ALUMINIUM_GOLEM_LAYER = new ModelLayerLocation(
