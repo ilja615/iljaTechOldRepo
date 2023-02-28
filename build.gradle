@@ -111,8 +111,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19-75:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19-75")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.3-78:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.3-78")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

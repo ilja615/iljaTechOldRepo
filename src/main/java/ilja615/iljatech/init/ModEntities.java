@@ -44,6 +44,7 @@ public class ModEntities
 
     // TODO spawnegg
 
+    // The event is passed in via main class
     public static void CreateEntityAttributes(final EntityAttributeCreationEvent event) {
         event.put(ModEntities.ELECTRIC_FISH.get(), ElectricFishEntity.createAttributes().build());
         event.put(ModEntities.ALUMINIUM_GOLEM.get(), AluminiumGolemEntity.createAttributes().build());

@@ -29,4 +29,4 @@ My tech mod
 [[dependencies.iljatech]]
     modId="patchouli"
     mandatory=true
-    versionRange="[1.19-75,)"
+    versionRange="[1.19.3-78,)"
