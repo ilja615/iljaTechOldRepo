@@ -13,6 +13,8 @@
   "block.iljatech.gearbox": "Gearbox",
   "block.iljatech.copper_rod": "Copper Rod",
   "block.iljatech.copper_wire": "Copper Wire",
+  "block.iljatech.brick_chute": "Brick Chute",
+  "block.iljatech.brick_foundry": "Brick Foundry",
   "death.attack.iljatech.barbed_wire": "%1$s was pricked to death by a barbed wire.",
   "item.iljatech.oil_bucket": "Oil Bucket"
 }

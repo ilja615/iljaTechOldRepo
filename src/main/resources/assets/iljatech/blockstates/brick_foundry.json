@@ -5,8 +5,7 @@
       "y": 90
     },
     "facing=north": {
-      "model": "iljatech:block/brick_foundry",
-      "x": 90
+      "model": "iljatech:block/brick_foundry"
     },
     "facing=south": {
       "model": "iljatech:block/brick_foundry",

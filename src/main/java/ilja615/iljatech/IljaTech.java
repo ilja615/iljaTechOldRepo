@@ -95,7 +95,6 @@ public class IljaTech
                     .title(Component.translatable("tabs.worldupgrade.worldupgrade_tab"))
                     .displayItems((featureFlags, output, hasOp) -> {
                         output.accept(ModItems.BRONZE_GEAR.get());
-                        output.accept(ModItems.BRONZE_GEAR.get(), CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
                     })
             );
         }
@@ -106,7 +105,7 @@ public class IljaTech
             if (event.getTab() == CREATIVE_TAB)
             {
                 ModItems.ITEMS.getEntries().forEach(itemRegistryObject -> event.accept(itemRegistryObject.get()));
-                ModBlocks.BLOCKS.getEntries().forEach(blockRegistryObject -> event.accept(blockRegistryObject.get()));
+                //ModBlocks.BLOCKS.getEntries().forEach(blockRegistryObject -> event.accept(blockRegistryObject.get()));
             }
         }
     }

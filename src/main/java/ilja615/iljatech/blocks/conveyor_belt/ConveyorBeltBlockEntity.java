@@ -117,7 +117,6 @@ public class ConveyorBeltBlockEntity extends BlockEntity
 
                 if (!entity.noPhysics)
                 {
-                    System.out.println(entity.getDeltaMovement().lengthSqr());
                     entity.setDeltaMovement(vec.add(entity.getDeltaMovement()));
                 }
             }

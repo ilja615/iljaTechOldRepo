@@ -1,14 +1,13 @@
 package ilja615.iljatech.blocks.foundry;
 
-import ilja615.iljatech.blocks.crafter_machine.CraftingInventoryWrapper;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModRecipeTypes;
+import ilja615.iljatech.networking.ModPacketHandler;
+import ilja615.iljatech.networking.StokedFireTickSyncS2CPacket;
 import ilja615.iljatech.util.CountedIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,7 +18,6 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,15 +34,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.EmptyHandler;
+import net.minecraftforge.network.PacketDistributor;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nameable
 {
@@ -56,6 +52,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
     private int processingTime;
     private int fuelTime;
     private int maxTimeOfFuel;
+    private int stokedFireTicks = 0;
 
     public FoundryBlockEntity(BlockPos pos, BlockState state)
     {
@@ -113,6 +110,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         compound.putInt("ProcessingTime", this.processingTime);
         compound.putInt("FuelTime", this.fuelTime);
         compound.putInt("MaxTimeOfFuel", this.maxTimeOfFuel);
+        compound.putInt("StokedFireTicks", this.stokedFireTicks);
     }
 
     @Override
@@ -131,6 +129,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         this.processingTime = compound.getInt("ProcessingTime");
         this.fuelTime = compound.getInt("FuelTime");
         this.maxTimeOfFuel = compound.getInt("MaxTimeOfFuel");
+        this.stokedFireTicks = compound.getInt("StokedFireTicks");
     }
 
     @Override
@@ -231,7 +230,17 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
 
     public int getProgress()
     {
-        return this.processingTime * 24 / 60;
+        return this.processingTime * 24 / 100;
+    }
+
+    public int getStokedFireTicks()
+    {
+        return this.stokedFireTicks;
+    }
+
+    public void setStokedFireTicks(int amount)
+    {
+        this.stokedFireTicks = Math.min(amount, 30);
     }
 
     public static void tick(Level level, BlockPos blockPos, BlockState state, FoundryBlockEntity blockEntity)
@@ -240,6 +249,9 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         BlockPos midBlock = blockPos.relative(d.getOpposite());
         if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(level, blockPos) != null)
         {
+            if (blockEntity.getStokedFireTicks() > 0) blockEntity.setStokedFireTicks(blockEntity.getStokedFireTicks() - 1);
+            ModPacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), new StokedFireTickSyncS2CPacket(blockEntity.getStokedFireTicks()));
+
             blockEntity.foundryItemStackHandler.ifPresent(itemHandler ->
             {
                 boolean foundRecipe = false;
@@ -249,7 +261,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
                 {
                     blockEntity.fuelTime--;
                     if (level.isClientSide)
-                        level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 4 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
+                        level.addParticle(ParticleTypes.SMOKE, midBlock.getX() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, midBlock.getY() + 3.5f, midBlock.getZ() + 0.5 + level.random.nextFloat()*0.6f - 0.3f, 0.0d, 0.0d, 0.0d);
                 }
 
                 ArrayList<Item> listOfInventory = new ArrayList();
@@ -301,11 +313,11 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
                         }
 
                         // A matching recipe was found. Now then:
-                        if (foundRecipe)
+                        if (foundRecipe && ((itemHandler.getStackInSlot(6).getItem() == resultingStack.getItem() && itemHandler.getStackInSlot(6).getCount() + resultingStack.getCount() <= itemHandler.getStackInSlot(6).getMaxStackSize()) || itemHandler.getStackInSlot(6).isEmpty()))
                         {
                             if (!blockEntity.isBurning() && ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING) > 0)
                             {
-                                // There is no fuel currently being burned but there is a fuel in the slot that can be started with burning
+                                // There is no fuel currently being burned, and there is a fuel in the slot that can now start being burnt
                                 itemHandler.getStackInSlot(4).shrink(1);
                                 blockEntity.fuelTime += ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING);
                                 blockEntity.maxTimeOfFuel = ForgeHooks.getBurnTime(itemHandler.getStackInSlot(4), RecipeType.SMELTING); // Store the max burn time for progress calculation
@@ -313,7 +325,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
 
                             blockEntity.processingTime++;
 
-                            if (blockEntity.processingTime >= 60)
+                            if (blockEntity.processingTime >= 100) // TODO : add that each recipe can have their own amount of time
                             {
                                 if (itemHandler.getStackInSlot(6).isEmpty()) // 6 is output slot
                                 {
@@ -353,6 +365,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
             blockEntity.processingTime = 0;
             blockEntity.fuelTime = 0;
             blockEntity.maxTimeOfFuel = 0;
+            blockEntity.setStokedFireTicks(0);
         }
     }
 }

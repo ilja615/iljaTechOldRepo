@@ -2,24 +2,18 @@ package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
+import ilja615.iljatech.blocks.foundry.ChuteScreen;
 import ilja615.iljatech.blocks.foundry.FoundryScreen;
 import ilja615.iljatech.client.models.AluminiumGolemModel;
 import ilja615.iljatech.client.models.SaltGolemModel;
 import ilja615.iljatech.client.render.*;
 import ilja615.iljatech.init.*;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +28,7 @@ public class ClientEventBusSubscriber
     {
         MenuScreens.register(ModContainerTypes.CRAFTER_MACHINE.get(), CrafterMachineScreen::new);
         MenuScreens.register(ModContainerTypes.FOUNDRY.get(), FoundryScreen::new);
+        MenuScreens.register(ModContainerTypes.CHUTE.get(), ChuteScreen::new);
 
         //render layers
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_NAILS.get(), RenderType.cutout());

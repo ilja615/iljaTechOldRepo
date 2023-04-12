@@ -1,9 +1,8 @@
 package ilja615.iljatech.blocks.crafter_machine;
 
-import ilja615.iljatech.containers.MaxStackSize1Slot;
+import ilja615.iljatech.util.containers.MaxStackSize1Slot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
-import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -85,7 +84,6 @@ public class CrafterMachineContainer extends AbstractContainerMenu
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index)
     {
-        //this.inventorySlots.forEach(s -> { if (s.getHasStack()) System.out.println("Slot "+index+" : "+s.getStack()); else System.out.println("Slot "+index+" : "+"Empty Item Stack");});
         ItemStack itemStack = ItemStack.EMPTY;
         final Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem())

@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "iljatech:block/brick_chute",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iljatech:block/brick_chute"
+    },
+    "facing=south": {
+      "model": "iljatech:block/brick_chute",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "iljatech:block/brick_chute",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "iljatech:block/brick_chute",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "iljatech:block/brick_chute",
+      "x": 90
+    }
+  }
+}

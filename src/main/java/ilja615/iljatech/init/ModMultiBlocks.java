@@ -25,15 +25,17 @@ public class ModMultiBlocks
     private static IMultiblock foundry(PatchouliAPI.IPatchouliAPI api)
     {
         return api.makeMultiblock(new String[][] {
-                        {"BBB", "BCB", "BBB"},
-                        {"BBB", "B B", "BBB"},
-                        {"BBB", "0 B", "BBB"},
-                        {"BBB", "BBB", "BBB"}
+                        {"BBB", "BPB", "BBB"},
+                        {"ccc", "c c", "ccc"},
+                        {"ppp", "0 B", "ppp"},
+                        {"BBB", "ccB", "BBB"}
                 },
                 '0', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY.get()),
                 ' ', api.airMatcher(),
-                'B', api.predicateMatcher(Blocks.BRICKS, state -> state.is(Blocks.BRICKS) || state.is(ModBlocks.BRICK_FOUNDRY_CHANNEL.get())),
-                'C', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY_CHANNEL.get())
+                'B', api.looseBlockMatcher(Blocks.BRICKS),
+                'p', api.predicateMatcher(Blocks.BRICKS, state -> state.is(Blocks.BRICKS) || state.is(ModBlocks.BRICK_FOUNDRY_PIPING.get())),
+                'c', api.predicateMatcher(Blocks.BRICKS, state -> state.is(Blocks.BRICKS) || state.is(ModBlocks.BRICK_CHUTE.get())),
+                'P', api.looseBlockMatcher(ModBlocks.BRICK_FOUNDRY_PIPING.get())
         );
     }
 }

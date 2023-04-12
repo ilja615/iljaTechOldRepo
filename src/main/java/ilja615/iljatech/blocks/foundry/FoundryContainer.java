@@ -1,15 +1,13 @@
 package ilja615.iljatech.blocks.foundry;
 
-import ilja615.iljatech.containers.MaxStackSize1Slot;
-import ilja615.iljatech.containers.ResultSlot;
+import ilja615.iljatech.util.containers.MaxStackSize1Slot;
+import ilja615.iljatech.util.containers.ResultSlot;
 import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModContainerTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

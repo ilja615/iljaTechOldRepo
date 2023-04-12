@@ -3,23 +3,21 @@ package ilja615.iljatech.blocks.foundry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.blocks.crafter_machine.CrafterMachineContainer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FoundryScreen extends AbstractContainerScreen<FoundryContainer>
+public class ChuteScreen extends AbstractContainerScreen<ChuteContainer>
 {
-    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(IljaTech.MOD_ID, "textures/gui/foundry.png");
-    FoundryContainer container;
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(IljaTech.MOD_ID, "textures/gui/channel.png");
+    ChuteContainer container;
 
-    public FoundryScreen(FoundryContainer container, Inventory playerInventory, Component title) {
+    public ChuteScreen(ChuteContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.container = container;
         this.leftPos = 0;
@@ -47,16 +45,5 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryContainer>
         int y = (this.height - this.imageHeight) / 2;
 
         this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
-
-        int i = this.leftPos;
-        int j = this.topPos;
-        if (this.container.te.isBurning()) {
-            int k = this.container.te.getLitProgress();
-            int f = this.container.te.getStokedFireTicks() / 6;
-            this.blit(matrixStack, i + 35 - 5*f, j + 48 - k, 201 - 5*f, 12 - k, 14 + 10*f, k + 1);
-        }
-
-        int l = this.container.te.getProgress();
-        this.blit(matrixStack, i + 106, j + 34, 176, 84, l + 1, 16);
     }
 }

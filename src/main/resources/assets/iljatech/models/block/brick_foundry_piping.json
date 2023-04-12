@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "iljatech:block/brick_foundry_tuyeres",
+		"north": "iljatech:block/brick_foundry_tuyeres",
+		"south": "iljatech:block/brick_foundry_tuyeres",
+		"east": "iljatech:block/brick_foundry_tuyeres",
+		"west": "iljatech:block/brick_foundry_tuyeres",
+		"up": "iljatech:block/brick_chute",
+		"down": "iljatech:block/brick_chute"
+	}
+}
