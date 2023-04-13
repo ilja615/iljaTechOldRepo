@@ -1,6 +1,7 @@
 package ilja615.iljatech;
 
 import ilja615.iljatech.init.*;
+import ilja615.iljatech.networking.ModMessages;
 import ilja615.iljatech.util.ModEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -45,6 +46,7 @@ public class IljaTech
         ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
         ModFluids.FLUIDS.register(modEventBus);
         ModFluidTypes.FLUID_TYPES.register(modEventBus);
+        ModMessages.register();
     }
 
     private void setup(final FMLCommonSetupEvent event)

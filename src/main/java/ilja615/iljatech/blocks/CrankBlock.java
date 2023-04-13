@@ -1,6 +1,6 @@
 package ilja615.iljatech.blocks;
 
-import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
+import ilja615.iljatech.energy.IMechanicalPowerSender;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;

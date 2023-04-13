@@ -1,9 +1,8 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "iljatech:block/dynamo",
+		"0": "iljatech:block/dynamo_on",
 		"1": "iljatech:block/dynamo_side",
-		"particle": "iljatech:block/dynamo"
+		"particle": "iljatech:block/dynamo_on"
 	},
 	"elements": [
 		{

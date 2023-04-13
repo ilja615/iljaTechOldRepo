@@ -1,7 +1,7 @@
 package ilja615.iljatech.init;
 
 import ilja615.iljatech.blocks.wire.WireShape;
-import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.energy.MechanicalPower;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

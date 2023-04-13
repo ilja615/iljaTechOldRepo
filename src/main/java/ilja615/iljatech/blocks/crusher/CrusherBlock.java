@@ -2,8 +2,8 @@ package ilja615.iljatech.blocks.crusher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
-import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.energy.IMechanicalPowerAccepter;
+import ilja615.iljatech.energy.MechanicalPower;
 import ilja615.iljatech.util.ModUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class CrusherBlock extends BaseEntityBlock implements IMechanicalPowerAccepter
 {

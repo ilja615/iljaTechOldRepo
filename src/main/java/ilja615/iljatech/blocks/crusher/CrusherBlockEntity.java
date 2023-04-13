@@ -2,9 +2,8 @@ package ilja615.iljatech.blocks.crusher;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.init.ModRecipeSerializers;
 import ilja615.iljatech.init.ModRecipeTypes;
-import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.energy.MechanicalPower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -15,8 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -124,7 +123,7 @@ public class CrusherBlockEntity extends BlockEntity
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction direction)
     {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (capability == ForgeCapabilities.ITEM_HANDLER) {
             return crusherItemStackHandler.cast();
         }
         return super.getCapability(capability, direction);

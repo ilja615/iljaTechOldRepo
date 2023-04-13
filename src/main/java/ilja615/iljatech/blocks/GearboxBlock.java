@@ -1,9 +1,9 @@
 package ilja615.iljatech.blocks;
 
 import ilja615.iljatech.init.ModProperties;
-import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
-import ilja615.iljatech.mechanicalpower.IMechanicalPowerSender;
-import ilja615.iljatech.mechanicalpower.MechanicalPower;
+import ilja615.iljatech.energy.IMechanicalPowerAccepter;
+import ilja615.iljatech.energy.IMechanicalPowerSender;
+import ilja615.iljatech.energy.MechanicalPower;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMechanicalPowerSender
 {

@@ -6,6 +6,7 @@ import ilja615.iljatech.blocks.burner.BurnerBlockEntity;
 import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlockEntity;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineBlockEntity;
 import ilja615.iljatech.blocks.crusher.CrusherBlockEntity;
+import ilja615.iljatech.blocks.dynamo.DynamoBlockEntity;
 import ilja615.iljatech.blocks.foundry.FoundryBlockEntity;
 import ilja615.iljatech.blocks.foundry.ChuteBlockEntity;
 import ilja615.iljatech.blocks.stretcher.StretcherBlockEntity;
@@ -30,6 +31,7 @@ public class ModBlockEntityTypes
     public static final RegistryObject<BlockEntityType<CrusherBlockEntity>> CRUSHER = BLOCK_ENTITY_TYPES.register("crusher", () -> BlockEntityType.Builder.of(CrusherBlockEntity::new, ModBlocks.CRUSHER.get()).build(null));
     public static final RegistryObject<BlockEntityType<FoundryBlockEntity>> FOUNDRY = BLOCK_ENTITY_TYPES.register("foundry", () -> BlockEntityType.Builder.of(FoundryBlockEntity::new, ModBlocks.BRICK_FOUNDRY.get()).build(null));
     public static final RegistryObject<BlockEntityType<ChuteBlockEntity>> CHUTE = BLOCK_ENTITY_TYPES.register("chute", () -> BlockEntityType.Builder.of(ChuteBlockEntity::new, ModBlocks.BRICK_CHUTE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<DynamoBlockEntity>> DYNAMO = BLOCK_ENTITY_TYPES.register("dynamo", () -> BlockEntityType.Builder.of(DynamoBlockEntity::new, ModBlocks.DYNAMO.get()).build(null));
 
     public static void registerBlockEntityRenderers()
     {

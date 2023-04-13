@@ -1,4 +1,4 @@
-package ilja615.iljatech.mechanicalpower;
+package ilja615.iljatech.energy;
 
 import ilja615.iljatech.init.ModProperties;
 import net.minecraft.world.level.block.state.BlockState;

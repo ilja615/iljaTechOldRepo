@@ -2,9 +2,8 @@ package ilja615.iljatech.blocks.conveyor_belt;
 
 import ilja615.iljatech.init.ModProperties;
 import ilja615.iljatech.init.ModBlockEntityTypes;
-import ilja615.iljatech.mechanicalpower.IMechanicalPowerAccepter;
-import ilja615.iljatech.mechanicalpower.MechanicalPower;
-import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlockEntity;
+import ilja615.iljatech.energy.IMechanicalPowerAccepter;
+import ilja615.iljatech.energy.MechanicalPower;
 import ilja615.iljatech.util.RotationDirection;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 import org.antlr.v4.runtime.misc.NotNull;
 

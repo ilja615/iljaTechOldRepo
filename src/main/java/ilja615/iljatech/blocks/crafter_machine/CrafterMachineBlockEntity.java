@@ -22,8 +22,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -157,7 +157,7 @@ public class CrafterMachineBlockEntity extends BlockEntity implements RecipeHold
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction direction)
     {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (capability == ForgeCapabilities.ITEM_HANDLER) {
             return cmItemStackHandler.cast();
         }
         return super.getCapability(capability, direction);

@@ -2,6 +2,7 @@ package ilja615.iljatech.init;
 
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineContainer;
+import ilja615.iljatech.blocks.dynamo.DynamoContainer;
 import ilja615.iljatech.blocks.foundry.ChuteContainer;
 import ilja615.iljatech.blocks.foundry.FoundryContainer;
 import net.minecraft.world.inventory.MenuType;
@@ -20,4 +21,6 @@ public class ModContainerTypes
             .register("foundry", () -> IForgeMenuType.create(FoundryContainer::new));
     public static final RegistryObject<MenuType<ChuteContainer>> CHUTE = CONTAINER_TYPES
             .register("chute", () -> IForgeMenuType.create(ChuteContainer::new));
+    public static final RegistryObject<MenuType<DynamoContainer>> DYNAMO = CONTAINER_TYPES
+            .register("dynamo", () -> IForgeMenuType.create(DynamoContainer::new));
 }
