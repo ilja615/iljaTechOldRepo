@@ -32,7 +32,7 @@ public class Wind
                     BlockPos checkPos = newPos.relative(direction).relative(direction.getClockWise(), c);
                     if (level.getBlockEntity(checkPos) instanceof FoundryBlockEntity foundryBlockEntity)
                     {
-                        foundryBlockEntity.setStokedFireTicks(Math.min(30, foundryBlockEntity.getStokedFireTicks() + 20));
+                        foundryBlockEntity.setStokedFireTicks(Math.min(100, foundryBlockEntity.getStokedFireTicks() + 100));
                         break;
                     }
                 }

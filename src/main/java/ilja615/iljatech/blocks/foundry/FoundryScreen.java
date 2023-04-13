@@ -52,8 +52,8 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryContainer>
         int j = this.topPos;
         if (this.container.te.isBurning()) {
             int k = this.container.te.getLitProgress();
-            int f = this.container.te.getStokedFireTicks() / 6;
-            this.blit(matrixStack, i + 35 - 5*f, j + 48 - k, 201 - 5*f, 12 - k, 14 + 10*f, k + 1);
+            int f = this.container.te.getStokedFireTicks() / 20;
+            this.blit(matrixStack, i + 44 - 5*f, j + 48 - k, 201 - 5*f, 12 - k, 14 + 10*f, k + 1);
         }
 
         int l = this.container.te.getProgress();

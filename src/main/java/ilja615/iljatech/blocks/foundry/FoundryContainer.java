@@ -30,7 +30,7 @@ public class FoundryContainer extends AbstractContainerMenu
         this.te = tileEntity;
 
         // Main Inventory
-        final int startX = 8;
+        final int startX = 17;
         final int startY = 17;
         final int slotSizePlus2 = 18;
         for (int i = 0 ; i < 4 ; ++i)
@@ -39,8 +39,7 @@ public class FoundryContainer extends AbstractContainerMenu
             tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, finalColumn, startX + (finalColumn * slotSizePlus2), startY)));
         }
         tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new SlotItemHandler(h, 4, 35, 53))); // Fuel
-        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new MaxStackSize1Slot(h, 5, 83, 35))); // Casting mold
-        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new ResultSlot(h, 6, 143, 35))); // Output
+        tileEntity.foundryItemStackHandler.ifPresent(h -> this.addSlot(new ResultSlot(h, 5, 143, 35))); // Output
 
         // HotBar
         final int hotBarStartY = 142;
@@ -90,32 +89,28 @@ public class FoundryContainer extends AbstractContainerMenu
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (p_38987_ == 6) {
-                if (!this.moveItemStackTo(itemstack1, 7, this.slots.size(), true)) {
+            if (p_38987_ == 5) {
+                if (!this.moveItemStackTo(itemstack1, 6, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
 
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (p_38987_ > 5) {
-                if (this.isCastMold(itemstack1)) {
-                    if (!this.moveItemStackTo(itemstack1, 5, 6, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (this.isFuel(itemstack1)) {
+            } else if (p_38987_ > 4) {
+                if (this.isFuel(itemstack1)) {
                     if (!this.moveItemStackTo(itemstack1, 4, 5, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (!this.moveItemStackTo(itemstack1, 0, 4, false)) {
                         return ItemStack.EMPTY;
                 }
-                else if (p_38987_ >= 7 && p_38987_ < 30) {
+                else if (p_38987_ >= 6 && p_38987_ < 29) {
                     if (!this.moveItemStackTo(itemstack1, this.slots.size() - 9, this.slots.size(), false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (p_38987_ >= 30 && p_38987_ < 39 && !this.moveItemStackTo(itemstack1, 7, this.slots.size() - 9, false)) {
+                } else if (p_38987_ >= 29 && p_38987_ < 38 && !this.moveItemStackTo(itemstack1, 6, this.slots.size() - 9, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 7, this.slots.size(), false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 6, this.slots.size(), false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -137,9 +132,5 @@ public class FoundryContainer extends AbstractContainerMenu
 
     protected boolean isFuel(ItemStack itemStack) {
         return net.minecraftforge.common.ForgeHooks.getBurnTime(itemStack, RecipeType.SMELTING) > 0;
-    }
-
-    protected boolean isCastMold(ItemStack itemStack) {
-        return itemStack.is(Items.STICK); // TODO : make actual correct thing
     }
 }

@@ -2,15 +2,17 @@ package ilja615.iljatech.blocks.foundry;
 
 import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModRecipeTypes;
-import ilja615.iljatech.networking.ModPacketHandler;
-import ilja615.iljatech.networking.StokedFireTickSyncS2CPacket;
 import ilja615.iljatech.util.CountedIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
@@ -45,7 +47,7 @@ import java.util.List;
 public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nameable
 {
     private Component customName;
-    public NonNullList<ItemStack> chestContents = NonNullList.withSize(7, ItemStack.EMPTY);
+    public NonNullList<ItemStack> chestContents = NonNullList.withSize(6, ItemStack.EMPTY);
     protected int numPlayersUsing;
     public LazyOptional<IItemHandlerModifiable> foundryItemStackHandler = LazyOptional.of(() -> new FoundryBlockEntity.FoundryItemStackHandler(this));
 
@@ -132,6 +134,45 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         this.stokedFireTicks = compound.getInt("StokedFireTicks");
     }
 
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        super.getUpdateTag();
+        CompoundTag tag = new CompoundTag();
+        //Write your data into the tag
+        ContainerHelper.saveAllItems(tag, this.chestContents);
+        tag.putInt("ProcessingTime", this.processingTime);
+        tag.putInt("FuelTime", this.fuelTime);
+        tag.putInt("MaxTimeOfFuel", this.maxTimeOfFuel);
+        tag.putInt("StokedFireTicks", this.stokedFireTicks);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag)
+    {
+        super.handleUpdateTag(tag);
+        this.chestContents = NonNullList.withSize(this.chestContents.size(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(tag, this.chestContents);
+        foundryItemStackHandler.ifPresent(h ->
+        {
+            for (int i = 0; i < h.getSlots(); i++)
+            {
+                h.setStackInSlot(i, chestContents.get(i));
+            }
+        });
+        this.processingTime = tag.getInt("ProcessingTime");
+        this.fuelTime = tag.getInt("FuelTime");
+        this.maxTimeOfFuel = tag.getInt("MaxTimeOfFuel");
+        this.stokedFireTicks = tag.getInt("StokedFireTicks");
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        // Will get tag from #getUpdateTag
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
     @Override
     public boolean triggerEvent(int id, int type) {
         if (id == 1) {
@@ -195,14 +236,14 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
 
         public FoundryItemStackHandler(FoundryBlockEntity te)
         {
-            super(7);
+            super(6);
             tile = te;
         }
 
         @Override
         protected void onContentsChanged(int slot)
         {
-            if (slot < 7) tile.chestContents.set(slot, this.stacks.get(slot));
+            if (slot < 6) tile.chestContents.set(slot, this.stacks.get(slot));
             tile.setChanged();
         }
     }
@@ -240,7 +281,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
 
     public void setStokedFireTicks(int amount)
     {
-        this.stokedFireTicks = Math.min(amount, 30);
+        this.stokedFireTicks = Math.min(amount, 100);
     }
 
     public static void tick(Level level, BlockPos blockPos, BlockState state, FoundryBlockEntity blockEntity)
@@ -250,7 +291,7 @@ public class FoundryBlockEntity extends BlockEntity implements MenuProvider, Nam
         if (PatchouliAPI.get().getMultiblock(new ResourceLocation("iljatech:foundry_multiblock")).validate(level, blockPos) != null)
         {
             if (blockEntity.getStokedFireTicks() > 0) blockEntity.setStokedFireTicks(blockEntity.getStokedFireTicks() - 1);
-            ModPacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), new StokedFireTickSyncS2CPacket(blockEntity.getStokedFireTicks()));
+            level.sendBlockUpdated(blockPos, level.getBlockState(blockPos), level.getBlockState(blockPos), 2);
 
             blockEntity.foundryItemStackHandler.ifPresent(itemHandler ->
             {
