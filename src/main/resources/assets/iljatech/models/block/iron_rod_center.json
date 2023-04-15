@@ -1,12 +1,12 @@
 {
 	"textures": {
-		"particle": "iljatech:block/copper_rod",
-		"texture": "iljatech:block/copper_rod"
+		"particle": "iljatech:block/iron_rod",
+		"texture": "iljatech:block/iron_rod"
 	},
 	"elements": [
 		{
-			"from": [ 14, 0, 0 ],
-			"to": [ 16, 16, 2 ],
+			"from": [ 7, 0, 7 ],
+			"to": [ 9, 16, 9 ],
 			"faces": {
 				"north": {"uv": [0, 0, 2, 16], "texture": "#texture"},
 				"east": {"uv": [14, 0, 16, 16], "texture": "#texture"},

@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -34,47 +35,107 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccepter, IMechanicalPowerSender
+public class RodBlock extends Block
 {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final BooleanProperty INPUT_KEY = BooleanProperty.create("last_input_axis_direction");
 
-    protected static final VoxelShape Y_AXIS_AABB = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D);
-    protected static final VoxelShape Z_AXIS_AABB = Block.box(6.0D, 6.0D, 0.0D, 10.0D, 10.0D, 16.0D);
-    protected static final VoxelShape X_AXIS_AABB = Block.box(0.0D, 6.0D, 6.0D, 16.0D, 10.0D, 10.0D);
+    protected static final VoxelShape Y_AXIS_AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+    private static final VoxelShape NORTHEAST_AABB = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
+    private static final VoxelShape NORTHWEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D);
+    private static final VoxelShape SOUTHEAST_AABB = Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+    private static final VoxelShape SOUTHWEST_AABB = Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D);
+    public static final BooleanProperty CENTER = BooleanProperty.create("center");
+    public static final BooleanProperty NORTHEAST = BooleanProperty.create("northeast");
+    public static final BooleanProperty NORTHWEST = BooleanProperty.create("northwest");
+    public static final BooleanProperty SOUTHEAST = BooleanProperty.create("southeast");
+    public static final BooleanProperty SOUTHWEST = BooleanProperty.create("southwest");
 
     public RodBlock(BlockBehaviour.Properties p_i48404_1_) {
         super(p_i48404_1_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP).setValue(WATERLOGGED, false).setValue(INPUT_KEY, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(NORTHEAST, false)
+                .setValue(NORTHWEST, false)
+                .setValue(SOUTHEAST, false)
+                .setValue(SOUTHWEST, false)
+                .setValue(CENTER, false)
+                .setValue(WATERLOGGED, false));
     }
 
-    public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
-        return p_185499_1_.setValue(FACING, p_185499_2_.rotate(p_185499_1_.getValue(FACING)));
+    public VoxelShape getShape(BlockState state, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
+        VoxelShape voxelshape = Shapes.empty();
+        if (state.getValue(CENTER))     { voxelshape = Shapes.or(voxelshape, Y_AXIS_AABB); }
+        if (state.getValue(NORTHEAST))     { voxelshape = Shapes.or(voxelshape, NORTHEAST_AABB); }
+        if (state.getValue(NORTHWEST))     { voxelshape = Shapes.or(voxelshape, NORTHWEST_AABB); }
+        if (state.getValue(SOUTHEAST))     { voxelshape = Shapes.or(voxelshape, SOUTHEAST_AABB); }
+        if (state.getValue(SOUTHWEST))     { voxelshape = Shapes.or(voxelshape, SOUTHWEST_AABB); }
+        return voxelshape;
     }
 
-    public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
-        return p_185471_1_.setValue(FACING, p_185471_2_.mirror(p_185471_1_.getValue(FACING)));
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockState = context.getLevel().getBlockState(context.getClickedPos()).is(this) ? context.getLevel().getBlockState(context.getClickedPos()) : this.defaultBlockState();
+        BooleanProperty whichOne = getWhichOne(context);
+        if (whichOne != null)
+            return blockState.setValue(whichOne, true);
+        return blockState;
     }
 
-    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
-        switch(p_220053_1_.getValue(FACING).getAxis()) {
-            case X:
-            default:
-                return X_AXIS_AABB;
-            case Z:
-                return Z_AXIS_AABB;
-            case Y:
-                return Y_AXIS_AABB;
+    private BooleanProperty getWhichOne(BlockPlaceContext context)
+    {
+        Direction clickedFace = context.getClickedFace();
+        double xn = context.getClickLocation().x - context.getClickedPos().getX();
+        double zn = context.getClickLocation().z - context.getClickedPos().getZ();
+        if (xn >= 0 && xn <= 1 && zn >= 0 && zn <= 1)
+        {
+            if (clickedFace.getAxis() == Direction.Axis.Y)
+            {
+                if (zn < 0.5 - xn)
+                    return NORTHWEST;
+                if (zn > 0.5 + xn)
+                    return SOUTHWEST;
+                if (zn < -0.5 + xn)
+                    return NORTHEAST;
+                if (zn > 1.5 - xn)
+                    return SOUTHEAST;
+                return CENTER;
+            } else {
+                if (xn < 0.5 && zn < 0.5)
+                    return NORTHWEST;
+                if (xn < 0.5 && zn >= 0.5)
+                    return SOUTHWEST;
+                if (xn >= 0.5 && zn < 0.5)
+                    return NORTHEAST;
+                if (xn >= 0.5 && zn >= 0.5)
+                    return SOUTHEAST;
+            }
         }
+        return null;
     }
 
-    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
-        Direction direction = p_196258_1_.getClickedFace();
-        return this.defaultBlockState().setValue(FACING, direction);
+    @Override
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext context)
+    {
+        if (context.getItemInHand().getItem() == this.asItem()) {
+            if (context.getClickedFace() == Direction.UP && context.getClickLocation().y - context.getClickedPos().getY() >= 1)
+                return false;
+            if (context.getClickedFace() == Direction.DOWN && context.getClickLocation().y - context.getClickedPos().getY() <= 0)
+                return false;
+            if (context.getClickedFace() == Direction.EAST && context.getClickLocation().x - context.getClickedPos().getX() >= 1)
+                return false;
+            if (context.getClickedFace() == Direction.WEST && context.getClickLocation().x - context.getClickedPos().getX() <= 0)
+                return false;
+            if (context.getClickedFace() == Direction.SOUTH && context.getClickLocation().z - context.getClickedPos().getZ() >= 1)
+                return false;
+            if (context.getClickedFace() == Direction.NORTH && context.getClickLocation().z - context.getClickedPos().getZ() <= 0)
+                return false;
+
+            BooleanProperty whichOne = getWhichOne(context);
+            return whichOne == null || !state.getValue(whichOne); // It can not be "replaced" if the thing that it would place is already there.
+        }
+        return false;
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
-        p_206840_1_.add(FACING, WATERLOGGED, ModProperties.MECHANICAL_POWER, INPUT_KEY);
+        p_206840_1_.add(CENTER, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, WATERLOGGED);
     }
 
     public FluidState getFluidState(BlockState p_204507_1_) {
@@ -85,87 +146,7 @@ public class RodBlock extends DirectionalBlock implements IMechanicalPowerAccept
         return true;
     }
 
-    public PushReaction getPistonPushReaction(BlockState state)
-    {
-        state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF);
-        return PushReaction.NORMAL;
-    }
-
     public boolean isPathfindable(BlockState p_196266_1_, BlockGetter p_196266_2_, BlockPos p_196266_3_, PathComputationType p_196266_4_) {
         return false;
-    }
-
-    @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand)
-    {
-        super.tick(state, worldIn, pos, rand);
-        if (state.getBlock() != this) { return; }
-
-        if (state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.ALMOST_STOPPING)
-        {
-            worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
-        }
-        else if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
-        {
-            Direction.AxisDirection lastReceivedPower = state.getValue(INPUT_KEY) ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
-            Direction dir = state.getValue(FACING);
-            Block other = worldIn.getBlockState(pos.relative(dir)).getBlock();
-            if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                sendPower(worldIn, pos, dir, ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt());
-            else
-            {
-                dir = state.getValue(FACING).getOpposite();
-                other = worldIn.getBlockState(pos.relative(dir)).getBlock();
-                if (dir.getAxisDirection() != lastReceivedPower && other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
-                    sendPower(worldIn, pos, dir, ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt());
-                else
-                {
-                     // There was nowhere to output to...
-                    worldIn.scheduleTick(pos, this, 5);
-                    worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
-    {
-        world.setBlockAndUpdate(thisPos, world.getBlockState(thisPos).setValue(INPUT_KEY, sideFrom.getAxisDirection() == Direction.AxisDirection.POSITIVE ? true : false));
-        world.scheduleTick(thisPos, this, 10);
-        IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
-    }
-
-    @Override
-    public boolean acceptsPower(Level world, BlockPos thisPos, Direction sideFrom)
-    {
-        BlockState state = world.getBlockState(thisPos);
-        return (state.hasProperty(FACING) && (state.getValue(FACING) == sideFrom || state.getValue(FACING).getOpposite() == sideFrom) && state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning());
-    }
-
-    @Override
-    public boolean sendPower(Level world, BlockPos thisPos, Direction face, int amount)
-    {
-        BlockState state = world.getBlockState(thisPos);
-        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
-        {
-            world.scheduleTick(thisPos, this, 5);
-            world.setBlockAndUpdate(thisPos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_)
-    {
-        if (state.hasProperty(ModProperties.MECHANICAL_POWER) && (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning() || state.getValue(ModProperties.MECHANICAL_POWER) == MechanicalPower.ALMOST_STOPPING))
-        {
-            double d0 = (double)p_180655_3_.getX() + 0.25D + (0.5f * p_180655_4_.nextDouble());
-            double d1 = (double)p_180655_3_.getY() + 0.25D + (0.5f * p_180655_4_.nextDouble());
-            double d2 = (double)p_180655_3_.getZ() + 0.25D + (0.5f * p_180655_4_.nextDouble());
-            p_180655_2_.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        }
     }
 }

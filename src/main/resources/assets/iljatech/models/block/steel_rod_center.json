@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"particle": "iljatech:block/constantan_rod",
-		"texture": "iljatech:block/constantan_rod"
+		"particle": "iljatech:block/steel_rod",
+		"texture": "iljatech:block/steel_rod"
 	},
 	"elements": [
 		{

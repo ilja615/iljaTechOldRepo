@@ -51,8 +51,6 @@ public class ModBlocks
     public static final RegistryObject<Block> COPPER_ROD = registerBlockWithItem("copper_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
     public static final RegistryObject<Block> ALUMINIUM_ROD = registerBlockWithItem("aluminium_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<Block> STEEL_ROD = registerBlockWithItem("steel_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> CONSTANTAN_ROD = registerBlockWithItem("constantan_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
-    public static final RegistryObject<Block> NICHROME_ROD = registerBlockWithItem("nichrome_rod", () -> new RodBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> IRON_NAILS = registerBlockWithItem("iron_nails", () -> new NailsBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
