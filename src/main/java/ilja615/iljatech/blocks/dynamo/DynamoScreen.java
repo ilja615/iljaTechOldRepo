@@ -78,6 +78,6 @@ public class DynamoScreen extends AbstractContainerScreen<DynamoContainer>
         int y = (this.height - this.imageHeight) / 2;
 
         this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
-        energyInfoArea.draw(matrixStack);
+        energyInfoArea.draw(matrixStack, x, y);
     }
 }

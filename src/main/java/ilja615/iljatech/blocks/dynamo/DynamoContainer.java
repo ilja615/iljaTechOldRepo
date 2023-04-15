@@ -65,7 +65,7 @@ public class DynamoContainer extends AbstractContainerMenu
     @Override
     public boolean stillValid(Player playerIn)
     {
-        return stillValid(canInteractWithCallable, playerIn, ModBlocks.CRAFTER_MACHINE.get());
+        return stillValid(canInteractWithCallable, playerIn, ModBlocks.DYNAMO.get());
     }
 
     @Override

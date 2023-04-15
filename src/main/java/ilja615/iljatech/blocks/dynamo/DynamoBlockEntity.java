@@ -34,7 +34,7 @@ public class DynamoBlockEntity extends BlockEntity implements MenuProvider
         super(ModBlockEntityTypes.DYNAMO.get(), p_155229_, p_155230_);
     }
 
-    private final ElectricalEnergyStorage ENERGY_STORAGE = new ElectricalEnergyStorage(32000, 256)
+    private final ElectricalEnergyStorage ENERGY_STORAGE = new ElectricalEnergyStorage(16000, 256)
     {
         @Override
         public void onEnergyChanged()
@@ -125,6 +125,6 @@ public class DynamoBlockEntity extends BlockEntity implements MenuProvider
 
     protected Component getDefaultName()
     {
-        return Component.translatable("container.crafting_machine");
+        return Component.translatable("container.dynamo");
     }
 }
