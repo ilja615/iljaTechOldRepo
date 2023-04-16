@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -13,7 +14,7 @@ public class WireState
 {
     private final Level level;
     private final BlockPos pos;
-    private final BaseWireBlock block;
+    private final Block block;
     private BlockState state;
     private List<BlockPos> connections = Lists.newArrayList();
 
@@ -21,9 +22,17 @@ public class WireState
         this.level = p_55421_;
         this.pos = p_55422_;
         this.state = p_55423_;
-        this.block = (BaseWireBlock)p_55423_.getBlock();
-        WireShape wireshape = this.block.getWireDirection(state, p_55421_, p_55422_);
-        this.updateConnections(wireshape);
+        this.block = p_55423_.getBlock();
+        if (this.block instanceof BaseWireBlock)
+        {
+            WireShape wireshape = ((BaseWireBlock)this.block).getWireDirection(state, p_55421_, p_55422_);
+            this.updateConnections(wireshape);
+        }
+        if (this.block instanceof ElectricalWireBlock)
+        {
+            WireShape wireshape = ((ElectricalWireBlock)this.block).getWireDirection(state, p_55421_, p_55422_);
+            this.updateConnections(wireshape);
+        }
     }
 
     public List<BlockPos> getConnections() {
@@ -215,7 +224,14 @@ public class WireState
             wireshape = WireShape.NORTH_SOUTH;
         }
 
-        this.state = this.state.setValue(this.block.getShapeProperty(), wireshape);
+        if (this.block instanceof BaseWireBlock)
+        {
+            this.state = this.state.setValue(((BaseWireBlock)this.block).getShapeProperty(), wireshape);
+        }
+        if (this.block instanceof ElectricalWireBlock)
+        {
+            this.state = this.state.setValue(((ElectricalWireBlock)this.block).getShapeProperty(), wireshape);
+        }
         this.level.setBlock(this.pos, this.state, 3);
     }
 
@@ -342,7 +358,14 @@ public class WireState
         }
 
         this.updateConnections(wireshape);
-        this.state = this.state.setValue(this.block.getShapeProperty(), wireshape);
+        if (this.block instanceof BaseWireBlock)
+        {
+            this.state = this.state.setValue(((BaseWireBlock)this.block).getShapeProperty(), wireshape);
+        }
+        if (this.block instanceof ElectricalWireBlock)
+        {
+            this.state = this.state.setValue(((ElectricalWireBlock)this.block).getShapeProperty(), wireshape);
+        }
         if (p_55433_ || this.level.getBlockState(this.pos) != this.state) {
             this.level.setBlock(this.pos, this.state, 3);
 

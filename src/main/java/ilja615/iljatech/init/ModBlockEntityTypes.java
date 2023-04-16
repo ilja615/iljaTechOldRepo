@@ -12,6 +12,7 @@ import ilja615.iljatech.blocks.foundry.ChuteBlockEntity;
 import ilja615.iljatech.blocks.stretcher.StretcherBlockEntity;
 import ilja615.iljatech.blocks.stretcher.StretcherSpecialRenderer;
 import ilja615.iljatech.blocks.turbine.TurbineBlockEntity;
+import ilja615.iljatech.blocks.wire.ElectricalWireBlockEntity;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,6 +33,12 @@ public class ModBlockEntityTypes
     public static final RegistryObject<BlockEntityType<FoundryBlockEntity>> FOUNDRY = BLOCK_ENTITY_TYPES.register("foundry", () -> BlockEntityType.Builder.of(FoundryBlockEntity::new, ModBlocks.BRICK_FOUNDRY.get()).build(null));
     public static final RegistryObject<BlockEntityType<ChuteBlockEntity>> CHUTE = BLOCK_ENTITY_TYPES.register("chute", () -> BlockEntityType.Builder.of(ChuteBlockEntity::new, ModBlocks.BRICK_CHUTE.get()).build(null));
     public static final RegistryObject<BlockEntityType<DynamoBlockEntity>> DYNAMO = BLOCK_ENTITY_TYPES.register("dynamo", () -> BlockEntityType.Builder.of(DynamoBlockEntity::new, ModBlocks.DYNAMO.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElectricalWireBlockEntity>> ELECTRICAL_WIRE = BLOCK_ENTITY_TYPES.register("electrical_wire", () -> BlockEntityType.Builder.of(ElectricalWireBlockEntity::new,
+            ModBlocks.COPPER_WIRE.get(),
+            ModBlocks.ALUMINIUM_WIRE.get(),
+            ModBlocks.CONSTANTAN_WIRE.get(),
+            ModBlocks.NICHROME_WIRE.get())
+            .build(null));
 
     public static void registerBlockEntityRenderers()
     {

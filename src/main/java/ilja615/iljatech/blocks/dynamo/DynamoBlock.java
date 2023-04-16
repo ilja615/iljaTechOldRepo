@@ -40,6 +40,12 @@ public class DynamoBlock extends BaseEntityBlock implements IMechanicalPowerAcce
         this.registerDefaultState(this.stateDefinition.any().setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.OFF));
     }
 
+    public boolean triggerEvent(BlockState p_49226_, Level p_49227_, BlockPos p_49228_, int p_49229_, int p_49230_) {
+        super.triggerEvent(p_49226_, p_49227_, p_49228_, p_49229_, p_49230_);
+        BlockEntity blockentity = p_49227_.getBlockEntity(p_49228_);
+        return blockentity == null ? false : blockentity.triggerEvent(p_49229_, p_49230_);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

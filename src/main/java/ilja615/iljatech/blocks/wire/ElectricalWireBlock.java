@@ -1,40 +1,67 @@
 package ilja615.iljatech.blocks.wire;
 
-import ilja615.iljatech.init.ModBlocks;
+import ilja615.iljatech.blocks.dynamo.DynamoBlockEntity;
+import ilja615.iljatech.init.ModBlockEntityTypes;
 import ilja615.iljatech.init.ModProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.apache.http.impl.conn.Wire;
-import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BaseWireBlock extends Block implements Fallable
+public class ElectricalWireBlock extends BaseEntityBlock implements Fallable
 {
     protected static final VoxelShape FLAT_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     protected static final VoxelShape HALF_BLOCK_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     public static final EnumProperty<WireShape> SHAPE = ModProperties.WIRE_SHAPE;
     public static final IntegerProperty DISTANCE = BlockStateProperties.STABILITY_DISTANCE;
 
-    public BaseWireBlock(BlockBehaviour.Properties properties) {
+    public ElectricalWireBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(SHAPE, WireShape.NORTH_SOUTH).setValue(DISTANCE, 7));
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return ModBlockEntityTypes.ELECTRICAL_WIRE.get().create(pos, state);
+    }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ModBlockEntityTypes.ELECTRICAL_WIRE.get(), ElectricalWireBlockEntity::tick);
+    }
+
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     public VoxelShape getShape(BlockState p_49403_, BlockGetter p_49404_, BlockPos p_49405_, CollisionContext p_49406_) {
@@ -276,5 +303,21 @@ public class BaseWireBlock extends Block implements Fallable
     }
 
     protected void falling(FallingBlockEntity p_53206_) {
+    }
+
+    // Debugging
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
+    {
+        if (level.getBlockEntity(pos) != null)
+        {
+            if (level.getBlockEntity(pos) instanceof ElectricalWireBlockEntity)
+            {
+                BlockEntity be = level.getBlockEntity(pos);
+                be.getCapability(ForgeCapabilities.ENERGY).ifPresent(iEnergyStorage ->
+                        player.displayClientMessage(Component.literal(String.valueOf(iEnergyStorage.getEnergyStored())), false));
+            }
+        }
+        return super.use(state, level, pos, player, hand, result);
     }
 }
