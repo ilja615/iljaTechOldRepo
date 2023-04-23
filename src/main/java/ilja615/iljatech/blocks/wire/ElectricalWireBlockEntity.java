@@ -29,7 +29,7 @@ public class ElectricalWireBlockEntity extends BlockEntity
 {
     public ElectricalWireBlockEntity(BlockPos p_155229_, BlockState p_155230_)
     {
-        super(ModBlockEntityTypes.DYNAMO.get(), p_155229_, p_155230_);
+        super(ModBlockEntityTypes.ELECTRICAL_WIRE.get(), p_155229_, p_155230_);
     }
 
     private final ElectricalEnergyStorage ENERGY_STORAGE = new ElectricalEnergyStorage(16000, 256)
@@ -91,25 +91,20 @@ public class ElectricalWireBlockEntity extends BlockEntity
     {
         if (level.isClientSide) return;
 
-        System.out.println("hi");
         if (level.getBlockState(pos).getBlock() instanceof ElectricalWireBlock)
         {
-            System.out.println("1");
             ElectricalWireBlock electricalWireBlock = (ElectricalWireBlock)state.getBlock();
             for (BlockPos p :WireState.getConnectionArray(pos, state.getValue(electricalWireBlock.getShapeProperty())))
             {
-                System.out.println(p);
                 if (level.getBlockEntity(p) != null)
                 {
                     BlockEntity be = level.getBlockEntity(p);
                     be.getCapability(ForgeCapabilities.ENERGY).ifPresent(iEnergyStorage ->
                     {
-                        System.out.println(p+ " That one has energy capability!");
                         if (iEnergyStorage.getEnergyStored() > thisBlockEntity.getEnergyStorage().getEnergyStored())
                         {
                             int extractedAmount = iEnergyStorage.extractEnergy(8, false);
                             thisBlockEntity.getEnergyStorage().receiveEnergy(extractedAmount, false);
-                            System.out.println("Transferred "+extractedAmount+" FE.");
                         }
                     });
 
