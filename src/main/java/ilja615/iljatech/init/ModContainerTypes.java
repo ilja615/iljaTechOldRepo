@@ -1,6 +1,7 @@
 package ilja615.iljatech.init;
 
 import ilja615.iljatech.IljaTech;
+import ilja615.iljatech.blocks.battery_box.BatteryBoxContainer;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineContainer;
 import ilja615.iljatech.blocks.dynamo.DynamoContainer;
 import ilja615.iljatech.blocks.foundry.ChuteContainer;
@@ -23,4 +24,6 @@ public class ModContainerTypes
             .register("chute", () -> IForgeMenuType.create(ChuteContainer::new));
     public static final RegistryObject<MenuType<DynamoContainer>> DYNAMO = CONTAINER_TYPES
             .register("dynamo", () -> IForgeMenuType.create(DynamoContainer::new));
+    public static final RegistryObject<MenuType<BatteryBoxContainer>> BATTERY_BOX = CONTAINER_TYPES
+            .register("battery_box", () -> IForgeMenuType.create(BatteryBoxContainer::new));
 }

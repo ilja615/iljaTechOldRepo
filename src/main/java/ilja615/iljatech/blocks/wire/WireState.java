@@ -23,14 +23,9 @@ public class WireState
         this.pos = p_55422_;
         this.state = p_55423_;
         this.block = p_55423_.getBlock();
-        if (this.block instanceof BaseWireBlock)
+        if (this.block instanceof WireBlock)
         {
-            WireShape wireshape = ((BaseWireBlock)this.block).getWireDirection(state, p_55421_, p_55422_);
-            this.updateConnections(wireshape);
-        }
-        if (this.block instanceof ElectricalWireBlock)
-        {
-            WireShape wireshape = ((ElectricalWireBlock)this.block).getWireDirection(state, p_55421_, p_55422_);
+            WireShape wireshape = ((WireBlock)this.block).getWireDirection(state, p_55421_, p_55422_);
             this.updateConnections(wireshape);
         }
     }
@@ -109,23 +104,23 @@ public class WireState
     }
 
     private boolean hasWire(BlockPos p_55430_) {
-        return BaseWireBlock.isWire(this.level, p_55430_) || BaseWireBlock.isWire(this.level, p_55430_.above()) || BaseWireBlock.isWire(this.level, p_55430_.below());
+        return WireBlock.isWire(this.level, p_55430_) || WireBlock.isWire(this.level, p_55430_.above()) || WireBlock.isWire(this.level, p_55430_.below());
     }
 
     @Nullable
     private WireState getWire(BlockPos p_55439_) {
         BlockState blockstate = this.level.getBlockState(p_55439_);
-        if (BaseWireBlock.isWire(blockstate)) {
+        if (WireBlock.isWire(blockstate)) {
             return new WireState(this.level, p_55439_, blockstate);
         } else {
             BlockPos $$1 = p_55439_.above();
             blockstate = this.level.getBlockState($$1);
-            if (BaseWireBlock.isWire(blockstate)) {
+            if (WireBlock.isWire(blockstate)) {
                 return new WireState(this.level, $$1, blockstate);
             } else {
                 $$1 = p_55439_.below();
                 blockstate = this.level.getBlockState($$1);
-                return BaseWireBlock.isWire(blockstate) ? new WireState(this.level, $$1, blockstate) : null;
+                return WireBlock.isWire(blockstate) ? new WireState(this.level, $$1, blockstate) : null;
             }
         }
     }
@@ -201,21 +196,21 @@ public class WireState
         }
 
         if (wireshape == WireShape.NORTH_SOUTH) {
-            if (BaseWireBlock.isWire(this.level, blockpos.above())) {
+            if (WireBlock.isWire(this.level, blockpos.above())) {
                 wireshape = WireShape.ASCENDING_NORTH;
             }
 
-            if (BaseWireBlock.isWire(this.level, blockpos1.above())) {
+            if (WireBlock.isWire(this.level, blockpos1.above())) {
                 wireshape = WireShape.ASCENDING_SOUTH;
             }
         }
 
         if (wireshape == WireShape.EAST_WEST) {
-            if (BaseWireBlock.isWire(this.level, blockpos3.above())) {
+            if (WireBlock.isWire(this.level, blockpos3.above())) {
                 wireshape = WireShape.ASCENDING_EAST;
             }
 
-            if (BaseWireBlock.isWire(this.level, blockpos2.above())) {
+            if (WireBlock.isWire(this.level, blockpos2.above())) {
                 wireshape = WireShape.ASCENDING_WEST;
             }
         }
@@ -224,13 +219,9 @@ public class WireState
             wireshape = WireShape.NORTH_SOUTH;
         }
 
-        if (this.block instanceof BaseWireBlock)
+        if (this.block instanceof WireBlock)
         {
-            this.state = this.state.setValue(((BaseWireBlock)this.block).getShapeProperty(), wireshape);
-        }
-        if (this.block instanceof ElectricalWireBlock)
-        {
-            this.state = this.state.setValue(((ElectricalWireBlock)this.block).getShapeProperty(), wireshape);
+            this.state = this.state.setValue(((WireBlock)this.block).getShapeProperty(), wireshape);
         }
         this.level.setBlock(this.pos, this.state, 3);
     }
@@ -334,21 +325,21 @@ public class WireState
         }
 
         if (wireshape == WireShape.NORTH_SOUTH) {
-            if (BaseWireBlock.isWire(this.level, northpos.above())) {
+            if (WireBlock.isWire(this.level, northpos.above())) {
                 wireshape = WireShape.ASCENDING_NORTH;
             }
 
-            if (BaseWireBlock.isWire(this.level, southpos.above())) {
+            if (WireBlock.isWire(this.level, southpos.above())) {
                 wireshape = WireShape.ASCENDING_SOUTH;
             }
         }
 
         if (wireshape == WireShape.EAST_WEST) {
-            if (BaseWireBlock.isWire(this.level, eastpos.above())) {
+            if (WireBlock.isWire(this.level, eastpos.above())) {
                 wireshape = WireShape.ASCENDING_EAST;
             }
 
-            if (BaseWireBlock.isWire(this.level, westpos.above())) {
+            if (WireBlock.isWire(this.level, westpos.above())) {
                 wireshape = WireShape.ASCENDING_WEST;
             }
         }
@@ -358,13 +349,9 @@ public class WireState
         }
 
         this.updateConnections(wireshape);
-        if (this.block instanceof BaseWireBlock)
+        if (this.block instanceof WireBlock)
         {
-            this.state = this.state.setValue(((BaseWireBlock)this.block).getShapeProperty(), wireshape);
-        }
-        if (this.block instanceof ElectricalWireBlock)
-        {
-            this.state = this.state.setValue(((ElectricalWireBlock)this.block).getShapeProperty(), wireshape);
+            this.state = this.state.setValue(((WireBlock)this.block).getShapeProperty(), wireshape);
         }
         if (p_55433_ || this.level.getBlockState(this.pos) != this.state) {
             this.level.setBlock(this.pos, this.state, 3);

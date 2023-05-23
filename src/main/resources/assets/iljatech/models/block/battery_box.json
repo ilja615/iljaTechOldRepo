@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "iljatech:block/steel_plate",
+		"north": "iljatech:block/battery_box",
+		"south": "iljatech:block/battery_box",
+		"east": "iljatech:block/battery_box",
+		"west": "iljatech:block/battery_box",
+		"up": "iljatech:block/steel_plate",
+		"down": "iljatech:block/steel_plate"
+	}
+}

@@ -3,6 +3,7 @@ package ilja615.iljatech.init;
 import ilja615.iljatech.IljaTech;
 import ilja615.iljatech.blocks.*;
 import ilja615.iljatech.blocks.RodBlock;
+import ilja615.iljatech.blocks.battery_box.BatteryBoxBlock;
 import ilja615.iljatech.blocks.bellows.BellowsBlock;
 import ilja615.iljatech.blocks.burner.BurnerBlock;
 import ilja615.iljatech.blocks.conveyor_belt.ConveyorBeltBlock;
@@ -15,8 +16,8 @@ import ilja615.iljatech.blocks.foundry.ChuteBlock;
 import ilja615.iljatech.blocks.stretcher.StretcherBlock;
 import ilja615.iljatech.blocks.turbine.TurbineBlock;
 import ilja615.iljatech.blocks.wire.BarbedWireBlock;
-import ilja615.iljatech.blocks.wire.BaseWireBlock;
 import ilja615.iljatech.blocks.wire.ElectricalWireBlock;
+import ilja615.iljatech.blocks.wire.WireBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -55,9 +56,13 @@ public class ModBlocks
 
     public static final RegistryObject<Block> IRON_NAILS = registerBlockWithItem("iron_nails", () -> new NailsBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
-    public static final RegistryObject<Block> GOLD_WIRE = registerBlockWithItem("gold_wire", () -> new BaseWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> STEEL_WIRE = registerBlockWithItem("steel_wire", () -> new BaseWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> GOLD_WIRE = registerBlockWithItem("gold_wire", () -> new WireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> STEEL_WIRE = registerBlockWithItem("steel_wire", () -> new WireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
     public static final RegistryObject<Block> BARBED_WIRE = registerBlockWithItem("barbed_wire", () -> new BarbedWireBlock(ModProperties.BARBED_WIRE_PROPERTY));
+    public static final RegistryObject<Block> COPPER_WIRE = registerBlockWithItem("copper_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> ALUMINIUM_WIRE = registerBlockWithItem("aluminium_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> CONSTANTAN_WIRE = registerBlockWithItem("constantan_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> NICHROME_WIRE = registerBlockWithItem("nichrome_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
 
     // Nailed Planks
     public static final RegistryObject<Block> NAILED_OAK_PLANKS = registerBlockWithItem("nailed_oak_planks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
@@ -132,12 +137,8 @@ public class ModBlocks
     public static final RegistryObject<Block> CRUSHER = registerBlockWithItem("crusher", () -> new CrusherBlock(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.COPPER).noOcclusion()));
 
     // Electrical
-    public static final RegistryObject<Block> COPPER_WIRE = registerBlockWithItem("copper_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> ALUMINIUM_WIRE = registerBlockWithItem("aluminium_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> CONSTANTAN_WIRE = registerBlockWithItem("constantan_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> NICHROME_WIRE = registerBlockWithItem("nichrome_wire", () -> new ElectricalWireBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion().noCollission()));
-
     public static final RegistryObject<Block> DYNAMO = registerBlockWithItem("dynamo", () -> new DynamoBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BATTERY_BOX = registerBlockWithItem("battery_box", () -> new BatteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
 
     public static <BLOCK extends Block> RegistryObject<BLOCK> registerBlockWithItem(String name, Supplier<BLOCK> blockSupplier, Item.Properties properties)

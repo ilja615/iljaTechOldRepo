@@ -1,9 +1,8 @@
-package ilja615.iljatech.blocks.dynamo;
+package ilja615.iljatech.blocks.battery_box;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ilja615.iljatech.IljaTech;
-import ilja615.iljatech.blocks.crafter_machine.CrafterMachineContainer;
 import ilja615.iljatech.client.render.EnergyInfoArea;
 import ilja615.iljatech.util.MouseUtil;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,17 +13,17 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.Optional;
 
-public class DynamoScreen extends AbstractContainerScreen<DynamoContainer>
+public class BatteryBoxScreen extends AbstractContainerScreen<BatteryBoxContainer>
 {
-    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(IljaTech.MOD_ID, "textures/gui/dynamo.png");
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(IljaTech.MOD_ID, "textures/gui/battery_box.png");
     private EnergyInfoArea energyInfoArea;
 
-    public DynamoScreen(DynamoContainer container, Inventory playerInventory, Component title) {
+    public BatteryBoxScreen(BatteryBoxContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         this.leftPos = 0;
         this.topPos = 0;
         this.imageWidth = 175;
-        this.imageHeight = 127;
+        this.imageHeight = 159;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class DynamoScreen extends AbstractContainerScreen<DynamoContainer>
     }
 
     private void renderEnergyAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 8, 18, 160, 12)) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 8, 49, 160, 12)) {
             renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }
@@ -78,6 +77,6 @@ public class DynamoScreen extends AbstractContainerScreen<DynamoContainer>
         int y = (this.height - this.imageHeight) / 2;
 
         this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
-        energyInfoArea.draw(matrixStack, x, y, 18);
+        energyInfoArea.draw(matrixStack, x, y, 49);
     }
 }

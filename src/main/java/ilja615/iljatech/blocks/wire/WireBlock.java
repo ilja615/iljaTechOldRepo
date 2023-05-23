@@ -1,6 +1,5 @@
 package ilja615.iljatech.blocks.wire;
 
-import ilja615.iljatech.init.ModBlocks;
 import ilja615.iljatech.init.ModProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,30 +8,26 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.apache.http.impl.conn.Wire;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 
 import java.util.Random;
 
-public class BaseWireBlock extends Block implements Fallable
+public class WireBlock extends Block implements Fallable
 {
     protected static final VoxelShape FLAT_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     protected static final VoxelShape HALF_BLOCK_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     public static final EnumProperty<WireShape> SHAPE = ModProperties.WIRE_SHAPE;
     public static final IntegerProperty DISTANCE = BlockStateProperties.STABILITY_DISTANCE;
 
-    public BaseWireBlock(BlockBehaviour.Properties properties) {
+    public WireBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(SHAPE, WireShape.NORTH_SOUTH).setValue(DISTANCE, 7));
     }
@@ -47,7 +42,7 @@ public class BaseWireBlock extends Block implements Fallable
     }
 
     public static boolean isWire(BlockState blockState) {
-        return blockState.getBlock() instanceof BaseWireBlock || blockState.getBlock() instanceof ElectricalWireBlock;
+        return blockState.getBlock() instanceof WireBlock || blockState.getBlock() instanceof ElectricalWireBlock;
     }
 
     @Override

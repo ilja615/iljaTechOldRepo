@@ -35,12 +35,12 @@ public class EnergyInfoArea extends GuiComponent
         return List.of(Component.literal(energy.getEnergyStored()+"/"+energy.getMaxEnergyStored()+" FE"));
     }
 
-    public void draw(PoseStack stack, int x, int y) {
+    public void draw(PoseStack stack, int x, int y, int yOffset) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, ENERGY_BAR);
 
         int e = (int)(area.getWidth()*(energy.getEnergyStored()/(float)energy.getMaxEnergyStored()));
-        this.blit(stack, x + 8, y + 18, e, area.getHeight(), 0, 0, e, area.getHeight(), 160, 12);
+        this.blit(stack, x + 8, y + yOffset, e, area.getHeight(), 0, 0, e, area.getHeight(), 160, 12);
     }
 }

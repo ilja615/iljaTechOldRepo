@@ -1,6 +1,8 @@
 package ilja615.iljatech.client;
 
 import ilja615.iljatech.IljaTech;
+import ilja615.iljatech.blocks.battery_box.BatteryBoxBlockEntity;
+import ilja615.iljatech.blocks.battery_box.BatteryBoxScreen;
 import ilja615.iljatech.blocks.crafter_machine.CrafterMachineScreen;
 import ilja615.iljatech.blocks.dynamo.DynamoBlock;
 import ilja615.iljatech.blocks.dynamo.DynamoScreen;
@@ -32,6 +34,7 @@ public class ClientEventBusSubscriber
         MenuScreens.register(ModContainerTypes.FOUNDRY.get(), FoundryScreen::new);
         MenuScreens.register(ModContainerTypes.CHUTE.get(), ChuteScreen::new);
         MenuScreens.register(ModContainerTypes.DYNAMO.get(), DynamoScreen::new);
+        MenuScreens.register(ModContainerTypes.BATTERY_BOX.get(), BatteryBoxScreen::new);
 
         //render layers
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_NAILS.get(), RenderType.cutout());

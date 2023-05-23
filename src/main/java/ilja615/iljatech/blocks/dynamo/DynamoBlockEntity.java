@@ -28,13 +28,14 @@ import javax.annotation.Nullable;
 public class DynamoBlockEntity extends BlockEntity implements MenuProvider
 {
     private Component customName;
+    private static final int ENERGY_GENERATION_RATE = 32;
 
     public DynamoBlockEntity(BlockPos p_155229_, BlockState p_155230_)
     {
         super(ModBlockEntityTypes.DYNAMO.get(), p_155229_, p_155230_);
     }
 
-    private final ElectricalEnergyStorage ENERGY_STORAGE = new ElectricalEnergyStorage(16000, 256)
+    private final ElectricalEnergyStorage ENERGY_STORAGE = new ElectricalEnergyStorage(256, 256)
     {
         @Override
         public void onEnergyChanged()
@@ -102,7 +103,7 @@ public class DynamoBlockEntity extends BlockEntity implements MenuProvider
 
         if (state.hasProperty(ModProperties.MECHANICAL_POWER) && ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
-            blockEntity.ENERGY_STORAGE.receiveEnergy(32, false);
+            blockEntity.ENERGY_STORAGE.receiveEnergy(ENERGY_GENERATION_RATE, false);
         }
     }
 
