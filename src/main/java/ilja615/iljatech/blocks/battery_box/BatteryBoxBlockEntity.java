@@ -282,13 +282,13 @@ public class BatteryBoxBlockEntity extends BlockEntity implements MenuProvider
         }
 
         // The battery box will then send it through a wire if possible
-        for (Direction d : Direction.values())
-        {
-            BlockPos p = pos.relative(d);
-            if (level.getBlockState(p).getBlock() instanceof ElectricalWireBlock)
-            {
-                ((ElectricalWireBlock)state.getBlock());
-            }
-        }
+//        for (Direction d : Direction.values())
+//        {
+//            BlockPos p = pos.relative(d);
+//            if (level.getBlockState(p).getBlock() instanceof ElectricalWireBlock)
+//            {
+//                ((ElectricalWireBlock)state.getBlock());
+//            }
+//        }
     }
 }
