@@ -45,46 +45,32 @@ public class ConveyorBeltBlockEntity extends BlockEntity
 
     public static void tick(Level level, BlockPos pos, BlockState state, ConveyorBeltBlockEntity blockEntity)
     {
-        final double speed = 0.08d;
+        final double speed = 0.07d;
 
         if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.X && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.CLOCKWISE)
+            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.X && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.COUNTER_CLOCKWISE)
             {
                 blockEntity.getAndMoveEntities(level, Direction.UP, new Vec3(0.0d, 0.0d, speed));
                 blockEntity.getAndMoveEntities(level, Direction.DOWN, new Vec3(0.0d, 0.0d, -speed));
                 blockEntity.getAndMoveEntities(level, Direction.NORTH, new Vec3(0.0d, speed, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.SOUTH, new Vec3(0.0d, -speed, 0.0d));
             }
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Y && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.CLOCKWISE)
-            {
-                blockEntity.getAndMoveEntities(level, Direction.EAST, new Vec3(0.0d, 0.0d, -speed));
-                blockEntity.getAndMoveEntities(level, Direction.WEST, new Vec3(0.0d, 0.0d, speed));
-                blockEntity.getAndMoveEntities(level, Direction.NORTH, new Vec3(-speed, 0.0d, 0.0d));
-                blockEntity.getAndMoveEntities(level, Direction.SOUTH, new Vec3(speed, 0.0d, 0.0d));
-            }
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Z && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.CLOCKWISE)
+            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Z && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.COUNTER_CLOCKWISE)
             {
                 blockEntity.getAndMoveEntities(level, Direction.UP, new Vec3(-speed, 0.0d, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.DOWN, new Vec3(speed, 0.0d, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.EAST, new Vec3(0.0d, speed, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.WEST, new Vec3(0.0d, -speed, 0.0d));
             }
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.X && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.COUNTER_CLOCKWISE)
+            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.X && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.CLOCKWISE)
             {
                 blockEntity.getAndMoveEntities(level, Direction.UP, new Vec3(0.0d, 0.0d, -speed));
                 blockEntity.getAndMoveEntities(level, Direction.DOWN, new Vec3(0.0d, 0.0d, speed));
                 blockEntity.getAndMoveEntities(level, Direction.NORTH, new Vec3(0.0d, -speed, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.SOUTH, new Vec3(0.0d, speed, 0.0d));
             }
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Y && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.COUNTER_CLOCKWISE)
-            {
-                blockEntity.getAndMoveEntities(level, Direction.EAST, new Vec3(0.0d, 0.0d, speed));
-                blockEntity.getAndMoveEntities(level, Direction.WEST, new Vec3(0.0d, 0.0d, -speed));
-                blockEntity.getAndMoveEntities(level, Direction.NORTH, new Vec3(speed, 0.0d, 0.0d));
-                blockEntity.getAndMoveEntities(level, Direction.SOUTH, new Vec3(-speed, 0.0d, 0.0d));
-            }
-            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Z && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.COUNTER_CLOCKWISE)
+            if (state.getValue(ConveyorBeltBlock.AXIS) == Direction.Axis.Z && state.getValue(ConveyorBeltBlock.ROTATION_DIRECTION) == RotationDirection.CLOCKWISE)
             {
                 blockEntity.getAndMoveEntities(level, Direction.UP, new Vec3(speed, 0.0d, 0.0d));
                 blockEntity.getAndMoveEntities(level, Direction.DOWN, new Vec3(-speed, 0.0d, 0.0d));

@@ -1,61 +1,120 @@
 {
   "multipart": [
-    {   "when": { "axis": "x" },
+    {   "when": { "axis": "x", "mechanical_power": "off" },
       "apply": { "model": "iljatech:block/conveyor_belt_middle", "y": 90, "uvlock": true }
     },
-    {   "when": { "axis": "z" },
+    {   "when": { "axis": "z", "mechanical_power": "off" },
       "apply": { "model": "iljatech:block/conveyor_belt_middle", "uvlock": true }
     },
+
+    {   "when": { "axis": "x", "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_middle_spinning", "y": 90, "uvlock": true }
+    },
+    {   "when": { "axis": "z", "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_middle_spinning", "uvlock": true }
+    },
     
-    {   "when": { "axis": "x", "up": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "x", "up": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_north_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "down": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_south_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "north": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_north_down_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "south": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_south_up_stopped", "uvlock": true }
+    },
+
+    {   "when": { "axis": "z", "up": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_west_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "down": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_east_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "east": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_east_down_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "west": "true", "rotationdirection": "clockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_west_up_stopped", "uvlock": true }
+    },
+
+    {   "when": { "axis": "x", "up": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_south_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "down": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_north_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "north": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_north_up_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "x", "south": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_south_down_stopped", "uvlock": true }
+    },
+
+    {   "when": { "axis": "z", "up": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_east_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "down": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_west_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "east": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_east_up_stopped", "uvlock": true }
+    },
+    {   "when": { "axis": "z", "west": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "off" },
+      "apply": { "model": "iljatech:block/conveyor_belt_west_down_stopped", "uvlock": true }
+    },
+
+    {   "when": { "axis": "x", "up": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_up_north", "uvlock": true }
     },
-    {   "when": { "axis": "x", "down": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "x", "down": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_down_south", "uvlock": true }
     },
-    {   "when": { "axis": "x", "north": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "x", "north": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_north_down", "uvlock": true }
     },
-    {   "when": { "axis": "x", "south": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "x", "south": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_south_up", "uvlock": true }
     },
 
-    {   "when": { "axis": "z", "up": "true", "rotationdirection": "clockwise" },
-      "apply": { "model": "iljatech:block/conveyor_belt_up_east", "uvlock": true }
+    {   "when": { "axis": "z", "up": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_west", "uvlock": true }
     },
-    {   "when": { "axis": "z", "down": "true", "rotationdirection": "clockwise" },
-      "apply": { "model": "iljatech:block/conveyor_belt_down_west", "uvlock": true }
+    {   "when": { "axis": "z", "down": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_east", "uvlock": true }
     },
-    {   "when": { "axis": "z", "east": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "z", "east": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_east_down", "uvlock": true }
     },
-    {   "when": { "axis": "z", "west": "true", "rotationdirection": "clockwise" },
+    {   "when": { "axis": "z", "west": "true", "rotationdirection": "clockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_west_up", "uvlock": true }
     },
 
-    {   "when": { "axis": "x", "up": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "x", "up": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_up_south", "uvlock": true }
     },
-    {   "when": { "axis": "x", "down": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "x", "down": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_down_north", "uvlock": true }
     },
-    {   "when": { "axis": "x", "north": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "x", "north": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_north_up", "uvlock": true }
     },
-    {   "when": { "axis": "x", "south": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "x", "south": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_south_down", "uvlock": true }
     },
 
-    {   "when": { "axis": "z", "up": "true", "rotationdirection": "counterclockwise" },
-      "apply": { "model": "iljatech:block/conveyor_belt_up_west", "uvlock": true }
+    {   "when": { "axis": "z", "up": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_up_east", "uvlock": true }
     },
-    {   "when": { "axis": "z", "down": "true", "rotationdirection": "counterclockwise" },
-      "apply": { "model": "iljatech:block/conveyor_belt_down_east", "uvlock": true }
+    {   "when": { "axis": "z", "down": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
+      "apply": { "model": "iljatech:block/conveyor_belt_down_west", "uvlock": true }
     },
-    {   "when": { "axis": "z", "east": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "z", "east": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_east_up", "uvlock": true }
     },
-    {   "when": { "axis": "z", "west": "true", "rotationdirection": "counterclockwise" },
+    {   "when": { "axis": "z", "west": "true", "rotationdirection": "counterclockwise" , "mechanical_power": "spinning_1|spinning_2|spinning_3|spinning_4|spinning_5|spinning_6|spinning_7|spinning_8|almost_stopping" },
       "apply": { "model": "iljatech:block/conveyor_belt_west_down", "uvlock": true }
     }
   ]

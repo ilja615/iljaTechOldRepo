@@ -3,7 +3,7 @@
 	"parent": "minecraft:block/block",
 	"textures": {
 		"0": "iljatech:block/iron_scaffolding",
-		"1": "iljatech:block/gear",
+		"1": "iljatech:block/gear_spinning",
 		"particle": "iljatech:block/iron_scaffolding"
 	},
 	"elements": [

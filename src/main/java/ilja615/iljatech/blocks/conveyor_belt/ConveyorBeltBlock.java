@@ -34,6 +34,7 @@ import javax.annotation.Nullable;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPowerAccepter, IMechanicalPowerSender
@@ -85,18 +86,26 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
     @Override
     public void receivePower(Level world, BlockPos thisPos, Direction sideFrom, int amount)
     {
-        world.scheduleTick(thisPos, this, 5);
+        world.scheduleTick(thisPos, this, 10);
         IMechanicalPowerAccepter.super.receivePower(world, thisPos, sideFrom, amount);
+    }
+
+    @Override
+    public boolean acceptsPower(Level world, BlockPos thisPos, Direction sideFrom)
+    {
+        BlockState state = world.getBlockState(thisPos);
+        return state.hasProperty(ModProperties.MECHANICAL_POWER) && !((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning();
     }
 
     @Override
     public boolean sendPower(Level world, BlockPos thisPos, Direction face, int amount)
     {
         BlockState state = world.getBlockState(thisPos);
-        if (state.getBlock().equals(this))
+        if (IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount))
         {
-            // The conveyor belt can only power other conveyor belts.
-            return IMechanicalPowerSender.super.sendPower(world, thisPos, face, amount);
+            world.scheduleTick(thisPos, this, 5);
+            world.setBlockAndUpdate(thisPos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
+            return true;
         } else {
             return false;
         }
@@ -120,16 +129,30 @@ public class ConveyorBeltBlock extends BaseEntityBlock implements IMechanicalPow
         }
         else if (((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).isSpinning())
         {
-            int power = ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt();
-            for (Direction d : Direction.values())
-            {
-                if (!state.getValue(PROPERTY_BY_DIRECTION.get(d)).booleanValue() && power > 1)
+            ArrayList<Direction> directions = new ArrayList<Direction>(); // Potential directions that power could be outputted to.
+            for (Direction dir : Direction.values()) {
+                if (!state.getValue(PROPERTY_BY_DIRECTION.get(dir)).booleanValue()) // A conveyor can only output to sides where it is connected to.
                 {
-                    sendPower(worldIn, pos, d, power - 1);
+                    Block other = worldIn.getBlockState(pos.relative(dir)).getBlock();
+                    if (other instanceof IMechanicalPowerAccepter && ((IMechanicalPowerAccepter)other).acceptsPower(worldIn, pos.relative(dir), dir.getOpposite()))
+                        if (other.equals(this)) // Conveyor belt can only power another conveyor belt
+                            directions.add(dir);
                 }
             }
-            worldIn.scheduleTick(pos, this, 10);
-            worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
+            if (directions.size() > 0) {
+                int power = ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt();
+                if (power > 1)
+                    directions.forEach(direction -> sendPower(worldIn, pos, direction, power - 1));
+                else {
+                    // Insufficient power, could not output...
+                    worldIn.scheduleTick(pos, this, 5);
+                    worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
+                }
+            } else {
+                // There was nowhere to output to...
+                worldIn.scheduleTick(pos, this, 5);
+                worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
+            }
         }
     }
 

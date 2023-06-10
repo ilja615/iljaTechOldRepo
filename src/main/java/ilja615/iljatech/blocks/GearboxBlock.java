@@ -54,6 +54,11 @@ public class GearboxBlock extends Block implements IMechanicalPowerAccepter, IMe
                 double power = ((MechanicalPower)state.getValue(ModProperties.MECHANICAL_POWER)).getInt();
                 if (Math.floor(power / ((double) directions.size())) > 0.0d)
                     directions.forEach(direction -> sendPower(worldIn, pos, direction, (int)(Math.floor(power / ((double) directions.size())))));
+                else {
+                    // Insufficient power, could not output...
+                    worldIn.scheduleTick(pos, this, 5);
+                    worldIn.setBlockAndUpdate(pos, state.setValue(ModProperties.MECHANICAL_POWER, MechanicalPower.ALMOST_STOPPING));
+                }
             } else {
                 // There was nowhere to output to...
                 worldIn.scheduleTick(pos, this, 5);
